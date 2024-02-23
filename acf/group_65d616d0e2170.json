@@ -1,0 +1,467 @@
+{
+    "key": "group_65d616d0e2170",
+    "title": "Global Fonts",
+    "fields": [
+        {
+            "key": "field_65d616d0e6bde",
+            "label": "Primary",
+            "name": "font_primary",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_65d616d0e7342",
+                    "label": "Family",
+                    "name": "family_primary",
+                    "aria-label": "",
+                    "type": "Typography",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_properties": [
+                        "font_family"
+                    ],
+                    "required_properties": "",
+                    "font_size": 15,
+                    "font_family": "Arial, Helvetica, sans-serif",
+                    "font_weight": 400,
+                    "font_style": "normal",
+                    "font_variant": "normal",
+                    "font_stretch": "normal",
+                    "line_height": "",
+                    "letter_spacing": 0,
+                    "text_align": "left",
+                    "text_color": "#000",
+                    "text_decoration": "none",
+                    "text_transform": "none"
+                },
+                {
+                    "key": "field_65d616d0e7347",
+                    "label": "Weight",
+                    "name": "weight_primary",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "300": "300 (Light)",
+                        "400": "400 (Normal)",
+                        "500": "500 (Medium)",
+                        "600": "600 (Semi Bold)",
+                        "700": "700 (Bold)"
+                    },
+                    "default_value": 400,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
+                }
+            ]
+        },
+        {
+            "key": "field_65d616d0e6bef",
+            "label": "H1",
+            "name": "font_h1",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_65d616d0eb383",
+                    "label": "Colour",
+                    "name": "colour_h1",
+                    "aria-label": "",
+                    "type": "color_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "enable_opacity": 0,
+                    "return_format": ""
+                },
+                {
+                    "key": "field_65d616d0eb389",
+                    "label": "Family",
+                    "name": "family_h1",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "arial": "Arial",
+                        "sans-serif": "Sans Serif"
+                    },
+                    "default_value": false,
+                    "return_format": "",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_65d616d0eb38c",
+                    "label": "Weight",
+                    "name": "weight_h1",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "300": "300 (Light)",
+                        "400": "400 (Normal)",
+                        "500": "500 (Medium)",
+                        "600": "600 (Semi Bold)",
+                        "700": "700 (Bold)"
+                    },
+                    "default_value": 400,
+                    "return_format": "",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
+                }
+            ]
+        },
+        {
+            "key": "field_65d616d0e6bf8",
+            "label": "H2",
+            "name": "font_h2",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_65d616d0ed687",
+                    "label": "Colour",
+                    "name": "colour_h2",
+                    "aria-label": "",
+                    "type": "color_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "enable_opacity": 0,
+                    "return_format": ""
+                },
+                {
+                    "key": "field_65d616d0ed68f",
+                    "label": "Family",
+                    "name": "family_h2",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "arial": "Arial",
+                        "sans-serif": "Sans Serif"
+                    },
+                    "default_value": false,
+                    "return_format": "",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_65d616d0ed693",
+                    "label": "Weight",
+                    "name": "weight_h2",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "300": "300 (Light)",
+                        "400": "400 (Normal)",
+                        "500": "500 (Medium)",
+                        "600": "600 (Semi Bold)",
+                        "700": "700 (Bold)"
+                    },
+                    "default_value": 400,
+                    "return_format": "",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
+                }
+            ]
+        },
+        {
+            "key": "field_65d616d0e6bff",
+            "label": "H3",
+            "name": "font_h3",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_65d616d0ef8e1",
+                    "label": "Colour",
+                    "name": "colour_h3",
+                    "aria-label": "",
+                    "type": "color_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "enable_opacity": 0,
+                    "return_format": "string"
+                },
+                {
+                    "key": "field_65d616d0ef8e5",
+                    "label": "Family",
+                    "name": "family_h3",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "arial": "Arial",
+                        "sans-serif": "Sans Serif"
+                    },
+                    "default_value": false,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_65d616d0ef8e8",
+                    "label": "Weight",
+                    "name": "weight_h3",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "300": "300 (Light)",
+                        "400": "400 (Normal)",
+                        "500": "500 (Medium)",
+                        "600": "600 (Semi Bold)",
+                        "700": "700 (Bold)"
+                    },
+                    "default_value": 400,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
+                }
+            ]
+        },
+        {
+            "key": "field_65d61d45b33a2",
+            "label": "H4",
+            "name": "font_h4",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_65d61d45b33a3",
+                    "label": "Colour",
+                    "name": "colour_h4",
+                    "aria-label": "",
+                    "type": "color_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "enable_opacity": 0,
+                    "return_format": "string"
+                },
+                {
+                    "key": "field_65d61d45b33a4",
+                    "label": "Family",
+                    "name": "family_h4",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "arial": "Arial",
+                        "sans-serif": "Sans Serif"
+                    },
+                    "default_value": false,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_65d61d45b33a5",
+                    "label": "Weight",
+                    "name": "weight_h4",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "300": "300 (Light)",
+                        "400": "400 (Normal)",
+                        "500": "500 (Medium)",
+                        "600": "600 (Semi Bold)",
+                        "700": "700 (Bold)"
+                    },
+                    "default_value": 400,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "customizer",
+                "operator": "==",
+                "value": "globaltypography"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1708601640
+}

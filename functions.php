@@ -35,19 +35,79 @@ function ezpzconsultations_enqueue_styles() {
 /**
  * Add ACF Option Page for Theme Designer
  */
-if (function_exists('acf_add_options_page')) {
-  acf_add_options_page(
-    array(
-      'page_title'     => __('Theme Designer', 'ezpzconsultations'),
-      'menu_title'    => __('Theme Designer', 'ezpzconsultations'),
-      'menu_slug'     => 'theme-designer',
-      'capability'  => 'edit_posts',
-      'icon_url' => 'dashicons-admin-customizer',
-      'position' => 2,
-      'autoload' => true,
+// if (function_exists('acf_add_options_page')) {
+//   acf_add_options_page(
+//     array(
+//       'page_title'     => __('Theme Designer', 'ezpzconsultations'),
+//       'menu_title'    => __('Theme Designer', 'ezpzconsultations'),
+//       'menu_slug'     => 'theme-designer',
+//       'capability'  => 'edit_posts',
+//       'icon_url' => 'dashicons-admin-customizer',
+//       'position' => 2,
+//       'autoload' => true,
+//     )
+//   );
+// }
+
+
+add_action('init', function () {
+  if (function_exists('acf_add_customizer_section')) {
+    $panel_id = acf_add_customizer_panel(array(
+      'title'        => 'Theme Designer',
+    ));
+    acf_add_customizer_section(array(
+      'title'        => 'Global Colors',
+      'storage_type' => 'option',
+      'panel'        => $panel_id,
+
+    ));
+    acf_add_customizer_section(array(
+      'title'        => 'Global Typography',
+      'storage_type' => 'option',
+      'panel'        => $panel_id,
+    ));
+    acf_add_customizer_section(array(
+      'title'        => 'Buttons',
+      'storage_type' => 'option',
+      'panel'        => $panel_id,
+    ));
+    acf_add_customizer_section(array(
+      'title'        => 'Custom CSS',
+      'storage_type' => 'option',
+      'panel'        => $panel_id,
+    ));
+    acf_add_customizer_section(array(
+      'title'        => 'Branding',
+      'storage_type' => 'option',
+      'panel'        => $panel_id,
+    ));
+  }
+});
+
+function get_options_by_prefix($prefix) {
+  global $wpdb;
+
+  $returned_data = [];
+
+  $options = $wpdb->get_results(
+    $wpdb->prepare(
+      "SELECT option_name, option_value FROM {$wpdb->options} WHERE option_name LIKE %s",
+      $wpdb->esc_like($prefix) . '%'
     )
   );
+
+  if (!empty($options)) {
+    foreach ($options as $data) {
+      $name = str_replace($prefix . '_', '', $data->option_name);
+      $returned_data[$name] = $data->option_value;
+    }
+  }
+
+  return  $returned_data;
 }
+
+
+
 /**
  * Sync ACF Json specific to the child theme into the child theme directory /acf
  * Add any more groups to the $groups array as required
@@ -58,7 +118,11 @@ function ezpzconsultations_load_acf_local_json($paths) {
 }
 function ezpzconsultations_save_acf_local_json($group) {
   $groups = array(
-    'group_647df582a6e08'
+    'group_65d61c51e9cdc',
+    'group_65d61eb9da7c1',
+    'group_65d616d0e2170',
+    'group_65d6168f43085',
+    'group_65d6172da0577'
   );
   if (in_array($group['key'], $groups)) {
     add_filter('acf/settings/save_json', function () {
@@ -74,21 +138,23 @@ add_action('acf/settings/load_json', 'ezpzconsultations_load_acf_local_json', 1,
  * Best to use this function where possible to keep things dry.
  */
 function ezpzconsultations_get_theme_opts() {
-  $theme_opts = get_fields('options');
 
-  // Process them as required - here we are adding a name and slug to colors
-  if (!empty($theme_opts['colors'])) {
-    foreach ($theme_opts['colors'] as $key => $color) {
-      $name = ucwords(str_replace('_', ' ', $key));
-      $slug = str_replace('_', '-', $key);
-      $theme_opts['colors'][$slug] = [
-        'name' => $name,
-        'value' => $color,
-      ];
-      unset($theme_opts['colors'][$key]);
+  $theme_opts = [];
+
+  $prefixes = [
+    'globalcolors',
+    'globaltypography',
+    'branding',
+    'buttons'
+  ];
+
+  foreach ($prefixes as $prefix) {
+    $options = get_options_by_prefix($prefix);
+
+    if (!empty($options)) {
+      $theme_opts[$prefix] = $options;
     }
   }
-
   return $theme_opts;
 }
 
@@ -107,6 +173,7 @@ function ezpzconsultations_create_theme_json() {
   }
 }
 
+
 /**
  * Saves the ACF options to theme.json when the ACF options page is saved
  */
@@ -123,11 +190,9 @@ function ezpzconsultations_save_theme_settings_to_json($post_id) {
         $theme_json = file_get_contents($theme_json);
         $theme_json = json_decode($theme_json, true);
 
-        // Get ACF Options
-        $opts = ezpzconsultations_get_theme_opts();
-        echo '<pre>';
-        var_dump($opts);
-        echo '</pre>';
+
+
+
 
         if (isset($opts['colors'])) {
           $palette = [];
@@ -153,18 +218,81 @@ function ezpzconsultations_save_theme_settings_to_json($post_id) {
 /**
  * Outputs custom CSS in the header based on the ACF options
  */
-add_action('wp_head', 'ezpzconsultations_add_custom_css', 30);
+add_action('wp_head', 'ezpzconsultations_add_custom_css', 100);
 function ezpzconsultations_add_custom_css() {
+
   $theme_opts = ezpzconsultations_get_theme_opts();
+
   if (!empty($theme_opts)) :
+
+    echo "<pre>";
+    var_dump($theme_opts);
+    echo "</pre>";
+
+    $global_font_family = get_typography_field('font_primary_family_primary', 'font_family', null, false);
+
 ?>
-<style type="text/css">
-<?php // DO YOUR STUFF HERE
-?>
-</style>
+
+    <style type="text/css">
+      :root {
+        /* Global Colours */
+        --color-primary-500: <?php echo $theme_opts['globalcolors']['primary_colour']; ?>;
+        --color-secondary-500: <?php echo $theme_opts['globalcolors']['secondary_colour']; ?>;
+        --font-primary: <?php echo $global_font_family; ?>;
+      }
+
+      body {
+        --color-text: <?php echo $theme_opts['globalcolors']['text_colour']; ?>;
+        accent-color: <?php echo $theme_opts['globalcolors']['accent_colour']; ?>
+      }
+
+      a,
+      a:link {
+        color: <?php echo $theme_opts['globalcolors']['accent_colour']; ?>
+      }
+
+      /* Global Typography */
+      body {
+        font-weight: 600;
+      }
+
+      h1 {
+        color: <?php echo $theme_opts['globaltypography']['font_h1_colour_h1']; ?>;
+        font-family: <?php echo $theme_opts['globaltypography']['font_h1']; ?>;
+        font-weight: <?php echo $theme_opts['globaltypography']['font_h1_weight_h1']; ?>;
+      }
+    </style>
 <?php
+
   endif;
 }
+// add_action('customize_preview_init', 'ezpzconsultations_customize_preview_init');
+// function ezpzconsultations_customize_preview_init($wp_customize) {
+//   // Enqueue your JavaScript file for customizer preview
+//   wp_enqueue_script('ezpzconsultations-customize-preview', get_stylesheet_directory_uri() . '/js/theme.min.js', array('customize-preview', 'jquery'), null, true);
+
+//   // Get primary color value
+//   $theme_opts = ezpzconsultations_get_theme_opts(); // Assuming you have a function to get theme options
+//   $primary_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['primary_colour'] : '';
+
+//   // Pass necessary data to the JavaScript file
+//   wp_localize_script('ezpzconsultations-customize-preview', 'ezpzconsultations_customizer_data', array(
+//     'primary_colour' => $primary_colour
+//   ));
+// }
+// add_action('customize_preview_init', 'ezpzconsultations_enqueue_customizer_preview_script');
+// function ezpzconsultations_enqueue_customizer_preview_script() {
+//   wp_enqueue_script(
+//     'ezpzconsultations-customizer-preview-script', // Script handle
+//     get_stylesheet_directory_uri() . '/js/theme.min.js', // Script file path
+//     array('customize-preview', 'jquery'), // Dependencies
+//     null, // Version (null to prevent caching)
+//     true // Enqueue script in footer
+//   );
+// }
+
+
+
 
 // Master To Do List:
 // Override header.php
