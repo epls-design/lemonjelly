@@ -293,7 +293,6 @@ function ezpzconsultations_add_custom_css() {
 
 
 
-
 // Master To Do List:
 // Override header.php
 // Add custom blocks
