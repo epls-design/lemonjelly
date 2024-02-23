@@ -3,11 +3,51 @@
     "title": "Global Fonts",
     "fields": [
         {
-            "key": "field_65d616d0e6bde",
-            "label": "Primary",
-            "name": "font_primary",
+            "key": "field_65d616d0e7342",
+            "label": "Primary Import Font Family",
+            "name": "primary_import_font_family",
             "aria-label": "",
-            "type": "group",
+            "type": "text",
+            "instructions": "Please add the @import url. For example: https:\/\/fonts.googleapis.com\/css2?family=Open+Sans&display=swap",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_65d8c34ae7d6d",
+            "label": "Primary Font Family",
+            "name": "primary_font_family",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Please copy the font family name",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_65d616d0e7347",
+            "label": "Primary Font Weight",
+            "name": "weight_primary",
+            "aria-label": "",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -16,69 +56,24 @@
                 "class": "",
                 "id": ""
             },
-            "layout": "block",
-            "sub_fields": [
-                {
-                    "key": "field_65d616d0e7342",
-                    "label": "Family",
-                    "name": "family_primary",
-                    "aria-label": "",
-                    "type": "Typography",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_properties": [
-                        "font_family"
-                    ],
-                    "required_properties": "",
-                    "font_size": 15,
-                    "font_family": "Arial, Helvetica, sans-serif",
-                    "font_weight": 400,
-                    "font_style": "normal",
-                    "font_variant": "normal",
-                    "font_stretch": "normal",
-                    "line_height": "",
-                    "letter_spacing": 0,
-                    "text_align": "left",
-                    "text_color": "#000",
-                    "text_decoration": "none",
-                    "text_transform": "none"
-                },
-                {
-                    "key": "field_65d616d0e7347",
-                    "label": "Weight",
-                    "name": "weight_primary",
-                    "aria-label": "",
-                    "type": "select",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "300": "300 (Light)",
-                        "400": "400 (Normal)",
-                        "500": "500 (Medium)",
-                        "600": "600 (Semi Bold)",
-                        "700": "700 (Bold)"
-                    },
-                    "default_value": 400,
-                    "return_format": "value",
-                    "multiple": 0,
-                    "allow_null": 0,
-                    "ui": 0,
-                    "ajax": 0,
-                    "placeholder": ""
-                }
-            ]
+            "choices": {
+                "100": "Thin (100)",
+                "200": "Extra Light (200)",
+                "300": "Light (300)",
+                "400": "Regular (400)",
+                "500": "Medium (500)",
+                "600": "Semi-Bold (600)",
+                "700": "Bold (700)",
+                "800": "Extra Bold (800)",
+                "900": "Black (900)"
+            },
+            "default_value": 400,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
         },
         {
             "key": "field_65d616d0e6bef",
@@ -155,14 +150,18 @@
                         "id": ""
                     },
                     "choices": {
-                        "300": "300 (Light)",
-                        "400": "400 (Normal)",
-                        "500": "500 (Medium)",
-                        "600": "600 (Semi Bold)",
-                        "700": "700 (Bold)"
+                        "100": "Thin (100)",
+                        "200": "Extra Light (200)",
+                        "300": "Light (300)",
+                        "400": "Regular (400)",
+                        "500": "Medium (500)",
+                        "600": "Semi-Bold (600)",
+                        "700": "Bold (700)",
+                        "800": "Extra Bold (800)",
+                        "900": "Black (900)"
                     },
                     "default_value": 400,
-                    "return_format": "",
+                    "return_format": "value",
                     "multiple": 0,
                     "allow_null": 0,
                     "ui": 0,
@@ -246,14 +245,18 @@
                         "id": ""
                     },
                     "choices": {
-                        "300": "300 (Light)",
-                        "400": "400 (Normal)",
-                        "500": "500 (Medium)",
-                        "600": "600 (Semi Bold)",
-                        "700": "700 (Bold)"
+                        "100": "Thin (100)",
+                        "200": "Extra Light (200)",
+                        "300": "Light (300)",
+                        "400": "Regular (400)",
+                        "500": "Medium (500)",
+                        "600": "Semi-Bold (600)",
+                        "700": "Bold (700)",
+                        "800": "Extra Bold (800)",
+                        "900": "Black (900)"
                     },
                     "default_value": 400,
-                    "return_format": "",
+                    "return_format": "value",
                     "multiple": 0,
                     "allow_null": 0,
                     "ui": 0,
@@ -337,11 +340,15 @@
                         "id": ""
                     },
                     "choices": {
-                        "300": "300 (Light)",
-                        "400": "400 (Normal)",
-                        "500": "500 (Medium)",
-                        "600": "600 (Semi Bold)",
-                        "700": "700 (Bold)"
+                        "100": "Thin (100)",
+                        "200": "Extra Light (200)",
+                        "300": "Light (300)",
+                        "400": "Regular (400)",
+                        "500": "Medium (500)",
+                        "600": "Semi-Bold (600)",
+                        "700": "Bold (700)",
+                        "800": "Extra Bold (800)",
+                        "900": "Black (900)"
                     },
                     "default_value": 400,
                     "return_format": "value",
@@ -428,11 +435,15 @@
                         "id": ""
                     },
                     "choices": {
-                        "300": "300 (Light)",
-                        "400": "400 (Normal)",
-                        "500": "500 (Medium)",
-                        "600": "600 (Semi Bold)",
-                        "700": "700 (Bold)"
+                        "100": "Thin (100)",
+                        "200": "Extra Light (200)",
+                        "300": "Light (300)",
+                        "400": "Regular (400)",
+                        "500": "Medium (500)",
+                        "600": "Semi-Bold (600)",
+                        "700": "Bold (700)",
+                        "800": "Extra Bold (800)",
+                        "900": "Black (900)"
                     },
                     "default_value": 400,
                     "return_format": "value",
@@ -463,5 +474,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1708601640
+    "modified": 1708706619
 }

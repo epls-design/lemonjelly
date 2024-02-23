@@ -191,9 +191,6 @@ function ezpzconsultations_save_theme_settings_to_json($post_id) {
         $theme_json = json_decode($theme_json, true);
 
 
-
-
-
         if (isset($opts['colors'])) {
           $palette = [];
           foreach ($opts['colors'] as $key => $data) {
@@ -224,21 +221,33 @@ function ezpzconsultations_add_custom_css() {
   $theme_opts = ezpzconsultations_get_theme_opts();
 
   if (!empty($theme_opts)) :
-
+    var_dump($theme_opts['buttons']['button_primary_background_colour']);
     echo "<pre>";
     var_dump($theme_opts);
     echo "</pre>";
 
-    $global_font_family = get_typography_field('font_primary_family_primary', 'font_family', null, false);
+    $global_font_family = $theme_opts['globaltypography']['primary_font_family'];
 
 ?>
-
     <style type="text/css">
+      /* Global Typography */
+      @import url('<?php echo $theme_opts['globaltypography']['primary_import_font_family']; ?>');
+
       :root {
-        /* Global Colours */
-        --color-primary-500: <?php echo $theme_opts['globalcolors']['primary_colour']; ?>;
-        --color-secondary-500: <?php echo $theme_opts['globalcolors']['secondary_colour']; ?>;
         --font-primary: <?php echo $global_font_family; ?>;
+
+      }
+
+      h1 {
+        color: <?php echo $theme_opts['globaltypography']['font_h1_colour_h1']; ?>;
+        font-family: <?php echo $theme_opts['globaltypography']['font_h1']; ?>;
+        font-weight: <?php echo $theme_opts['globaltypography']['font_h1_weight_h1']; ?>;
+      }
+
+      /* Global Colours */
+      :root {
+        --color-primary-500: <?php echo $theme_opts['globalcolors']['primary_colour']; ?>;
+        --color-secondary-500: <?php echo $theme_opts['globalcolors']['secondary_colour']; ?>
       }
 
       body {
@@ -251,15 +260,28 @@ function ezpzconsultations_add_custom_css() {
         color: <?php echo $theme_opts['globalcolors']['accent_colour']; ?>
       }
 
-      /* Global Typography */
-      body {
-        font-weight: 600;
+
+      /* Buttons */
+
+      /* Primary Button */
+      .button,
+      [type=button],
+      [type=reset],
+      [type=submit],
+      a.button,
+      button {
+        --button-color-theme: <?php echo $theme_opts['buttons']['button_primary_background_colour']; ?>;
+        --button-color-text: <?php echo $theme_opts['buttons']['button_primary_text_color']; ?>;
+        --button-hover-color-theme: <?php echo $theme_opts['buttons']['button_primary_background_colour']; ?>;
+
       }
 
-      h1 {
-        color: <?php echo $theme_opts['globaltypography']['font_h1_colour_h1']; ?>;
-        font-family: <?php echo $theme_opts['globaltypography']['font_h1']; ?>;
-        font-weight: <?php echo $theme_opts['globaltypography']['font_h1_weight_h1']; ?>;
+
+      .button.secondary,
+      a.button.secondary {
+        --button-color-theme: <?php echo $theme_opts['buttons']['button_secondary_background_colour']; ?>;
+        --button-color-text: <?php echo $theme_opts['buttons']['button_secondary_text_colour']; ?>;
+        --button-hover-color-theme: <?php echo $theme_opts['buttons']['button_secondary_background_colour']; ?>;
       }
     </style>
 <?php

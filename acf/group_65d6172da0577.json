@@ -35,35 +35,9 @@
                     "layout": "block",
                     "sub_fields": [
                         {
-                            "key": "field_65d6172da2e44",
-                            "label": "Family",
-                            "name": "button_primary_family",
-                            "aria-label": "",
-                            "type": "select",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "choices": {
-                                "arial": "Arial",
-                                "sans-serif": "Sans Serif"
-                            },
-                            "default_value": false,
-                            "return_format": "value",
-                            "multiple": 0,
-                            "allow_null": 0,
-                            "ui": 0,
-                            "ajax": 0,
-                            "placeholder": ""
-                        },
-                        {
                             "key": "field_65d617ed47487",
                             "label": "Colour",
-                            "name": "button_primary_background_colour",
+                            "name": "background_colour",
                             "aria-label": "",
                             "type": "color_picker",
                             "instructions": "",
@@ -81,7 +55,7 @@
                         {
                             "key": "field_65d617c547486",
                             "label": "Text Colour",
-                            "name": "button_primary_text_color",
+                            "name": "text_color",
                             "aria-label": "",
                             "type": "color_picker",
                             "instructions": "",
@@ -94,12 +68,12 @@
                             },
                             "default_value": "",
                             "enable_opacity": 0,
-                            "return_format": ""
+                            "return_format": "string"
                         },
                         {
                             "key": "field_65d618c047488",
                             "label": "Border Radius",
-                            "name": "button_primary_border_radius",
+                            "name": "border_radius",
                             "aria-label": "",
                             "type": "number",
                             "instructions": "",
@@ -137,35 +111,9 @@
                     "layout": "block",
                     "sub_fields": [
                         {
-                            "key": "field_65d6190e4748a",
-                            "label": "Family",
-                            "name": "button_secondary_family",
-                            "aria-label": "",
-                            "type": "select",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "choices": {
-                                "arial": "Arial",
-                                "sans-serif": "Sans Serif"
-                            },
-                            "default_value": false,
-                            "return_format": "value",
-                            "multiple": 0,
-                            "allow_null": 0,
-                            "ui": 0,
-                            "ajax": 0,
-                            "placeholder": ""
-                        },
-                        {
                             "key": "field_65d6190e4748b",
                             "label": "Colour",
-                            "name": "button_secondary_background_colour",
+                            "name": "background_colour",
                             "aria-label": "",
                             "type": "color_picker",
                             "instructions": "",
@@ -183,7 +131,7 @@
                         {
                             "key": "field_65d6190e4748c",
                             "label": "Text Colour",
-                            "name": "button_secondary_text_color",
+                            "name": "text_colour",
                             "aria-label": "",
                             "type": "color_picker",
                             "instructions": "",
@@ -201,7 +149,7 @@
                         {
                             "key": "field_65d6190e4748d",
                             "label": "Border Radius",
-                            "name": "button_secondary_border_radius",
+                            "name": "border_radius",
                             "aria-label": "",
                             "type": "number",
                             "instructions": "",
@@ -243,5 +191,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1708530311
+    "modified": 1708708702
 }
