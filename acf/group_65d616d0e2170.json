@@ -1,6 +1,6 @@
 {
     "key": "group_65d616d0e2170",
-    "title": "Global Fonts",
+    "title": "Global Typography",
     "fields": [
         {
             "key": "field_65d616d0e7342",
@@ -43,9 +43,62 @@
             "append": ""
         },
         {
+            "key": "field_65dcba6f90c30",
+            "label": "Secondary Font Family",
+            "name": "secondary_font_family",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Please copy the font family name",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_65d616d0e7347",
             "label": "Primary Font Weight",
             "name": "weight_primary",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "100": "Thin (100)",
+                "200": "Extra Light (200)",
+                "300": "Light (300)",
+                "400": "Regular (400)",
+                "500": "Medium (500)",
+                "600": "Semi-Bold (600)",
+                "700": "Bold (700)",
+                "800": "Extra Bold (800)",
+                "900": "Black (900)"
+            },
+            "default_value": 400,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_65dcba99075d2",
+            "label": "Secondary Font Weight",
+            "name": "weight_secondary",
             "aria-label": "",
             "type": "select",
             "instructions": "",
@@ -117,18 +170,31 @@
                     "type": "select",
                     "instructions": "",
                     "required": 0,
-                    "conditional_logic": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_65d8c34ae7d6d",
+                                "operator": "!=empty"
+                            }
+                        ],
+                        [
+                            {
+                                "field": "field_65dcba6f90c30",
+                                "operator": "!=empty"
+                            }
+                        ]
+                    ],
                     "wrapper": {
                         "width": "",
                         "class": "",
                         "id": ""
                     },
                     "choices": {
-                        "arial": "Arial",
-                        "sans-serif": "Sans Serif"
+                        "primary_font": "Primary",
+                        "secondary_font Secondary": "secondary_font Secondary"
                     },
                     "default_value": false,
-                    "return_format": "",
+                    "return_format": "value",
                     "multiple": 0,
                     "allow_null": 0,
                     "ui": 0,
@@ -474,5 +540,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1708706619
+    "modified": 1708968815
 }

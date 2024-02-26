@@ -98,15 +98,19 @@ function get_options_by_prefix($prefix) {
 
   if (!empty($options)) {
     foreach ($options as $data) {
-      $name = str_replace($prefix . '_', '', $data->option_name);
-      $returned_data[$name] = $data->option_value;
+      // Extract the option name without the prefix
+      $name_without_prefix = str_replace($prefix . '_', '', $data->option_name);
+
+      // Check if an option with a more specific prefix exists
+      if (!isset($returned_data[$name_without_prefix])) {
+        // If not, add the current option to the returned data
+        $returned_data[$name_without_prefix] = $data->option_value;
+      }
     }
   }
 
-  return  $returned_data;
+  return $returned_data;
 }
-
-
 
 /**
  * Sync ACF Json specific to the child theme into the child theme directory /acf
@@ -145,7 +149,8 @@ function ezpzconsultations_get_theme_opts() {
     'globalcolors',
     'globaltypography',
     'branding',
-    'buttons'
+    'buttons',
+    'customcss'
   ];
 
   foreach ($prefixes as $prefix) {
@@ -221,46 +226,89 @@ function ezpzconsultations_add_custom_css() {
   $theme_opts = ezpzconsultations_get_theme_opts();
 
   if (!empty($theme_opts)) :
-    var_dump($theme_opts['buttons']['button_primary_background_colour']);
+    // Example usage with theme options
+    $primaryColor = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['primary_colour'] : "#ff3c74";
+    $secondaryColor = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['secondary_colour'] : "#ffa0cd";
+
+
+    //if ($theme_opts['branding']["main_logo"]) echo $theme_opts['branding']["main_logo"];
     echo "<pre>";
     var_dump($theme_opts);
     echo "</pre>";
 
-    $global_font_family = $theme_opts['globaltypography']['primary_font_family'];
+
+    $custom_css = $theme_opts['customcss']["custom_css"];
+
+    $primary_font_family = $theme_opts['globaltypography']['primary_font_family'];
+
+    $secondary_font_family = $theme_opts['globaltypography']['secondary_font_family'];
+
+    //Generate colours
+    include('color_functions.php');
+
+
 
 ?>
+
+    ?>
     <style type="text/css">
+      /* Custom CSS from theme designer */
+      <?php if ($custom_css) echo $custom_css; ?>
       /* Global Typography */
       @import url('<?php echo $theme_opts['globaltypography']['primary_import_font_family']; ?>');
 
       :root {
-        --font-primary: <?php echo $global_font_family; ?>;
+        --font-primary: <?php echo !empty($primary_font_family) ? $primary_font_family : 'var(--font-primary)'; ?>;
+        --font-secondary: <?php echo !empty($secondary_font_family) ? $secondary_font_family : 'var(--font-primary)'; ?>;
 
       }
 
       h1 {
-        color: <?php echo $theme_opts['globaltypography']['font_h1_colour_h1']; ?>;
-        font-family: <?php echo $theme_opts['globaltypography']['font_h1']; ?>;
-        font-weight: <?php echo $theme_opts['globaltypography']['font_h1_weight_h1']; ?>;
+        <?php if (!empty($theme_opts['globaltypography']['font_h1_colour_h1'])) : ?>color: <?php echo $theme_opts['globaltypography']['font_h1_colour_h1']; ?> !important;
+        <?php endif; ?><?php if (!empty($theme_opts['globaltypography']['font_h1'])) : ?>font-family: <?php echo $theme_opts['globaltypography']['font_h1']; ?>;
+
+
+
+        <?php endif; ?><?php if (!empty($theme_opts['globaltypography']['font_h1_weight_h1'])) : ?>font-weight: <?php echo $theme_opts['globaltypography']['font_h1_weight_h1']; ?>;
+        <?php endif; ?>
       }
+
 
       /* Global Colours */
-      :root {
-        --color-primary-500: <?php echo $theme_opts['globalcolors']['primary_colour']; ?>;
-        --color-secondary-500: <?php echo $theme_opts['globalcolors']['secondary_colour']; ?>
+      <?php
+
+
+      // Generate color shades
+
+      // Output CSS
+
+
+      $primaryPalette = makeColorPalette($primaryColor);
+      $secondaryPalette = makeColorPalette($secondaryColor);
+
+      echo ":root {\n";
+      foreach ($primaryPalette as $key => $value) {
+        echo "    --color-primary-$key: $value;\n";
+      }
+      foreach ($secondaryPalette as $key => $value) {
+        echo "    --color-secondary-$key: $value;\n";
+      }
+      echo "}\n";
+
+      ?>body {
+        <?php if (!empty($theme_opts['globalcolors']['text_colour'])) : ?>--color-text: <?php echo $theme_opts['globalcolors']['text_colour']; ?>;
+        <?php endif; ?><?php if (!empty($theme_opts['globalcolors']['accent_colour'])) : ?>accent-color: <?php echo $theme_opts['globalcolors']['accent_colour']; ?> <?php endif; ?>
       }
 
-      body {
-        --color-text: <?php echo $theme_opts['globalcolors']['text_colour']; ?>;
-        accent-color: <?php echo $theme_opts['globalcolors']['accent_colour']; ?>
-      }
 
-      a,
-      a:link {
+
+      <?php if (!empty($theme_opts['globalcolors']['accent_colour'])) : ?>a,
+
+      <?php if (!empty($theme_opts['globalcolors']['text_accent_colourcolour'])) : ?>a:link {
         color: <?php echo $theme_opts['globalcolors']['accent_colour']; ?>
       }
 
-
+      <?php endif; ?><?php endif; ?>
       /* Buttons */
 
       /* Primary Button */
@@ -270,21 +318,31 @@ function ezpzconsultations_add_custom_css() {
       [type=submit],
       a.button,
       button {
-        --button-color-theme: <?php echo $theme_opts['buttons']['button_primary_background_colour']; ?>;
-        --button-color-text: <?php echo $theme_opts['buttons']['button_primary_text_color']; ?>;
-        --button-hover-color-theme: <?php echo $theme_opts['buttons']['button_primary_background_colour']; ?>;
 
+        <?php if (!empty($theme_opts['buttons']['button_primary_background_colour'])) : ?>--button-color-theme: <?php echo $theme_opts['buttons']['button_primary_background_colour']; ?>;
+        <?php endif; ?><?php if (!empty($theme_opts['buttons']['button_primary_text_color'])) : ?>--button-color-text: <?php echo $theme_opts['buttons']['button_primary_text_color']; ?>;
+        color: <?php echo $theme_opts['buttons']['button_primary_text_color']; ?>;
+        <?php endif; ?><?php if (!empty($theme_opts['buttons']['button_primary_background_colour'])) : ?>--button-hover-color-theme: <?php echo $theme_opts['buttons']['button_primary_background_colour']; ?>;
+        <?php endif; ?><?php if (!empty($theme_opts['buttons']['button_primary_border_radius'])) : ?>border-radius: <?php echo $theme_opts['buttons']['button_primary_border_radius']; ?>px;
+        <?php endif; ?>
       }
+
 
 
       .button.secondary,
       a.button.secondary {
-        --button-color-theme: <?php echo $theme_opts['buttons']['button_secondary_background_colour']; ?>;
-        --button-color-text: <?php echo $theme_opts['buttons']['button_secondary_text_colour']; ?>;
-        --button-hover-color-theme: <?php echo $theme_opts['buttons']['button_secondary_background_colour']; ?>;
+        <?php if (!empty($theme_opts['buttons']['button_secondary_background_colour'])) : ?>--button-color-theme: <?php echo $theme_opts['buttons']['button_secondary_background_colour']; ?>;
+        <?php endif; ?><?php if (!empty($theme_opts['buttons']['button_secondary_background_colour'])) : ?>--button-color-text: <?php echo $theme_opts['buttons']['button_secondary_text_colour']; ?>;
+        color: <?php echo $theme_opts['buttons']['button_secondary_text_colour']; ?>;
+        <?php endif; ?><?php
+                        if (!empty($theme_opts['buttons']['button_primary_border_radius'])) {
+                          echo 'border-radius: ' . $theme_opts['buttons']['button_primary_border_radius'] . 'px;';
+                        }
+                        ?>
       }
     </style>
 <?php
+
 
   endif;
 }

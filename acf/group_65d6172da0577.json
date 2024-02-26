@@ -3,9 +3,9 @@
     "title": "Buttons",
     "fields": [
         {
-            "key": "field_65d6172da1ed4",
-            "label": "Buttons",
-            "name": "buttons",
+            "key": "field_65d6172da263a",
+            "label": "Primary",
+            "name": "button_primary",
             "aria-label": "",
             "type": "group",
             "instructions": "",
@@ -19,11 +19,11 @@
             "layout": "block",
             "sub_fields": [
                 {
-                    "key": "field_65d6172da263a",
-                    "label": "Primary",
-                    "name": "button_primary",
+                    "key": "field_65d617ed47487",
+                    "label": "Colour",
+                    "name": "background_colour",
                     "aria-label": "",
-                    "type": "group",
+                    "type": "color_picker",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -32,74 +32,16 @@
                         "class": "",
                         "id": ""
                     },
-                    "layout": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_65d617ed47487",
-                            "label": "Colour",
-                            "name": "background_colour",
-                            "aria-label": "",
-                            "type": "color_picker",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "enable_opacity": 0,
-                            "return_format": "string"
-                        },
-                        {
-                            "key": "field_65d617c547486",
-                            "label": "Text Colour",
-                            "name": "text_color",
-                            "aria-label": "",
-                            "type": "color_picker",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "enable_opacity": 0,
-                            "return_format": "string"
-                        },
-                        {
-                            "key": "field_65d618c047488",
-                            "label": "Border Radius",
-                            "name": "border_radius",
-                            "aria-label": "",
-                            "type": "number",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "min": "",
-                            "max": "",
-                            "placeholder": "",
-                            "step": "",
-                            "prepend": "",
-                            "append": ""
-                        }
-                    ]
+                    "default_value": "",
+                    "enable_opacity": 0,
+                    "return_format": "string"
                 },
                 {
-                    "key": "field_65d6190e47489",
-                    "label": "Secondary",
-                    "name": "button_secondary",
+                    "key": "field_65d617c547486",
+                    "label": "Text Colour",
+                    "name": "text_color",
                     "aria-label": "",
-                    "type": "group",
+                    "type": "color_picker",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -108,67 +50,107 @@
                         "class": "",
                         "id": ""
                     },
-                    "layout": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_65d6190e4748b",
-                            "label": "Colour",
-                            "name": "background_colour",
-                            "aria-label": "",
-                            "type": "color_picker",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "enable_opacity": 0,
-                            "return_format": "string"
-                        },
-                        {
-                            "key": "field_65d6190e4748c",
-                            "label": "Text Colour",
-                            "name": "text_colour",
-                            "aria-label": "",
-                            "type": "color_picker",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "enable_opacity": 0,
-                            "return_format": "string"
-                        },
-                        {
-                            "key": "field_65d6190e4748d",
-                            "label": "Border Radius",
-                            "name": "border_radius",
-                            "aria-label": "",
-                            "type": "number",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "min": "",
-                            "max": "",
-                            "placeholder": "",
-                            "step": "",
-                            "prepend": "",
-                            "append": ""
-                        }
-                    ]
+                    "default_value": "",
+                    "enable_opacity": 0,
+                    "return_format": "string"
+                },
+                {
+                    "key": "field_65d618c047488",
+                    "label": "Border Radius",
+                    "name": "border_radius",
+                    "aria-label": "",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "min": "",
+                    "max": "",
+                    "placeholder": "",
+                    "step": "",
+                    "prepend": "",
+                    "append": ""
+                }
+            ]
+        },
+        {
+            "key": "field_65d6190e47489",
+            "label": "Secondary",
+            "name": "button_secondary",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_65d6190e4748b",
+                    "label": "Colour",
+                    "name": "background_colour",
+                    "aria-label": "",
+                    "type": "color_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "enable_opacity": 0,
+                    "return_format": "string"
+                },
+                {
+                    "key": "field_65d6190e4748c",
+                    "label": "Text Colour",
+                    "name": "text_colour",
+                    "aria-label": "",
+                    "type": "color_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "enable_opacity": 0,
+                    "return_format": "string"
+                },
+                {
+                    "key": "field_65d6190e4748d",
+                    "label": "Border Radius",
+                    "name": "border_radius",
+                    "aria-label": "",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "min": "",
+                    "max": "",
+                    "placeholder": "",
+                    "step": "",
+                    "prepend": "",
+                    "append": ""
                 }
             ]
         }
@@ -191,5 +173,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1708708702
+    "modified": 1708946149
 }
