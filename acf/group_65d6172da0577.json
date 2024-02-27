@@ -39,7 +39,7 @@
                 {
                     "key": "field_65d617c547486",
                     "label": "Text Colour",
-                    "name": "text_color",
+                    "name": "text_colour",
                     "aria-label": "",
                     "type": "color_picker",
                     "instructions": "",
@@ -173,5 +173,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1708946149
+    "modified": 1709036259
 }

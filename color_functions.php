@@ -24,8 +24,8 @@ function lighten($color, $amount) {
 function makeColorPalette($color) {
   $palette = array();
   // Adjust lightness for each shade
-  $palette['25'] = lighten($color, 100);
-  $palette['50'] = lighten($color, 75);
+  $palette['25'] = lighten($color, 120);
+  $palette['50'] = lighten($color, 90);
   $palette['100'] = lighten($color, 60);
   $palette['200'] = lighten($color, 45);
   $palette['300'] = lighten($color, 30);

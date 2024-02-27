@@ -57,6 +57,24 @@
             "return_format": "string"
         },
         {
+            "key": "field_65ddb310b358a",
+            "label": "Headings Preferred Colour",
+            "name": "headings_preferred_colour",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "enable_opacity": 0,
+            "return_format": "string"
+        },
+        {
             "key": "field_65d6168f46396",
             "label": "Accent\/Link Colour",
             "name": "accent_colour",
@@ -93,5 +111,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1708535224
+    "modified": 1709028205
 }

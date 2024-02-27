@@ -185,24 +185,67 @@ function ezpzconsultations_create_theme_json() {
 add_action('acf/save_post', 'ezpzconsultations_save_theme_settings_to_json', 20);
 function ezpzconsultations_save_theme_settings_to_json($post_id) {
 
-  if ($post_id == 'options') {
-    $screen = get_current_screen();
-    if (!empty($screen) && $screen->id == 'toplevel_page_theme-designer') {
+  // Retrieve theme options
+  $theme_opts = ezpzconsultations_get_theme_opts();
 
+  // CUSTOMISER WONT VAR DUMP, SO SEE IF YOU CAN GET IT TO DEBUG.LOG THE DATA INSTEAD
+
+  $primaryColor = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['primary_colour'] : "#ff3c74";
+  $secondaryColor = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['secondary_colour'] : "#ffa0cd";
+
+  include_once 'color_functions.php';
+  $primaryPalette = makeColorPalette($primaryColor);
+  $secondaryPalette = makeColorPalette($secondaryColor);
+
+
+  $primary_color_500 = $primaryPalette['500'];
+  $secondary_color_500 = $secondaryPalette['500'];
+
+  error_log($primary_color_500);
+  error_log($secondary_color_500);
+  error_log($post_id);
+  if ($post_id == 'globalcolors') {
+    // $screen = get_current_screen();
+    // error_log("current screen" . $screen);
+    // if (!empty($screen) && $screen->id == 'toplevel_page_theme-designer') {
+    if (is_customize_preview()) {
       // See if theme.json exists
       $theme_json = get_stylesheet_directory() . '/theme.json';
       if (file_exists($theme_json)) {
         $theme_json = file_get_contents($theme_json);
         $theme_json = json_decode($theme_json, true);
 
+        error_log("anything");
 
-        if (isset($opts['colors'])) {
+
+        // TODO: FOR PRIMARY AND SECONDARY GENERATE;
+        // primary-500
+        // primary-100
+        // sec
+        // Also force a white option - and black?
+        /**
+         * .block.bg-primary-500
+         * - You need to get your primary 500 value
+         * - Get the default font colour whoch will be whatever neutral, 900 resolves to
+         * compare against the bg-primary-500 colour, and against white. To see what has the best contrast afgainst the backgrpi8md
+         */
+
+        $colors = array(
+          "primary-500" => $primary_color_500,
+          "secondary-500" => $secondary_color_500,
+          "white" => '#ffffff',
+          "black" => "#000000"
+        );
+
+        if (isset($colors)) {
           $palette = [];
-          foreach ($opts['colors'] as $key => $data) {
+          foreach ($colors as $key => $color) {
+            $name_parts = explode("-", $key);
+            $name = $name_parts[0];
             $palette[] = array(
               "slug" => $key,
-              "color" => $data['value'],
-              "name" => $data['name'],
+              "color" => $color,
+              "name" => $name,
             );
           }
           // Set the new palette
@@ -217,6 +260,24 @@ function ezpzconsultations_save_theme_settings_to_json($post_id) {
   }
 }
 
+//Get font family function
+function getFontFamily($font_key, $theme_opts) {
+  $font_family = '';
+
+  if (!empty($theme_opts['globaltypography'][$font_key])) {
+    switch ($theme_opts['globaltypography'][$font_key]) {
+      case 'primary_font':
+        $font_family = "var(--font-primary)";
+        break;
+      case 'secondary_font':
+        $font_family = "var(--font-secondary)";
+        break;
+    }
+  }
+
+  return $font_family;
+}
+
 /**
  * Outputs custom CSS in the header based on the ACF options
  */
@@ -227,30 +288,44 @@ function ezpzconsultations_add_custom_css() {
 
   if (!empty($theme_opts)) :
     // Example usage with theme options
+
+    //Global Colours
     $primaryColor = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['primary_colour'] : "#ff3c74";
     $secondaryColor = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['secondary_colour'] : "#ffa0cd";
+    $color_headings_preferred = isset($theme_opts['globalcolors']['headings_preferred_colour']) ? $theme_opts['globalcolors']['headings_preferred_colour'] : 'var(--color-headings-preferred)';
+    $text_colour = isset($theme_opts['globalcolors']['text_colour']) ? $theme_opts['globalcolors']['text_colour'] : 'var(--text-color)';
+    $accent_colour = isset($theme_opts['globalcolors']['accent_colour']) ? $theme_opts['globalcolors']['accent_colour'] : 'var(--color-primary-500)';
+
+    var_dump($accent_colour);
+
+    $custom_css = isset($theme_opts['customcss']['custom_css']) ? $theme_opts['customcss']['custom_css'] : "";
+
+    //Typography / Fonts / Heading Colours
+    $primary_font_family = isset($theme_opts['globaltypography']['primary_font_family']) ? $theme_opts['globaltypography']['primary_font_family'] : 'var(--font-primary)';
+    $secondary_font_family = isset($theme_opts['globaltypography']['secondary_font_family']) ? $theme_opts['globaltypography']['secondary_font_family'] : 'var(--font-primary)';
+
+
+    //Buttons
+    $button_primary_background_colour = isset($theme_opts['buttons']['button_primary_background_colour']) ? $theme_opts['buttons']['button_primary_background_colour'] : 'var(--color-primary-500);';
+    $button_primary_text_colour = isset($theme_opts['buttons']['button_primary_text_colour']) ? $theme_opts['buttons']['button_primary_text_colour'] : 'var(--color-black);';
+    $button_primary_border_radius = isset($theme_opts['buttons']['button_primary_border_radius']) ? $theme_opts['buttons']['button_primary_border_radius'] . 'px' : '.5rem';
+
+    $button_secondary_background_colour = isset($theme_opts['buttons']['button_secondary_background_colour']) ? $theme_opts['buttons']['button_secondary_background_colour'] : 'var(--color-secondary-500);';
+    $button_secondary_text_colour = isset($theme_opts['buttons']['button_secondary_text_colour']) ? $theme_opts['buttons']['button_secondary_text_colour'] : 'var(--color-black);';
+    $button_secondary_border_radius = isset($theme_opts['buttons']['button_secondary_border_radius']) ? $theme_opts['buttons']['button_secondary_border_radius'] . 'px' : '.5rem';
 
 
     //if ($theme_opts['branding']["main_logo"]) echo $theme_opts['branding']["main_logo"];
-    echo "<pre>";
-    var_dump($theme_opts);
-    echo "</pre>";
+    // echo "<pre>";
+    // var_dump($theme_opts);
+    // echo "</pre>";
 
-
-    $custom_css = $theme_opts['customcss']["custom_css"];
-
-    $primary_font_family = $theme_opts['globaltypography']['primary_font_family'];
-
-    $secondary_font_family = $theme_opts['globaltypography']['secondary_font_family'];
-
+    var_dump($color_headings_preferred);
     //Generate colours
     include('color_functions.php');
 
-
-
 ?>
 
-    ?>
     <style type="text/css">
       /* Custom CSS from theme designer */
       <?php if ($custom_css) echo $custom_css; ?>
@@ -258,33 +333,57 @@ function ezpzconsultations_add_custom_css() {
       @import url('<?php echo $theme_opts['globaltypography']['primary_import_font_family']; ?>');
 
       :root {
-        --font-primary: <?php echo !empty($primary_font_family) ? $primary_font_family : 'var(--font-primary)'; ?>;
-        --font-secondary: <?php echo !empty($secondary_font_family) ? $secondary_font_family : 'var(--font-primary)'; ?>;
+        --font-primary: <?php echo $primary_font_family ?>;
+        --font-secondary: <?php echo $secondary_font_family ?>;
 
+        --color-headings-preferred: <?php echo $color_headings_preferred ?>;
       }
 
-      h1 {
-        <?php if (!empty($theme_opts['globaltypography']['font_h1_colour_h1'])) : ?>color: <?php echo $theme_opts['globaltypography']['font_h1_colour_h1']; ?> !important;
-        <?php endif; ?><?php if (!empty($theme_opts['globaltypography']['font_h1'])) : ?>font-family: <?php echo $theme_opts['globaltypography']['font_h1']; ?>;
-
-
-
-        <?php endif; ?><?php if (!empty($theme_opts['globaltypography']['font_h1_weight_h1'])) : ?>font-weight: <?php echo $theme_opts['globaltypography']['font_h1_weight_h1']; ?>;
-        <?php endif; ?>
-      }
-
-
-      /* Global Colours */
+      /* Headings - Global Typography */
       <?php
 
+      // Define an array of headings and their corresponding CSS properties
+      $headings = [
+        'h1' => 'font_h1_colour_h1',
+        'h2' => 'font_h2_colour_h2',
+        'h3' => 'font_h3_colour_h3',
+        'h4' => 'font_h4_colour_h4'
+      ];
 
-      // Generate color shades
+      // Iterate through headings to generate CSS for color
+      foreach ($headings as $tag => $colorKey) {
+        $color = isset($theme_opts['globaltypography'][$colorKey]) && $theme_opts['globaltypography'][$colorKey] !== '' ? $theme_opts['globaltypography'][$colorKey] : 'var(--color-headings-preferred)';
+        echo "$tag {
+            color: $color !important;
+        }";
+      }
 
-      // Output CSS
+      // Define an array of font families for headings
+      $fontFamilies = [
+        'h1' => 'font_h1_family_h1',
+        'h2' => 'font_h2_family_h2',
+        'h3' => 'font_h3_family_h3',
+        'h4' => 'font_h4_family_h4'
+      ];
 
+      // Iterate through headings to generate CSS for font family
+      foreach ($fontFamilies as $tag => $fontKey) {
+        $fontFamily = getFontFamily($fontKey, $theme_opts);
+        if ($fontFamily) {
+          echo "$tag {
+                font-family: $fontFamily;
+            }";
+        }
+      }
 
+      ?>
+
+      /* Global Colours - Generate Colour Palette  */
+      <?php
       $primaryPalette = makeColorPalette($primaryColor);
       $secondaryPalette = makeColorPalette($secondaryColor);
+
+
 
       echo ":root {\n";
       foreach ($primaryPalette as $key => $value) {
@@ -296,49 +395,42 @@ function ezpzconsultations_add_custom_css() {
       echo "}\n";
 
       ?>body {
-        <?php if (!empty($theme_opts['globalcolors']['text_colour'])) : ?>--color-text: <?php echo $theme_opts['globalcolors']['text_colour']; ?>;
-        <?php endif; ?><?php if (!empty($theme_opts['globalcolors']['accent_colour'])) : ?>accent-color: <?php echo $theme_opts['globalcolors']['accent_colour']; ?> <?php endif; ?>
+        <?php if ($text_colour) : ?>--color-text: <?php echo $text_colour; ?>;
+
+        <?php endif; ?><?php if ($accent_colour) : ?>accent-color,
+        a,
+        a:link,
+        a:visited {
+          color: <?php echo $accent_colour; ?>;
+        }
+
+        <?php endif; ?>
       }
 
 
-
-      <?php if (!empty($theme_opts['globalcolors']['accent_colour'])) : ?>a,
-
-      <?php if (!empty($theme_opts['globalcolors']['text_accent_colourcolour'])) : ?>a:link {
-        color: <?php echo $theme_opts['globalcolors']['accent_colour']; ?>
-      }
-
-      <?php endif; ?><?php endif; ?>
       /* Buttons */
 
-      /* Primary Button */
       .button,
       [type=button],
       [type=reset],
       [type=submit],
       a.button,
       button {
-
-        <?php if (!empty($theme_opts['buttons']['button_primary_background_colour'])) : ?>--button-color-theme: <?php echo $theme_opts['buttons']['button_primary_background_colour']; ?>;
-        <?php endif; ?><?php if (!empty($theme_opts['buttons']['button_primary_text_color'])) : ?>--button-color-text: <?php echo $theme_opts['buttons']['button_primary_text_color']; ?>;
-        color: <?php echo $theme_opts['buttons']['button_primary_text_color']; ?>;
-        <?php endif; ?><?php if (!empty($theme_opts['buttons']['button_primary_background_colour'])) : ?>--button-hover-color-theme: <?php echo $theme_opts['buttons']['button_primary_background_colour']; ?>;
-        <?php endif; ?><?php if (!empty($theme_opts['buttons']['button_primary_border_radius'])) : ?>border-radius: <?php echo $theme_opts['buttons']['button_primary_border_radius']; ?>px;
+        <?php if ($button_primary_background_colour) : ?>--button-color-theme: <?php echo $button_primary_background_colour; ?>;
+        <?php endif; ?><?php if ($button_primary_text_colour) : ?>--button-color-text: <?php echo $button_primary_text_colour; ?>;
+        color: <?php echo $button_primary_text_colour; ?>;
+        <?php endif; ?><?php if ($button_primary_border_radius) : ?>border-radius: <?php echo $button_primary_border_radius; ?>;
         <?php endif; ?>
       }
 
 
-
       .button.secondary,
       a.button.secondary {
-        <?php if (!empty($theme_opts['buttons']['button_secondary_background_colour'])) : ?>--button-color-theme: <?php echo $theme_opts['buttons']['button_secondary_background_colour']; ?>;
-        <?php endif; ?><?php if (!empty($theme_opts['buttons']['button_secondary_background_colour'])) : ?>--button-color-text: <?php echo $theme_opts['buttons']['button_secondary_text_colour']; ?>;
-        color: <?php echo $theme_opts['buttons']['button_secondary_text_colour']; ?>;
-        <?php endif; ?><?php
-                        if (!empty($theme_opts['buttons']['button_primary_border_radius'])) {
-                          echo 'border-radius: ' . $theme_opts['buttons']['button_primary_border_radius'] . 'px;';
-                        }
-                        ?>
+        <?php if ($button_secondary_background_colour) : ?>--button-color-theme: <?php echo $button_secondary_background_colour; ?>;
+        <?php endif; ?><?php if ($button_secondary_text_colour) : ?>--button-color-text: <?php echo $button_secondary_text_colour; ?>;
+        color: <?php echo $button_secondary_text_colour; ?>;
+        <?php endif; ?><?php if ($button_secondary_border_radius) : ?>border-radius: <?php echo $button_secondary_border_radius; ?>;
+        <?php endif; ?>
       }
     </style>
 <?php

@@ -7,7 +7,7 @@
             "label": "Primary Import Font Family",
             "name": "primary_import_font_family",
             "aria-label": "",
-            "type": "text",
+            "type": "textarea",
             "instructions": "Please add the @import url. For example: https:\/\/fonts.googleapis.com\/css2?family=Open+Sans&display=swap",
             "required": 0,
             "conditional_logic": 0,
@@ -18,9 +18,9 @@
             },
             "default_value": "",
             "maxlength": "",
+            "rows": "",
             "placeholder": "",
-            "prepend": "",
-            "append": ""
+            "new_lines": ""
         },
         {
             "key": "field_65d8c34ae7d6d",
@@ -61,72 +61,6 @@
             "placeholder": "",
             "prepend": "",
             "append": ""
-        },
-        {
-            "key": "field_65d616d0e7347",
-            "label": "Primary Font Weight",
-            "name": "weight_primary",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "100": "Thin (100)",
-                "200": "Extra Light (200)",
-                "300": "Light (300)",
-                "400": "Regular (400)",
-                "500": "Medium (500)",
-                "600": "Semi-Bold (600)",
-                "700": "Bold (700)",
-                "800": "Extra Bold (800)",
-                "900": "Black (900)"
-            },
-            "default_value": 400,
-            "return_format": "value",
-            "multiple": 0,
-            "allow_null": 0,
-            "ui": 0,
-            "ajax": 0,
-            "placeholder": ""
-        },
-        {
-            "key": "field_65dcba99075d2",
-            "label": "Secondary Font Weight",
-            "name": "weight_secondary",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "100": "Thin (100)",
-                "200": "Extra Light (200)",
-                "300": "Light (300)",
-                "400": "Regular (400)",
-                "500": "Medium (500)",
-                "600": "Semi-Bold (600)",
-                "700": "Bold (700)",
-                "800": "Extra Bold (800)",
-                "900": "Black (900)"
-            },
-            "default_value": 400,
-            "return_format": "value",
-            "multiple": 0,
-            "allow_null": 0,
-            "ui": 0,
-            "ajax": 0,
-            "placeholder": ""
         },
         {
             "key": "field_65d616d0e6bef",
@@ -191,42 +125,9 @@
                     },
                     "choices": {
                         "primary_font": "Primary",
-                        "secondary_font Secondary": "secondary_font Secondary"
+                        "secondary_font": "Secondary"
                     },
                     "default_value": false,
-                    "return_format": "value",
-                    "multiple": 0,
-                    "allow_null": 0,
-                    "ui": 0,
-                    "ajax": 0,
-                    "placeholder": ""
-                },
-                {
-                    "key": "field_65d616d0eb38c",
-                    "label": "Weight",
-                    "name": "weight_h1",
-                    "aria-label": "",
-                    "type": "select",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "100": "Thin (100)",
-                        "200": "Extra Light (200)",
-                        "300": "Light (300)",
-                        "400": "Regular (400)",
-                        "500": "Medium (500)",
-                        "600": "Semi-Bold (600)",
-                        "700": "Bold (700)",
-                        "800": "Extra Bold (800)",
-                        "900": "Black (900)"
-                    },
-                    "default_value": 400,
                     "return_format": "value",
                     "multiple": 0,
                     "allow_null": 0,
@@ -285,43 +186,10 @@
                         "id": ""
                     },
                     "choices": {
-                        "arial": "Arial",
-                        "sans-serif": "Sans Serif"
+                        "primary_font": "Primary",
+                        "secondary_font": "Secondary"
                     },
                     "default_value": false,
-                    "return_format": "",
-                    "multiple": 0,
-                    "allow_null": 0,
-                    "ui": 0,
-                    "ajax": 0,
-                    "placeholder": ""
-                },
-                {
-                    "key": "field_65d616d0ed693",
-                    "label": "Weight",
-                    "name": "weight_h2",
-                    "aria-label": "",
-                    "type": "select",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "100": "Thin (100)",
-                        "200": "Extra Light (200)",
-                        "300": "Light (300)",
-                        "400": "Regular (400)",
-                        "500": "Medium (500)",
-                        "600": "Semi-Bold (600)",
-                        "700": "Bold (700)",
-                        "800": "Extra Bold (800)",
-                        "900": "Black (900)"
-                    },
-                    "default_value": 400,
                     "return_format": "value",
                     "multiple": 0,
                     "allow_null": 0,
@@ -380,43 +248,10 @@
                         "id": ""
                     },
                     "choices": {
-                        "arial": "Arial",
-                        "sans-serif": "Sans Serif"
+                        "primary_font": "Primary",
+                        "secondary_font": "Secondary"
                     },
                     "default_value": false,
-                    "return_format": "value",
-                    "multiple": 0,
-                    "allow_null": 0,
-                    "ui": 0,
-                    "ajax": 0,
-                    "placeholder": ""
-                },
-                {
-                    "key": "field_65d616d0ef8e8",
-                    "label": "Weight",
-                    "name": "weight_h3",
-                    "aria-label": "",
-                    "type": "select",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "100": "Thin (100)",
-                        "200": "Extra Light (200)",
-                        "300": "Light (300)",
-                        "400": "Regular (400)",
-                        "500": "Medium (500)",
-                        "600": "Semi-Bold (600)",
-                        "700": "Bold (700)",
-                        "800": "Extra Bold (800)",
-                        "900": "Black (900)"
-                    },
-                    "default_value": 400,
                     "return_format": "value",
                     "multiple": 0,
                     "allow_null": 0,
@@ -475,43 +310,10 @@
                         "id": ""
                     },
                     "choices": {
-                        "arial": "Arial",
-                        "sans-serif": "Sans Serif"
+                        "primary_font": "Primary",
+                        "secondary_font": "Secondary"
                     },
                     "default_value": false,
-                    "return_format": "value",
-                    "multiple": 0,
-                    "allow_null": 0,
-                    "ui": 0,
-                    "ajax": 0,
-                    "placeholder": ""
-                },
-                {
-                    "key": "field_65d61d45b33a5",
-                    "label": "Weight",
-                    "name": "weight_h4",
-                    "aria-label": "",
-                    "type": "select",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "100": "Thin (100)",
-                        "200": "Extra Light (200)",
-                        "300": "Light (300)",
-                        "400": "Regular (400)",
-                        "500": "Medium (500)",
-                        "600": "Semi-Bold (600)",
-                        "700": "Bold (700)",
-                        "800": "Extra Bold (800)",
-                        "900": "Black (900)"
-                    },
-                    "default_value": 400,
                     "return_format": "value",
                     "multiple": 0,
                     "allow_null": 0,
@@ -540,5 +342,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1708968815
+    "modified": 1709028912
 }
