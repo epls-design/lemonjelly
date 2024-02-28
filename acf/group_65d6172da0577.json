@@ -19,11 +19,11 @@
             "layout": "block",
             "sub_fields": [
                 {
-                    "key": "field_65d617ed47487",
-                    "label": "Colour",
-                    "name": "background_colour",
+                    "key": "field_65df24a361147",
+                    "label": "Font Weight",
+                    "name": "font_weight",
                     "aria-label": "",
-                    "type": "color_picker",
+                    "type": "select",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -32,27 +32,24 @@
                         "class": "",
                         "id": ""
                     },
-                    "default_value": "",
-                    "enable_opacity": 0,
-                    "return_format": "string"
-                },
-                {
-                    "key": "field_65d617c547486",
-                    "label": "Text Colour",
-                    "name": "text_colour",
-                    "aria-label": "",
-                    "type": "color_picker",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
+                    "choices": {
+                        "100": "Thin (100)",
+                        "200": "Extra Light (200)",
+                        "300": "Light (300)",
+                        "400": "Regular (400)",
+                        "500": "Medium (500)",
+                        "600": "Semi-Bold (600)",
+                        "700": "Bold (700)",
+                        "800": "Extra Bold (800)",
+                        "900": "Black (900)"
                     },
-                    "default_value": "",
-                    "enable_opacity": 0,
-                    "return_format": "string"
+                    "default_value": 400,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
                 },
                 {
                     "key": "field_65d618c047488",
@@ -95,11 +92,11 @@
             "layout": "block",
             "sub_fields": [
                 {
-                    "key": "field_65d6190e4748b",
-                    "label": "Colour",
-                    "name": "background_colour",
+                    "key": "field_65df24c361148",
+                    "label": "Font Weight",
+                    "name": "font_weight",
                     "aria-label": "",
-                    "type": "color_picker",
+                    "type": "select",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -108,27 +105,24 @@
                         "class": "",
                         "id": ""
                     },
-                    "default_value": "",
-                    "enable_opacity": 0,
-                    "return_format": "string"
-                },
-                {
-                    "key": "field_65d6190e4748c",
-                    "label": "Text Colour",
-                    "name": "text_colour",
-                    "aria-label": "",
-                    "type": "color_picker",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
+                    "choices": {
+                        "100": "Thin (100)",
+                        "200": "Extra Light (200)",
+                        "300": "Light (300)",
+                        "400": "Regular (400)",
+                        "500": "Medium (500)",
+                        "600": "Semi-Bold (600)",
+                        "700": "Bold (700)",
+                        "800": "Extra Bold (800)",
+                        "900": "Black (900)"
                     },
-                    "default_value": "",
-                    "enable_opacity": 0,
-                    "return_format": "string"
+                    "default_value": 400,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
                 },
                 {
                     "key": "field_65d6190e4748d",
@@ -173,5 +167,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1709036259
+    "modified": 1709122887
 }

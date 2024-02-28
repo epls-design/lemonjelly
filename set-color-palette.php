@@ -21,7 +21,7 @@ function lighten($color, $amount) {
   return $hex;
 }
 
-function makeColorPalette($color) {
+function ezpzconsultations_make_color_palette($color) {
   $palette = array();
   // Adjust lightness for each shade
   $palette['25'] = lighten($color, 120);
@@ -36,6 +36,7 @@ function makeColorPalette($color) {
   $palette['800'] = lighten($color, -45);
   $palette['900'] = lighten($color, -60);
   $palette['1000'] = lighten($color, -75);
+  //100 of primary secondary and nutral
 
   return $palette;
 }
