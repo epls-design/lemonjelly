@@ -325,6 +325,7 @@ function ezpzconsultations_add_custom_css() {
     //Generate colours
     include('set-color-palette.php');
     include_once 'set-color-contrast.php';
+
     $primary_palette = ezpzconsultations_make_color_palette($primary_color);
     $secondary_palette = ezpzconsultations_make_color_palette($secondary_color);
 
