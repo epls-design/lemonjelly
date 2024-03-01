@@ -1,4 +1,23 @@
 <?php
+function darken($color, $percent) {
+  // Convert hexadecimal color string to RGB array
+  $rgb = sscanf($color, "#%02x%02x%02x");
+
+  // Darken each RGB component by the percentage
+  $r = $rgb[0] * (1 - $percent);
+  $g = $rgb[1] * (1 - $percent);
+  $b = $rgb[2] * (1 - $percent);
+
+  // Ensure they are within bounds
+  $r = max(0, min(255, round($r)));
+  $g = max(0, min(255, round($g)));
+  $b = max(0, min(255, round($b)));
+
+  // Convert back to hexadecimal color string
+  $dark_color = sprintf("#%02x%02x%02x", $r, $g, $b);
+
+  return $dark_color;
+}
 
 function multiply_colors($color1, $color2) {
   // Convert HEX to RGB
@@ -48,21 +67,21 @@ function mix_colors($color1, $color2, $weight) {
 function ezpzconsultations_make_color_palette($color) {
   // Calculate dark color by multiplying color with itself
   $dark = multiply_colors($color, $color);
-
+  $dark = darken($dark, 0.5);
   // Generate the palette
   $palette = array(
-    '25' => mix_colors('#ffffff', $color, 0.06),
-    '50' => mix_colors('#ffffff', $color, 0.12),
+    '25' => mix_colors('#ffffff', $color, 0.1),
+    '50' => mix_colors('#ffffff', $color, 0.2),
     '100' => mix_colors('#ffffff', $color, 0.30),
     '200' => mix_colors('#ffffff', $color, 0.50),
     '300' => mix_colors('#ffffff', $color, 0.70),
     '400' => mix_colors('#ffffff', $color, 0.85),
     '500' => $color,
-    '600' => mix_colors($dark, $color, 0.87),
-    '700' => mix_colors($dark, $color, 0.70),
-    '800' => mix_colors($dark, $color, 0.54),
-    '900' => mix_colors($dark, $color, 0.25),
-    '1000' => mix_colors($dark, $color, 0),
+    '600' => mix_colors($dark, $color, 0.86),
+    '700' => mix_colors($dark, $color, 0.72),
+    '800' => mix_colors($dark, $color, 0.58),
+    '900' => mix_colors($dark, $color, 0.44),
+    '1000' => mix_colors($dark, $color, 0.35),
   );
 
   return $palette;

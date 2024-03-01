@@ -188,24 +188,21 @@ function ezpzconsultations_save_theme_settings_to_json($post_id) {
   // Retrieve theme options
   $theme_opts = ezpzconsultations_get_theme_opts();
 
-  // CUSTOMISER WONT VAR DUMP, SO SEE IF YOU CAN GET IT TO DEBUG.LOG THE DATA INSTEAD
-
-  $primary_color = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['primary_colour'] : "#ff3c74";
-  $secondary_color = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['secondary_colour'] : "#ffa0cd";
-
+  $primary_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['primary_colour'] : "#ff3c74";
+  $secondary_colour = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['secondary_colour'] : "#ffa0cd";
 
   include_once 'set-color-palette.php';
-  $primary_palette = ezpzconsultations_make_color_palette($primary_color);
-  $secondary_palette = ezpzconsultations_make_color_palette($secondary_color);
+  $primary_palette = ezpzconsultations_make_color_palette($primary_colour);
+  $secondary_palette = ezpzconsultations_make_color_palette($secondary_colour);
 
-  $primary_color_100 = $primary_palette['100'];
-  $primary_color_500 = $primary_palette['500'];
-  $secondary_color_100 = $secondary_palette['100'];
-  $secondary_color_500 = $secondary_palette['500'];
+  $primary_colour_100 = $primary_palette['100'];
+  $primary_colour_500 = $primary_palette['500'];
+  $secondary_colour_100 = $secondary_palette['100'];
+  $secondary_colour_500 = $secondary_palette['500'];
 
 
-  error_log($primary_color_500);
-  error_log($secondary_color_500);
+  error_log($primary_colour_500);
+  error_log($secondary_colour_500);
   error_log($post_id);
   if ($post_id == 'globalcolors') {
     // See if theme.json exists
@@ -230,10 +227,10 @@ function ezpzconsultations_save_theme_settings_to_json($post_id) {
        */
 
       $colors = array(
-        "primary-100" => $primary_color_100,
-        "primary-500" => $primary_color_500,
-        "secondary-100" => $secondary_color_100,
-        "secondary-500" => $secondary_color_500,
+        "primary-100" => $primary_colour_100,
+        "primary-500" => $primary_colour_500,
+        "secondary-100" => $secondary_colour_100,
+        "secondary-500" => $secondary_colour_500,
 
         "white" => '#ffffff',
         "black" => "#000000"
@@ -294,8 +291,12 @@ function ezpzconsultations_add_custom_css() {
     // Example usage with theme options
 
     //Global Colours
-    $primary_color = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['primary_colour'] : "#ff3c74";
-    $secondary_color = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['secondary_colour'] : "#ffa0cd";
+    $primary_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['primary_colour'] : "#ff3c74";
+    $secondary_colour = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['secondary_colour'] : "#ffa0cd";
+    $neutral_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['neutral_colour'] : "#64748b";
+    $success_colour = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['success_colour'] : "#00c851";
+    $warning_colour = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['warning_colour'] : "#FFBB33";
+    $error_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['error_colour'] : "#FF4444";
     $color_headings_preferred = isset($theme_opts['globalcolors']['headings_preferred_colour']) ? $theme_opts['globalcolors']['headings_preferred_colour'] : 'var(--color-headings-preferred)';
     $text_colour = isset($theme_opts['globalcolors']['text_colour']) ? $theme_opts['globalcolors']['text_colour'] : 'var(--text-color)';
     $accent_colour = isset($theme_opts['globalcolors']['accent_colour']) ? $theme_opts['globalcolors']['accent_colour'] : 'var(--color-primary-500)';
@@ -326,20 +327,27 @@ function ezpzconsultations_add_custom_css() {
     include('set-color-palette.php');
     include_once 'set-color-contrast.php';
 
-    $primary_palette = ezpzconsultations_make_color_palette($primary_color);
-    $secondary_palette = ezpzconsultations_make_color_palette($secondary_color);
+    $primary_palette = ezpzconsultations_make_color_palette($primary_colour);
+    $secondary_palette = ezpzconsultations_make_color_palette($secondary_colour);
 
-    $primary_color_500 = $primary_palette['500'];
-    $secondary_color_500 = $secondary_palette['500'];
+    $primary_colour_100 = $primary_palette['100'];
+    $primary_colour_500 = $primary_palette['500'];
 
-    var_dump($primary_color_500);
-    var_dump($secondary_color_500);
-    $primary_text = ezpzconsultations_calculate_contrast($primary_color_500);
-    $secondary_text = ezpzconsultations_calculate_contrast($secondary_color_500);
+    $secondary_colour_100 = $secondary_palette['100'];
+    $secondary_colour_500 = $secondary_palette['500'];
+
+    $neutral_palette = ezpzconsultations_make_color_palette($neutral_colour);
+    $success_palette = ezpzconsultations_make_color_palette($success_colour);
+    $warning_palette = ezpzconsultations_make_color_palette($warning_colour);
+    $error_palette = ezpzconsultations_make_color_palette($error_colour);
+
+    var_dump($primary_colour_500);
+    var_dump($secondary_colour_500);
+    $primary_text = ezpzconsultations_calculate_contrast($primary_colour_500);
+    $secondary_text = ezpzconsultations_calculate_contrast($secondary_colour_500);
 
     echo "Text color for primary color: $primary_text<br>";
     echo "Text color for secondary color: $secondary_text";
-
 
 ?>
 
@@ -405,6 +413,18 @@ function ezpzconsultations_add_custom_css() {
       foreach ($secondary_palette as $key => $value) {
         echo "    --color-secondary-$key: $value;\n";
       }
+      foreach ($neutral_palette as $key => $value) {
+        echo "    --color-neutral-$key: $value;\n";
+      }
+      foreach ($success_palette as $key => $value) {
+        echo "    --color-success-$key: $value;\n";
+      }
+      foreach ($warning_palette as $key => $value) {
+        echo "    --color-warning-$key: $value;\n";
+      }
+      foreach ($error_palette as $key => $value) {
+        echo "    --color-error-$key: $value;\n";
+      }
       echo "}\n";
 
       ?><?php if (!empty($text_colour) || !empty($accent_colour)) : ?>body {
@@ -432,7 +452,7 @@ function ezpzconsultations_add_custom_css() {
       .button {
         <?php if ($button_primary_font_weight) : ?>font-weight: <?php echo $button_primary_font_weight; ?>;
         <?php endif; ?><?php if ($button_primary_border_radius) : ?>border-radius: <?php echo $button_primary_border_radius; ?>;
-        <?php endif; ?>--button-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_color_500); ?>
+        <?php endif; ?>--button-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500); ?>
       }
 
       <?php endif; ?>
@@ -442,7 +462,7 @@ function ezpzconsultations_add_custom_css() {
       a.button.secondary {
         <?php if ($button_secondary_font_weight) : ?>font-weight: <?php echo $button_secondary_font_weight; ?>;
         <?php endif; ?><?php if ($button_secondary_border_radius) : ?>border-radius: <?php echo $button_secondary_border_radius; ?>;
-        <?php endif; ?>--button-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_color_500); ?>
+        <?php endif; ?>--button-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500); ?>
       }
 
       <?php endif; ?>
@@ -450,10 +470,10 @@ function ezpzconsultations_add_custom_css() {
       /* Set colour contrast for background colours */
       <?php
       $theme_bg_colors = array(
-        '.block.bg-primary-500 ' => $primary_color_500,
-        '.block.bg-secondary-500 ' => $secondary_color_500,
-        '.block.bg-primary-00 ' => $primary_color_100,
-        '.block.bg-secondary-100 ' => $secondary_color_200,
+        '.block.bg-primary-500 ' => $primary_colour_500,
+        '.block.bg-secondary-500 ' => $secondary_colour_500,
+        '.block.bg-primary-100 ' => $primary_colour_100,
+        '.block.bg-secondary-100 ' => $secondary_colour_100,
       );
 
       foreach ($theme_bg_colors as $css_class => $bg_color) {

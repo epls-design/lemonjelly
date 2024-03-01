@@ -16,7 +16,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
+            "default_value": "#ff3c74",
             "enable_opacity": 0,
             "return_format": "string"
         },
@@ -34,7 +34,79 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
+            "default_value": "#ffa0cd",
+            "enable_opacity": 0,
+            "return_format": "string"
+        },
+        {
+            "key": "field_65e1b24732226",
+            "label": "Neutral Colour",
+            "name": "neutral_colour",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "#64748b",
+            "enable_opacity": 0,
+            "return_format": "string"
+        },
+        {
+            "key": "field_65e1b61232227",
+            "label": "Success Colour",
+            "name": "success_colour",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "#00c851",
+            "enable_opacity": 0,
+            "return_format": "string"
+        },
+        {
+            "key": "field_65e1b63532228",
+            "label": "Warning Colour",
+            "name": "warning_colour",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "#FFBB33",
+            "enable_opacity": 0,
+            "return_format": "string"
+        },
+        {
+            "key": "field_65e1b64e32229",
+            "label": "Error Colour",
+            "name": "error_colour",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "#FF4444",
             "enable_opacity": 0,
             "return_format": "string"
         },
@@ -111,5 +183,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1709028205
+    "modified": 1709298301
 }
