@@ -1,0 +1,46 @@
+{
+    "key": "group_65e1fd5aec57b",
+    "title": "Global Padding",
+    "fields": [
+        {
+            "key": "field_65e1fd5b7eda6",
+            "label": "Padding Decrease",
+            "name": "padding_decrease",
+            "aria-label": "",
+            "type": "range",
+            "instructions": "Enter the pixel value by which you would like to decrease the padding.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "step": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "customizer",
+                "operator": "==",
+                "value": "globalpadding"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1709313481
+}

@@ -80,10 +80,10 @@
             "sub_fields": [
                 {
                     "key": "field_65d616d0eb383",
-                    "label": "Colour",
-                    "name": "colour_h1",
+                    "label": "Font Weight",
+                    "name": "font_weight",
                     "aria-label": "",
-                    "type": "color_picker",
+                    "type": "select",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -92,9 +92,24 @@
                         "class": "",
                         "id": ""
                     },
-                    "default_value": "",
-                    "enable_opacity": 0,
-                    "return_format": ""
+                    "choices": {
+                        "100": "Thin (100)",
+                        "200": "Extra Light (200)",
+                        "300": "Light (300)",
+                        "400": "Regular (400)",
+                        "500": "Medium (500)",
+                        "600": "Semi-Bold (600)",
+                        "700": "Bold (700)",
+                        "800": "Extra Bold (800)",
+                        "900": "Black (900)"
+                    },
+                    "default_value": 500,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
                 },
                 {
                     "key": "field_65d616d0eb389",
@@ -155,10 +170,10 @@
             "sub_fields": [
                 {
                     "key": "field_65d616d0ed687",
-                    "label": "Colour",
-                    "name": "colour_h2",
+                    "label": "Font Weight",
+                    "name": "font_weight",
                     "aria-label": "",
-                    "type": "color_picker",
+                    "type": "select",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -167,9 +182,24 @@
                         "class": "",
                         "id": ""
                     },
-                    "default_value": "",
-                    "enable_opacity": 0,
-                    "return_format": ""
+                    "choices": {
+                        "100": "Thin (100)",
+                        "200": "Extra Light (200)",
+                        "300": "Light (300)",
+                        "400": "Regular (400)",
+                        "500": "Medium (500)",
+                        "600": "Semi-Bold (600)",
+                        "700": "Bold (700)",
+                        "800": "Extra Bold (800)",
+                        "900": "Black (900)"
+                    },
+                    "default_value": 500,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
                 },
                 {
                     "key": "field_65d616d0ed68f",
@@ -217,10 +247,10 @@
             "sub_fields": [
                 {
                     "key": "field_65d616d0ef8e1",
-                    "label": "Colour",
-                    "name": "colour_h3",
+                    "label": "Font Weight",
+                    "name": "font_weight",
                     "aria-label": "",
-                    "type": "color_picker",
+                    "type": "select",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -229,9 +259,24 @@
                         "class": "",
                         "id": ""
                     },
-                    "default_value": "",
-                    "enable_opacity": 0,
-                    "return_format": "string"
+                    "choices": {
+                        "100": "Thin (100)",
+                        "200": "Extra Light (200)",
+                        "300": "Light (300)",
+                        "400": "Regular (400)",
+                        "500": "Medium (500)",
+                        "600": "Semi-Bold (600)",
+                        "700": "Bold (700)",
+                        "800": "Extra Bold (800)",
+                        "900": "Black (900)"
+                    },
+                    "default_value": 500,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
                 },
                 {
                     "key": "field_65d616d0ef8e5",
@@ -279,10 +324,10 @@
             "sub_fields": [
                 {
                     "key": "field_65d61d45b33a3",
-                    "label": "Colour",
-                    "name": "colour_h4",
+                    "label": "Font Weight",
+                    "name": "font_weight",
                     "aria-label": "",
-                    "type": "color_picker",
+                    "type": "select",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -291,9 +336,24 @@
                         "class": "",
                         "id": ""
                     },
-                    "default_value": "",
-                    "enable_opacity": 0,
-                    "return_format": "string"
+                    "choices": {
+                        "100": "Thin (100)",
+                        "200": "Extra Light (200)",
+                        "300": "Light (300)",
+                        "400": "Regular (400)",
+                        "500": "Medium (500)",
+                        "600": "Semi-Bold (600)",
+                        "700": "Bold (700)",
+                        "800": "Extra Bold (800)",
+                        "900": "Black (900)"
+                    },
+                    "default_value": 500,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
                 },
                 {
                     "key": "field_65d61d45b33a4",
@@ -342,5 +402,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1709028912
+    "modified": 1709306440
 }

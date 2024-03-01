@@ -81,6 +81,11 @@ add_action('init', function () {
       'storage_type' => 'option',
       'panel'        => $panel_id,
     ));
+    acf_add_customizer_section(array(
+      'title'        => 'Global Padding',
+      'storage_type' => 'option',
+      'panel'        => $panel_id,
+    ));
   }
 });
 
@@ -126,7 +131,8 @@ function ezpzconsultations_save_acf_local_json($group) {
     'group_65d61eb9da7c1',
     'group_65d616d0e2170',
     'group_65d6168f43085',
-    'group_65d6172da0577'
+    'group_65d6172da0577',
+    'group_65e1fd5aec57b'
   );
   if (in_array($group['key'], $groups)) {
     add_filter('acf/settings/save_json', function () {
@@ -150,7 +156,8 @@ function ezpzconsultations_get_theme_opts() {
     'globaltypography',
     'branding',
     'buttons',
-    'customcss'
+    'customcss',
+    'globalpadding'
   ];
 
   foreach ($prefixes as $prefix) {
@@ -301,8 +308,6 @@ function ezpzconsultations_add_custom_css() {
     $text_colour = isset($theme_opts['globalcolors']['text_colour']) ? $theme_opts['globalcolors']['text_colour'] : 'var(--text-color)';
     $accent_colour = isset($theme_opts['globalcolors']['accent_colour']) ? $theme_opts['globalcolors']['accent_colour'] : 'var(--color-primary-500)';
 
-    var_dump($accent_colour);
-
     $custom_css = isset($theme_opts['customcss']['custom_css']) ? $theme_opts['customcss']['custom_css'] : "";
 
     //Typography / Fonts / Heading Colours
@@ -317,11 +322,12 @@ function ezpzconsultations_add_custom_css() {
     $button_secondary_border_radius = isset($theme_opts['buttons']['button_secondary_border_radius']) ? $theme_opts['buttons']['button_secondary_border_radius'] . 'px' : '.5rem';
     $button_secondary_font_weight = isset($theme_opts['buttons']['button_secondary_font_weight']) ? $theme_opts['buttons']['button_secondary_font_weight'] : '400';
 
-
+    $padding_decrease = isset($theme_opts['globalpadding']['padding_decrease']) ? $theme_opts['globalpadding']['padding_decrease'] : '0';
     //if ($theme_opts['branding']["main_logo"]) echo $theme_opts['branding']["main_logo"];
     // echo "<pre>";
     // var_dump($theme_opts);
     // echo "</pre>";
+
 
     //Generate colours
     include('set-color-palette.php');
@@ -341,17 +347,36 @@ function ezpzconsultations_add_custom_css() {
     $warning_palette = ezpzconsultations_make_color_palette($warning_colour);
     $error_palette = ezpzconsultations_make_color_palette($error_colour);
 
-    var_dump($primary_colour_500);
-    var_dump($secondary_colour_500);
-    $primary_text = ezpzconsultations_calculate_contrast($primary_colour_500);
-    $secondary_text = ezpzconsultations_calculate_contrast($secondary_colour_500);
-
-    echo "Text color for primary color: $primary_text<br>";
-    echo "Text color for secondary color: $secondary_text";
-
 ?>
 
     <style type="text/css">
+      /* Paddings */
+      header.block,
+      section.block {
+        padding-bottom: calc(0.5rem - <?php echo $padding_decrease; ?>px);
+        padding-top: calc(2rem - <?php echo $padding_decrease; ?>px);
+        position: relative;
+      }
+
+      @media (min-width: 37.5em) {
+
+        header.block,
+        section.block {
+          padding-bottom: calc(2.5rem - <?php echo $padding_decrease; ?>px);
+          padding-top: calc(4rem - <?php echo $padding_decrease; ?>px);
+        }
+      }
+
+      @media (min-width: 56.25em) {
+
+        header.block,
+        section.block {
+          padding-bottom: calc(4.5rem - <?php echo $padding_decrease; ?>px);
+          padding-top: calc(6rem - <?php echo $padding_decrease; ?>px);
+        }
+      }
+
+
       /* Custom CSS from theme designer */
       <?php if ($custom_css) echo $custom_css; ?>
       /* Global Typography */
@@ -368,19 +393,21 @@ function ezpzconsultations_add_custom_css() {
       <?php
 
       // Define an array of headings and their corresponding CSS properties
-      $headings = [
-        'h1' => 'font_h1_colour_h1',
-        'h2' => 'font_h2_colour_h2',
-        'h3' => 'font_h3_colour_h3',
-        'h4' => 'font_h4_colour_h4'
+      $font_weight = [
+        'h1' => 'font_h1_font_weight',
+        'h2' => 'font_h2_font_weight',
+        'h3' => 'font_h3_font_weight',
+        'h4' => 'font_h4_font_weight'
       ];
 
-      // Iterate through headings to generate CSS for color
-      foreach ($headings as $tag => $colorKey) {
-        $color = isset($theme_opts['globaltypography'][$colorKey]) && $theme_opts['globaltypography'][$colorKey] !== '' ? $theme_opts['globaltypography'][$colorKey] : 'var(--color-headings-preferred)';
+      // Iterate through headings to generate CSS for font weight
+      foreach ($font_weight as $tag => $weight_key) {
+        // Check if the weight value is set in $theme_opts['globaltypography'], otherwise fallback to a default value
+        $weight = isset($theme_opts['globaltypography'][$weight_key]) && $theme_opts['globaltypography'][$weight_key] !== '' ? $theme_opts['globaltypography'][$weight_key] : '500';
+        // Output the CSS
         echo "$tag {
-            color: $color !important;
-        }";
+          font-weight: $weight;
+      }";
       }
 
       // Define an array of font families for headings
@@ -391,13 +418,16 @@ function ezpzconsultations_add_custom_css() {
         'h4' => 'font_h4_family_h4'
       ];
 
-      // Iterate through headings to generate CSS for font family
+      // Iterate through font_families to generate CSS for font family
       foreach ($font_families as $tag => $font_key) {
         $font_family = ezpzconsultations_get_font_family($font_key, $theme_opts);
+
         if ($font_family) {
           echo "$tag {
-                font-family: $font_family;
-            }";
+ font-family: $font_family;
+        }
+
+        ";
         }
       }
 
@@ -452,7 +482,8 @@ function ezpzconsultations_add_custom_css() {
       .button {
         <?php if ($button_primary_font_weight) : ?>font-weight: <?php echo $button_primary_font_weight; ?>;
         <?php endif; ?><?php if ($button_primary_border_radius) : ?>border-radius: <?php echo $button_primary_border_radius; ?>;
-        <?php endif; ?>--button-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500); ?>
+        <?php endif; ?>--button-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500); ?>;
+        --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500); ?>
       }
 
       <?php endif; ?>
@@ -462,7 +493,8 @@ function ezpzconsultations_add_custom_css() {
       a.button.secondary {
         <?php if ($button_secondary_font_weight) : ?>font-weight: <?php echo $button_secondary_font_weight; ?>;
         <?php endif; ?><?php if ($button_secondary_border_radius) : ?>border-radius: <?php echo $button_secondary_border_radius; ?>;
-        <?php endif; ?>--button-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500); ?>
+        <?php endif; ?>--button-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500); ?>;
+        --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500); ?>
       }
 
       <?php endif; ?>
@@ -502,11 +534,13 @@ function ezpzconsultations_add_custom_css() {
         --color-headings-preferred: <?php echo ezpzconsultations_calculate_contrast($bg_color); ?>;
         --button-color-text: <?php echo ezpzconsultations_calculate_contrast($bg_color); ?>;
         border-color: <?php echo ezpzconsultations_calculate_contrast($bg_color); ?>;
+
       }
 
 
       <?php
       }
+
       ?>
     </style>
 
