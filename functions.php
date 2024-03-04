@@ -17,15 +17,22 @@ function ezpzconsultations_enqueue_styles() {
   $version = $theme->get('Version');
 
   wp_enqueue_style(
-    'ezpz-consultations',
+    'ezpz-consultations-style',
     get_stylesheet_directory_uri() . '/style.css',
     array('jellypress-styles'),
     $version
   );
 
   wp_enqueue_script(
-    'ezpz-consultations',
+    'ezpz-consultations-theme',
     get_stylesheet_directory_uri() . '/js/theme.min.js',
+    array('jellypress-scripts'),
+    $version,
+    true
+  );
+  wp_enqueue_script(
+    'ezpz-consultations-twentytwenty',
+    get_stylesheet_directory_uri() . '/js/twentytwenty.min.js',
     array('jellypress-scripts'),
     $version,
     true
