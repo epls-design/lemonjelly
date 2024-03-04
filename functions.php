@@ -132,7 +132,8 @@ function ezpzconsultations_save_acf_local_json($group) {
     'group_65d616d0e2170',
     'group_65d6168f43085',
     'group_65d6172da0577',
-    'group_65e1fd5aec57b'
+    'group_65e1fd5aec57b',
+    'group_64c2957a5ef4e'
   );
   if (in_array($group['key'], $groups)) {
     add_filter('acf/settings/save_json', function () {
@@ -327,7 +328,6 @@ function ezpzconsultations_add_custom_css() {
     // echo "<pre>";
     // var_dump($theme_opts);
     // echo "</pre>";
-
 
     //Generate colours
     include('set-color-palette.php');
