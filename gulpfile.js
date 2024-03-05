@@ -47,11 +47,20 @@ const opts = {
 		" *  License: <%= pkg.license %>\n" +
 		" *  Text Domain: <%= pkg.text_domain %> */ \n",
 };
-
+var sassOptions = {
+	errLogToConsole: true,
+	outputStyle: "expanded",
+};
+function sassProcess() {
+	return src("./blocks/**/*.scss")
+		.pipe(sass(sassOptions).on("error", sass.logError))
+		.pipe(postcss(sassProcessors))
+		.pipe(dest("./blocks"));
+}
 // Tasks which watch for changes in specified files/dirs and run tasks based on filetypes edited
 function watchTask(done) {
 	watch(["./src/scss/*.scss"], sassProcessSite);
-
+	watch("./blocks/**/*.scss", sassProcess);
 	watch(["./src/js/*.js"], series(javascriptLint, javascriptProcess));
 	done();
 }

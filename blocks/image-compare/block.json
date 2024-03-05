@@ -1,0 +1,31 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "ezpz/image-compare",
+	"title": "Image Compare",
+	"category": "media",
+	"icon": "image-flip-horizontal",
+	"description": "Displays two images in a before/after component allowing the user to compare differences.",
+	"keywords": ["before", "after", "twentytwenty", "compare", "comparison"],
+	"version": "1.0.0",
+	"textdomain": "ezpz-blocks-consultations",
+	"supports": {
+		"align": false,
+		"alignText": false,
+		"anchor": true,
+		"color": {
+			"background": false,
+			"gradients": false,
+			"link": false,
+			"text": false
+		},
+		"customClassName": true,
+		"html": false
+	},
+	"styles": [],
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "view.php",
+		"postTypes": ["post", "page"]
+	}
+}

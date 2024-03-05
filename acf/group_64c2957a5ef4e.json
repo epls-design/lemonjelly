@@ -98,7 +98,7 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "ezpz-block-consultations\/timeline"
+                "value": "ezpz\/timeline"
             }
         ]
     ],
@@ -111,5 +111,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1709567406
+    "modified": 1709658317
 }

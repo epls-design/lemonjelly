@@ -11,6 +11,8 @@ defined('ABSPATH') || exit;
  * Enqueue the child theme
  */
 add_action('wp_enqueue_scripts', 'ezpzconsultations_enqueue_styles');
+add_editor_style('style.css');
+
 function ezpzconsultations_enqueue_styles() {
   $theme = wp_get_theme();
 
@@ -37,6 +39,84 @@ function ezpzconsultations_enqueue_styles() {
     $version,
     true
   );
+  wp_enqueue_script(
+    'ezpz-consultations-twentytwenty-js',
+    get_stylesheet_directory_uri() . '/js/jquery.twentytwenty.js',
+    array('jellypress-scripts'),
+    $version,
+    true
+  );
+  wp_enqueue_script(
+    'ezpz-consultations-event-move',
+    get_stylesheet_directory_uri() . '/js/jquery.event.move.js',
+    array('jellypress-scripts'),
+    $version,
+    true
+  );
+}
+
+add_action('acf/init', 'register_blocks', 20);
+add_action('wp_enqueue_scripts', 'enqueue_block_scripts');
+add_filter('ezpz_allowed_blocks', 'add_to_allowed_blocks', 10, 1);
+//change to ezpz_consultation_blocks
+$blocks = array('timeline', 'image-compare');
+
+function register_blocks() {
+  global $blocks;
+  foreach ($blocks as $slug) {
+
+    //var_dump(get_stylesheet_directory(__FILE__) . '/blocks/' . $slug . '/block.json');
+    if (file_exists(get_stylesheet_directory(__FILE__) . '/blocks/' . $slug . '/block.json')) {
+      // Register ACF block
+      register_block_type(get_stylesheet_directory(__FILE__) . '/blocks/' . $slug);
+    }
+  }
+}
+function add_to_allowed_blocks($allowed_blocks) {
+  global $blocks;
+  foreach ($blocks as $slug) {
+    $allowed_blocks[] = 'ezpz/' . $slug;
+  }
+  return $allowed_blocks;
+}
+function enqueue_block_scripts() {
+  global $blocks;
+  foreach ($blocks as $slug) {
+    if (file_exists(get_stylesheet_directory(__FILE__) . '/blocks/' . $slug . '/scripts.js')) {
+      $version = filemtime(get_stylesheet_directory(__FILE__) . '/blocks/' . $slug . '/scripts.js');
+
+      // Get file size
+      $size = filesize(get_stylesheet_directory(__FILE__) . '/blocks/' . $slug . '/scripts.js');
+
+      // If file size is greater than 0, enqueue the JS
+      if ($size > 0) {
+        wp_enqueue_script(
+          'block-' . $slug,
+          get_stylesheet_directory_uri() . '/blocks/' . $slug . '/scripts.js',
+          array('jquery', 'jellypress-scripts'),
+          $version,
+          true
+        );
+      }
+    }
+    // Register the CSS
+    if (file_exists(plugin_dir_path(__FILE__) . 'blocks/' . $slug . '/styles.css')) {
+      $version = filemtime(plugin_dir_path(__FILE__) . 'blocks/' . $slug . '/styles.css');
+
+      // Get file size
+      $size = filesize(plugin_dir_path(__FILE__) . 'blocks/' . $slug . '/styles.css');
+
+      // If file size is greater than 0, enqueue the CSS
+      if ($size > 0) {
+        wp_enqueue_style(
+          'block-' . $slug,
+          get_stylesheet_directory_uri() . '/blocks/' . $slug . '/styles.css',
+          array(),
+          $version
+        );
+      }
+    }
+  }
 }
 
 /**
@@ -56,11 +136,13 @@ function ezpzconsultations_enqueue_styles() {
 //   );
 // }
 
-
+//I am using the https://github.com/mcguffin/acf-customizer
+//TODO : setup dependencies with tgmpluginactivation
 add_action('init', function () {
   if (function_exists('acf_add_customizer_section')) {
     $panel_id = acf_add_customizer_panel(array(
       'title'        => 'Theme Designer',
+
     ));
     acf_add_customizer_section(array(
       'title'        => 'Global Colors',
@@ -301,6 +383,46 @@ add_action('wp_head', 'ezpzconsultations_add_custom_css', 100);
 function ezpzconsultations_add_custom_css() {
 
   $theme_opts = ezpzconsultations_get_theme_opts();
+
+  if (isset($_POST['customized'])) {
+    // echo $_POST['customized'];
+
+    //get fields for customizer
+
+    // Global Colours
+    $primary_colour = get_field('primary_colour', 'option') ?: '#ff3c74';
+    $secondary_colour = get_field('secondary_colour', 'option') ?: '#ffa0cd';
+    $neutral_colour = get_field('neutral_colour', 'option') ?: '#64748b';
+    $success_colour = get_field('success_colour', 'option') ?: '#00c851';
+    $warning_colour = get_field('warning_colour', 'option') ?: '#FFBB33';
+    $error_colour = get_field('error_colour', 'option') ?: '#FF4444';
+    $color_headings_preferred = get_field('headings_preferred_colour', 'option') ?: 'var(--color-headings-preferred)';
+    $text_colour = get_field('text_colour', 'option') ?: 'var(--text-color)';
+    $accent_colour = get_field('accent_colour', 'option') ?: 'var(--color-primary-500)';
+
+    $custom_css = get_field('custom_css', 'option') ?: '';
+
+    // Typography / Fonts / Heading Colours
+    $primary_font_family = get_field('primary_font_family', 'option') ?: 'var(--font-primary)';
+    $secondary_font_family = get_field('secondary_font_family', 'option') ?: 'var(--font-primary)';
+
+    // Buttons
+    $button_primary_border_radius = get_field('button_primary_border_radius', 'option') ?: '.5rem';
+    $button_primary_font_weight = get_field('button_primary_font_weight', 'option') ?: '400';
+
+    $button_secondary_border_radius = get_field('button_secondary_border_radius', 'option') ?: '.5rem';
+    $button_secondary_font_weight = get_field('button_secondary_font_weight', 'option') ?: '400';
+
+    $padding_decrease = get_field('padding_decrease', 'option') ?: '0';
+
+    //Global Colours
+    $primary_colour = get_field('primary_colour', 'globalcolors');
+  } else {
+    echo "not customised";
+  }
+
+
+
 
   if (!empty($theme_opts)) :
     // Example usage with theme options
@@ -556,31 +678,6 @@ function ezpzconsultations_add_custom_css() {
 
   endif;
 }
-// add_action('customize_preview_init', 'ezpzconsultations_customize_preview_init');
-// function ezpzconsultations_customize_preview_init($wp_customize) {
-//   // Enqueue your JavaScript file for customizer preview
-//   wp_enqueue_script('ezpzconsultations-customize-preview', get_stylesheet_directory_uri() . '/js/theme.min.js', array('customize-preview', 'jquery'), null, true);
-
-//   // Get primary color value
-//   $theme_opts = ezpzconsultations_get_theme_opts(); // Assuming you have a function to get theme options
-//   $primary_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['primary_colour'] : '';
-
-//   // Pass necessary data to the JavaScript file
-//   wp_localize_script('ezpzconsultations-customize-preview', 'ezpzconsultations_customizer_data', array(
-//     'primary_colour' => $primary_colour
-//   ));
-// }
-// add_action('customize_preview_init', 'ezpzconsultations_enqueue_customizer_preview_script');
-// function ezpzconsultations_enqueue_customizer_preview_script() {
-//   wp_enqueue_script(
-//     'ezpzconsultations-customizer-preview-script', // Script handle
-//     get_stylesheet_directory_uri() . '/js/theme.min.js', // Script file path
-//     array('customize-preview', 'jquery'), // Dependencies
-//     null, // Version (null to prevent caching)
-//     true // Enqueue script in footer
-//   );
-// }
-
 
 
 // Master To Do List:

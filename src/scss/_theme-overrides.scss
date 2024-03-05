@@ -4,3 +4,7 @@
 .bg-secondary-100 {
 	--color-section-background: var(--color-secondary-100);
 }
+a.acf-icon {
+	user-select: unset !important;
+	pointer-events: unset !important;
+}

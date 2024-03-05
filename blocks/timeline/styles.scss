@@ -1,0 +1,127 @@
+/* Add your styles here, and they will be compiled down into the styles.css file. */
+// Define the breakpoints map
+$breakpoints: (
+	sm: (
+		breakpoint: 600px,
+		container-width: 100%,
+		container-gutter: 4rem,
+		col-gutter: 1.5rem,
+	),
+	md: (
+		breakpoint: 900px,
+		container-width: 90%,
+		container-max-width: 1140px,
+		container-gutter: 0px,
+		root-font-size: 18px,
+		root-line-height: 1.6,
+		col-gutter: 2rem,
+	),
+	lg: (
+		breakpoint: 1200px,
+		container-width: 1140px,
+		container-max-width: none,
+	),
+	xl: (
+		breakpoint: 1800px,
+		container-width: 1280px,
+	),
+);
+
+// Define the above mixin
+@mixin above($breakpoint) {
+	$breakpoint-values: map-get($breakpoints, $breakpoint);
+	@media (min-width: map-get($breakpoint-values, breakpoint)) {
+		@content;
+	}
+}
+
+// Define the pseudo mixin
+@mixin pseudo() {
+	content: "";
+	position: absolute;
+}
+
+$element-padding: 1.5rem;
+$element-margin: 1.5rem;
+
+$timeline-line-width: 6px;
+.timeline {
+	--marker-size: 1.2rem;
+	--marker-offset: 2rem;
+	position: relative;
+	margin-bottom: $element-margin;
+	@include above(md) {
+		margin-top: $element-margin;
+	}
+	&::after {
+		content: "";
+		position: absolute;
+		width: $timeline-line-width;
+		background-color: var(--color-primary-500);
+		top: 0;
+		bottom: 0;
+		left: calc((var(--marker-size) * 0.5) - ($timeline-line-width / 2));
+	}
+}
+
+.time-container {
+	width: 100%;
+	padding-left: calc(var(--marker-size) + var(--marker-offset));
+	padding-right: 0;
+	padding-bottom: $element-margin;
+}
+
+.time-container h3 {
+	position: relative;
+	&::before {
+		@include pseudo();
+		top: 0.2em;
+		background-color: var(--color-primary-500);
+		width: var(--marker-size);
+		height: var(--marker-size);
+		left: calc((var(--marker-size) * -1) - var(--marker-offset));
+	}
+	&::after {
+		@include pseudo();
+		top: calc(var(--marker-size) * 0.5 - ($timeline-line-width / 2) + 0.2em);
+		background-color: var(--color-primary-500);
+		width: calc(var(--marker-offset) * 0.75);
+		height: $timeline-line-width;
+		left: calc(var(--marker-offset) * -1);
+	}
+}
+
+@include above(md) {
+	.timeline {
+		--marker-offset: 3rem;
+		&::after {
+			left: calc(50% - ($timeline-line-width / 2));
+		}
+	}
+	.time-container {
+		width: 50%;
+		&.left {
+			text-align: right;
+			padding-right: calc(var(--marker-size) + var(--marker-offset));
+			padding-left: 0;
+			h3 {
+				&::before {
+					left: auto;
+					right: calc((var(--marker-size) * -1) - var(--marker-offset));
+				}
+				&::after {
+					left: auto;
+					right: calc(var(--marker-offset) * -1);
+				}
+			}
+		}
+		&.right {
+			margin-left: 50%;
+		}
+	}
+}
+@include above(lg) {
+	.timeline {
+		--marker-offset: 4rem;
+	}
+}
