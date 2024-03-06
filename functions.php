@@ -385,8 +385,6 @@ function ezpzconsultations_add_custom_css() {
   $theme_opts = ezpzconsultations_get_theme_opts();
 
   if (isset($_POST['customized'])) {
-    // echo $_POST['customized'];
-
     //get fields for customizer
     if (!empty($theme_opts)) :
       // Global Colours
@@ -428,6 +426,7 @@ function ezpzconsultations_add_custom_css() {
         // Convert the font weight to string before outputting
         $weight = $font_heading['font_weight'];
         $family =  $font_heading['font_family'];
+
         if ($font_heading['font_family'] == 'primary_font') {
           $family = 'var(--font-primary)';
         } else {
@@ -445,7 +444,7 @@ function ezpzconsultations_add_custom_css() {
         } else {
           // Fallback to a default font weight if not set
           echo "<style>$tag { font-weight: 500;
-            font-family: $family;
+            font-family: var(--font-primary);
           }</style>";
         }
       }
@@ -475,48 +474,29 @@ function ezpzconsultations_add_custom_css() {
 
       $padding_decrease = isset($theme_opts['globalpadding']['padding_decrease']) ? $theme_opts['globalpadding']['padding_decrease'] : '0';
 
-
-      // Define an array of headings and their corresponding CSS properties
-      $font_weight = [
-        'h1' => 'font_h1_font_weight',
-        'h2' => 'font_h2_font_weight',
-        'h3' => 'font_h3_font_weight',
-        'h4' => 'font_h4_font_weight'
-      ];
-
-      // Iterate through headings to generate CSS for font weight
-      foreach ($font_weight as $tag => $weight_key) {
-        // Check if the weight value is set in $theme_opts['globaltypography'], otherwise fallback to a default value
-        $weight = isset($theme_opts['globaltypography'][$weight_key]) && $theme_opts['globaltypography'][$weight_key] !== '' ? $theme_opts['globaltypography'][$weight_key] : '500';
-        // Output the CSS
-        echo "<style>$tag { font-weight: $weight; }</style>";
-      }
-
-
-
       /* Headings - Global Typography */
-
-
-      // Define an array of font families for headings
-      $font_families = [
-        'h1' => 'font_h1_font_family',
-        'h2' => 'font_h2_font_family',
-        'h3' => 'font_h3_font_family',
-        'h4' => 'font_h4_font_family'
+      // Define an array of headings, their corresponding CSS properties, and their corresponding font family keys
+      $styles = [
+        'h1' => ['font_weight_key' => 'font_h1_font_weight', 'font_family_key' => 'font_h1_font_family'],
+        'h2' => ['font_weight_key' => 'font_h2_font_weight', 'font_family_key' => 'font_h2_font_family'],
+        'h3' => ['font_weight_key' => 'font_h3_font_weight', 'font_family_key' => 'font_h3_font_family'],
+        'h4' => ['font_weight_key' => 'font_h4_font_weight', 'font_family_key' => 'font_h4_font_family']
       ];
 
-      // Iterate through font_families to generate CSS for font family
-      foreach ($font_families as $tag => $font_key) {
-        $font_family = ezpzconsultations_get_font_family($font_key, $theme_opts);
+      // Iterate through styles to generate CSS for font weight and font family
+      foreach ($styles as $tag => $style) {
+        // Check if the weight value is set in $theme_opts['globaltypography'], otherwise fallback to a default value
+        $weight = isset($theme_opts['globaltypography'][$style['font_weight_key']]) && $theme_opts['globaltypography'][$style['font_weight_key']] !== '' ? $theme_opts['globaltypography'][$style['font_weight_key']] : '500';
+        // Output the CSS for font weight
+        echo "<style>$tag { font-weight: $weight; }</style>";
 
+        // Get font family
+        $font_family = ezpzconsultations_get_font_family($style['font_family_key'], $theme_opts);
+        // Output the CSS for font family if it exists
         if ($font_family) {
-
           echo "<style>$tag { font-family: $font_family; }</style>";
         }
       }
-
-
-
 
     endif;
   }
@@ -575,7 +555,6 @@ function ezpzconsultations_add_custom_css() {
           padding-top: calc(6rem - <?php echo $padding_decrease; ?>px);
         }
       }
-
 
       /* Custom CSS from theme designer */
       <?php if ($custom_css) echo $custom_css; ?>
