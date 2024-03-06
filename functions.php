@@ -388,71 +388,142 @@ function ezpzconsultations_add_custom_css() {
     // echo $_POST['customized'];
 
     //get fields for customizer
+    if (!empty($theme_opts)) :
+      // Global Colours
+      $primary_colour = get_field('primary_colour', 'globalcolors') ?: '#ff3c74';
+      $secondary_colour = get_field('secondary_colour', 'globalcolors') ?: '#ffa0cd';
+      $neutral_colour = get_field('neutral_colour', 'globalcolors') ?: '#64748b';
+      $success_colour = get_field('success_colour', 'globalcolors') ?: '#00c851';
+      $warning_colour = get_field('warning_colour', 'globalcolors') ?: '#FFBB33';
+      $error_colour = get_field('error_colour', 'globalcolors') ?: '#FF4444';
+      $color_headings_preferred = get_field('headings_preferred_colour', 'globalcolors') ?: 'var(--color-headings-preferred)';
 
-    // Global Colours
-    $primary_colour = get_field('primary_colour', 'option') ?: '#ff3c74';
-    $secondary_colour = get_field('secondary_colour', 'option') ?: '#ffa0cd';
-    $neutral_colour = get_field('neutral_colour', 'option') ?: '#64748b';
-    $success_colour = get_field('success_colour', 'option') ?: '#00c851';
-    $warning_colour = get_field('warning_colour', 'option') ?: '#FFBB33';
-    $error_colour = get_field('error_colour', 'option') ?: '#FF4444';
-    $color_headings_preferred = get_field('headings_preferred_colour', 'option') ?: 'var(--color-headings-preferred)';
-    $text_colour = get_field('text_colour', 'option') ?: 'var(--text-color)';
-    $accent_colour = get_field('accent_colour', 'option') ?: 'var(--color-primary-500)';
+      $custom_css = get_field('custom_css', 'custom_css') ?: '';
 
-    $custom_css = get_field('custom_css', 'option') ?: '';
+      // Typography / Fonts / Heading Colours
+      $primary_font_family = get_field('primary_font_family', 'globaltypography') ?: 'var(--font-primary)';
+      $secondary_font_family = get_field('secondary_font_family', 'globaltypography') ?: 'var(--font-primary)';
 
-    // Typography / Fonts / Heading Colours
-    $primary_font_family = get_field('primary_font_family', 'option') ?: 'var(--font-primary)';
-    $secondary_font_family = get_field('secondary_font_family', 'option') ?: 'var(--font-primary)';
+      // Buttons
+      $button_colour = get_field('colour', 'buttons') ?: "";
+      $button_border_radius = (get_field('border_radius', 'buttons') ?: ".5rem") . "px";
 
-    // Buttons
-    $button_primary_border_radius = get_field('button_primary_border_radius', 'option') ?: '.5rem';
-    $button_primary_font_weight = get_field('button_primary_font_weight', 'option') ?: '400';
+      $button_font_weight = get_field('font_weight', 'buttons') ?: '400';
 
-    $button_secondary_border_radius = get_field('button_secondary_border_radius', 'option') ?: '.5rem';
-    $button_secondary_font_weight = get_field('button_secondary_font_weight', 'option') ?: '400';
+      $padding_decrease = get_field('padding_decrease', 'globalpadding') ?: '0';
 
-    $padding_decrease = get_field('padding_decrease', 'option') ?: '0';
+      // Define an array of headings and their corresponding ACF field keys
+      $font_fields = [
+        'h1' => 'font_h1',
+        'h2' => 'font_h2',
+        'h3' => 'font_h3',
+        'h4' => 'font_h4'
+      ];
 
-    //Global Colours
-    $primary_colour = get_field('primary_colour', 'globalcolors');
+      // Iterate through headings to generate CSS for font weight
+      foreach ($font_fields as $tag => $field_key) {
+        // Get the font weight for the current heading size
+        $font_heading = get_field($field_key, 'globaltypography');
+
+        // Convert the font weight to string before outputting
+        $weight = $font_heading['font_weight'];
+        $family =  $font_heading['font_family'];
+        if ($font_heading['font_family'] == 'primary_font') {
+          $family = 'var(--font-primary)';
+        } else {
+          $family = 'var(--font-secondary)';
+        }
+        // Check if the font weight is set
+        if ($font_heading && isset($font_heading['font_weight'])) {
+
+          // Output the CSS
+          echo "<style>$tag { font-weight: $weight;
+            font-family: $family;
+
+        }
+          </style>";
+        } else {
+          // Fallback to a default font weight if not set
+          echo "<style>$tag { font-weight: 500;
+            font-family: $family;
+          }</style>";
+        }
+      }
+
+    endif;
   } else {
-    echo "not customised";
+    if (!empty($theme_opts)) :
+      $primary_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['primary_colour'] : "#ff3c74";
+      $secondary_colour = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['secondary_colour'] : "#ffa0cd";
+      $neutral_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['neutral_colour'] : "#64748b";
+      $success_colour = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['success_colour'] : "#00c851";
+      $warning_colour = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['warning_colour'] : "#FFBB33";
+      $error_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['error_colour'] : "#FF4444";
+      $color_headings_preferred = isset($theme_opts['globalcolors']['headings_preferred_colour']) ? $theme_opts['globalcolors']['headings_preferred_colour'] : 'var(--color-headings-preferred)';
+
+      $custom_css = isset($theme_opts['customcss']['custom_css']) ? $theme_opts['customcss']['custom_css'] : "";
+
+      //Typography / Fonts / Heading Colours
+      $primary_font_family = isset($theme_opts['globaltypography']['primary_font_family']) ? $theme_opts['globaltypography']['primary_font_family'] : 'var(--font-primary)';
+      $secondary_font_family = isset($theme_opts['globaltypography']['secondary_font_family']) ? $theme_opts['globaltypography']['secondary_font_family'] : 'var(--font-primary)';
+
+
+      //Buttons
+      $button_colour = isset($theme_opts['buttons']['colour']) ? $theme_opts['buttons']['colour'] : "";
+      $button_border_radius = isset($theme_opts['buttons']['border_radius']) ? $theme_opts['buttons']['border_radius'] . 'px' : '.5rem';
+      $button_font_weight = isset($theme_opts['buttons']['font_weight']) ? $theme_opts['buttons']['font_weight'] : '400';
+
+      $padding_decrease = isset($theme_opts['globalpadding']['padding_decrease']) ? $theme_opts['globalpadding']['padding_decrease'] : '0';
+
+
+      // Define an array of headings and their corresponding CSS properties
+      $font_weight = [
+        'h1' => 'font_h1_font_weight',
+        'h2' => 'font_h2_font_weight',
+        'h3' => 'font_h3_font_weight',
+        'h4' => 'font_h4_font_weight'
+      ];
+
+      // Iterate through headings to generate CSS for font weight
+      foreach ($font_weight as $tag => $weight_key) {
+        // Check if the weight value is set in $theme_opts['globaltypography'], otherwise fallback to a default value
+        $weight = isset($theme_opts['globaltypography'][$weight_key]) && $theme_opts['globaltypography'][$weight_key] !== '' ? $theme_opts['globaltypography'][$weight_key] : '500';
+        // Output the CSS
+        echo "<style>$tag { font-weight: $weight; }</style>";
+      }
+
+
+
+      /* Headings - Global Typography */
+
+
+      // Define an array of font families for headings
+      $font_families = [
+        'h1' => 'font_h1_font_family',
+        'h2' => 'font_h2_font_family',
+        'h3' => 'font_h3_font_family',
+        'h4' => 'font_h4_font_family'
+      ];
+
+      // Iterate through font_families to generate CSS for font family
+      foreach ($font_families as $tag => $font_key) {
+        $font_family = ezpzconsultations_get_font_family($font_key, $theme_opts);
+
+        if ($font_family) {
+
+          echo "<style>$tag { font-family: $font_family; }</style>";
+        }
+      }
+
+
+
+
+    endif;
   }
-
-
-
 
   if (!empty($theme_opts)) :
     // Example usage with theme options
 
-    //Global Colours
-    $primary_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['primary_colour'] : "#ff3c74";
-    $secondary_colour = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['secondary_colour'] : "#ffa0cd";
-    $neutral_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['neutral_colour'] : "#64748b";
-    $success_colour = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['success_colour'] : "#00c851";
-    $warning_colour = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['warning_colour'] : "#FFBB33";
-    $error_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['error_colour'] : "#FF4444";
-    $color_headings_preferred = isset($theme_opts['globalcolors']['headings_preferred_colour']) ? $theme_opts['globalcolors']['headings_preferred_colour'] : 'var(--color-headings-preferred)';
-    $text_colour = isset($theme_opts['globalcolors']['text_colour']) ? $theme_opts['globalcolors']['text_colour'] : 'var(--text-color)';
-    $accent_colour = isset($theme_opts['globalcolors']['accent_colour']) ? $theme_opts['globalcolors']['accent_colour'] : 'var(--color-primary-500)';
-
-    $custom_css = isset($theme_opts['customcss']['custom_css']) ? $theme_opts['customcss']['custom_css'] : "";
-
-    //Typography / Fonts / Heading Colours
-    $primary_font_family = isset($theme_opts['globaltypography']['primary_font_family']) ? $theme_opts['globaltypography']['primary_font_family'] : 'var(--font-primary)';
-    $secondary_font_family = isset($theme_opts['globaltypography']['secondary_font_family']) ? $theme_opts['globaltypography']['secondary_font_family'] : 'var(--font-primary)';
-
-
-    //Buttons
-    $button_primary_border_radius = isset($theme_opts['buttons']['button_primary_border_radius']) ? $theme_opts['buttons']['button_primary_border_radius'] . 'px' : '.5rem';
-    $button_primary_font_weight = isset($theme_opts['buttons']['button_primary_font_weight']) ? $theme_opts['buttons']['button_primary_font_weight'] : '400';
-
-    $button_secondary_border_radius = isset($theme_opts['buttons']['button_secondary_border_radius']) ? $theme_opts['buttons']['button_secondary_border_radius'] . 'px' : '.5rem';
-    $button_secondary_font_weight = isset($theme_opts['buttons']['button_secondary_font_weight']) ? $theme_opts['buttons']['button_secondary_font_weight'] : '400';
-
-    $padding_decrease = isset($theme_opts['globalpadding']['padding_decrease']) ? $theme_opts['globalpadding']['padding_decrease'] : '0';
     //if ($theme_opts['branding']["main_logo"]) echo $theme_opts['branding']["main_logo"];
     // echo "<pre>";
     // var_dump($theme_opts);
@@ -518,49 +589,6 @@ function ezpzconsultations_add_custom_css() {
         --color-headings-preferred: <?php echo $color_headings_preferred ?>;
       }
 
-      /* Headings - Global Typography */
-      <?php
-
-      // Define an array of headings and their corresponding CSS properties
-      $font_weight = [
-        'h1' => 'font_h1_font_weight',
-        'h2' => 'font_h2_font_weight',
-        'h3' => 'font_h3_font_weight',
-        'h4' => 'font_h4_font_weight'
-      ];
-
-      // Iterate through headings to generate CSS for font weight
-      foreach ($font_weight as $tag => $weight_key) {
-        // Check if the weight value is set in $theme_opts['globaltypography'], otherwise fallback to a default value
-        $weight = isset($theme_opts['globaltypography'][$weight_key]) && $theme_opts['globaltypography'][$weight_key] !== '' ? $theme_opts['globaltypography'][$weight_key] : '500';
-        // Output the CSS
-        echo "$tag {
-          font-weight: $weight;
-      }";
-      }
-
-      // Define an array of font families for headings
-      $font_families = [
-        'h1' => 'font_h1_family_h1',
-        'h2' => 'font_h2_family_h2',
-        'h3' => 'font_h3_family_h3',
-        'h4' => 'font_h4_family_h4'
-      ];
-
-      // Iterate through font_families to generate CSS for font family
-      foreach ($font_families as $tag => $font_key) {
-        $font_family = ezpzconsultations_get_font_family($font_key, $theme_opts);
-
-        if ($font_family) {
-          echo "$tag {
- font-family: $font_family;
-        }
-
-        ";
-        }
-      }
-
-      ?>
 
       /* Global Colours - Generate Colour Palette  */
       <?php
@@ -586,44 +614,26 @@ function ezpzconsultations_add_custom_css() {
       }
       echo "}\n";
 
-      ?><?php if (!empty($text_colour) || !empty($accent_colour)) : ?>body {
-        <?php if ($text_colour) : ?>--color-text: <?php echo $text_colour; ?>;
-
-        <?php endif; ?><?php if ($accent_colour) : ?>accent-color,
-        a,
-        a:link,
-        a:visited {
-          color: <?php echo $accent_colour; ?>;
-        }
-
-        <?php endif; ?>
-      }
-
-      <?php endif; ?>
+      ?>
 
       /* Buttons */
       /* Primary button */
-      <?php if (!empty($button_primary_font_weight) || !empty($button_secondary_border_radius)) : ?>.button,
+      <?php if (!empty($button_colour) || !empty($button_font_weight) || !empty($button_border_radius)) : ?>.button,
       [type=button],
       [type=reset],
       [type=submit],
       a.button,
       .button {
-        <?php if ($button_primary_font_weight) : ?>font-weight: <?php echo $button_primary_font_weight; ?>;
-        <?php endif; ?><?php if ($button_primary_border_radius) : ?>border-radius: <?php echo $button_primary_border_radius; ?>;
-        <?php endif; ?>--button-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500); ?>;
-        --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500); ?>
-      }
+        <?php if ($button_font_weight) : ?>font-weight: <?php echo $button_font_weight; ?>;
+        <?php endif; ?><?php if ($button_border_radius) : ?>border-radius: <?php echo $button_border_radius; ?>;
 
-      <?php endif; ?>
-
-      /* Secondary button */
-      <?php if (!empty($button_secondary_font_weight) || !empty($button_secondary_border_radius)) : ?>.button.secondary,
-      a.button.secondary {
-        <?php if ($button_secondary_font_weight) : ?>font-weight: <?php echo $button_secondary_font_weight; ?>;
-        <?php endif; ?><?php if ($button_secondary_border_radius) : ?>border-radius: <?php echo $button_secondary_border_radius; ?>;
-        <?php endif; ?>--button-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500); ?>;
-        --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500); ?>
+        <?php endif; ?><?php if (!empty($button_colour) && $button_colour == "primary") : ?>--button-color-theme: <?php echo $primary_colour_500 ?>;
+        --button-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500); ?>;
+        --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500); ?>;
+        <?php else : ?>--button-color-theme: <?php echo $secondary_colour_500 ?>;
+        --button-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500); ?>;
+        --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500); ?>;
+        <?php endif; ?>
       }
 
       <?php endif; ?>

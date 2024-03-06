@@ -3,11 +3,11 @@
     "title": "Buttons",
     "fields": [
         {
-            "key": "field_65d6172da263a",
-            "label": "Primary",
-            "name": "button_primary",
+            "key": "field_65e83c403627b",
+            "label": "Colour",
+            "name": "colour",
             "aria-label": "",
-            "type": "group",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -16,71 +16,24 @@
                 "class": "",
                 "id": ""
             },
-            "layout": "block",
-            "sub_fields": [
-                {
-                    "key": "field_65df24a361147",
-                    "label": "Font Weight",
-                    "name": "font_weight",
-                    "aria-label": "",
-                    "type": "select",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "100": "Thin (100)",
-                        "200": "Extra Light (200)",
-                        "300": "Light (300)",
-                        "400": "Regular (400)",
-                        "500": "Medium (500)",
-                        "600": "Semi-Bold (600)",
-                        "700": "Bold (700)",
-                        "800": "Extra Bold (800)",
-                        "900": "Black (900)"
-                    },
-                    "default_value": 400,
-                    "return_format": "value",
-                    "multiple": 0,
-                    "allow_null": 0,
-                    "ui": 0,
-                    "ajax": 0,
-                    "placeholder": ""
-                },
-                {
-                    "key": "field_65d618c047488",
-                    "label": "Border Radius",
-                    "name": "border_radius",
-                    "aria-label": "",
-                    "type": "number",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "min": "",
-                    "max": "",
-                    "placeholder": "",
-                    "step": "",
-                    "prepend": "",
-                    "append": ""
-                }
-            ]
+            "choices": {
+                "primary": "Primary",
+                "secondary": "Secondary"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
         },
         {
-            "key": "field_65d6190e47489",
-            "label": "Secondary",
-            "name": "button_secondary",
+            "key": "field_65df24a361147",
+            "label": "Font Weight",
+            "name": "font_weight",
             "aria-label": "",
-            "type": "group",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -89,64 +42,46 @@
                 "class": "",
                 "id": ""
             },
-            "layout": "block",
-            "sub_fields": [
-                {
-                    "key": "field_65df24c361148",
-                    "label": "Font Weight",
-                    "name": "font_weight",
-                    "aria-label": "",
-                    "type": "select",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "100": "Thin (100)",
-                        "200": "Extra Light (200)",
-                        "300": "Light (300)",
-                        "400": "Regular (400)",
-                        "500": "Medium (500)",
-                        "600": "Semi-Bold (600)",
-                        "700": "Bold (700)",
-                        "800": "Extra Bold (800)",
-                        "900": "Black (900)"
-                    },
-                    "default_value": 400,
-                    "return_format": "value",
-                    "multiple": 0,
-                    "allow_null": 0,
-                    "ui": 0,
-                    "ajax": 0,
-                    "placeholder": ""
-                },
-                {
-                    "key": "field_65d6190e4748d",
-                    "label": "Border Radius",
-                    "name": "border_radius",
-                    "aria-label": "",
-                    "type": "number",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "min": "",
-                    "max": "",
-                    "placeholder": "",
-                    "step": "",
-                    "prepend": "",
-                    "append": ""
-                }
-            ]
+            "choices": {
+                "100": "Thin (100)",
+                "200": "Extra Light (200)",
+                "300": "Light (300)",
+                "400": "Regular (400)",
+                "500": "Medium (500)",
+                "600": "Semi-Bold (600)",
+                "700": "Bold (700)",
+                "800": "Extra Bold (800)",
+                "900": "Black (900)"
+            },
+            "default_value": 400,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_65d618c047488",
+            "label": "Border Radius",
+            "name": "border_radius",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "placeholder": "",
+            "step": "",
+            "prepend": "",
+            "append": ""
         }
     ],
     "location": [
@@ -167,5 +102,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1709122887
+    "modified": 1709719769
 }

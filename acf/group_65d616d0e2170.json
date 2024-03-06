@@ -114,7 +114,7 @@
                 {
                     "key": "field_65d616d0eb389",
                     "label": "Family",
-                    "name": "family_h1",
+                    "name": "font_family",
                     "aria-label": "",
                     "type": "select",
                     "instructions": "",
@@ -204,7 +204,7 @@
                 {
                     "key": "field_65d616d0ed68f",
                     "label": "Family",
-                    "name": "family_h2",
+                    "name": "font_family",
                     "aria-label": "",
                     "type": "select",
                     "instructions": "",
@@ -281,7 +281,7 @@
                 {
                     "key": "field_65d616d0ef8e5",
                     "label": "Family",
-                    "name": "family_h3",
+                    "name": "font_family",
                     "aria-label": "",
                     "type": "select",
                     "instructions": "",
@@ -358,7 +358,7 @@
                 {
                     "key": "field_65d61d45b33a4",
                     "label": "Family",
-                    "name": "family_h4",
+                    "name": "font_family",
                     "aria-label": "",
                     "type": "select",
                     "instructions": "",
@@ -402,5 +402,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1709306440
+    "modified": 1709743476
 }
