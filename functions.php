@@ -6,6 +6,14 @@
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
+$block_functions_to_include = array('image-compare', 'timeline', 'hero');
+
+foreach ($block_functions_to_include as $block) {
+  $directory = get_stylesheet_directory() . '/blocks/' . $block . '/functions.php';
+
+  if (file_exists($directory))
+    include_once $directory;
+}
 
 /**
  * Enqueue the child theme
@@ -32,36 +40,16 @@ function ezpzconsultations_enqueue_styles() {
     $version,
     true
   );
-  wp_enqueue_script(
-    'ezpz-consultations-twentytwenty',
-    get_stylesheet_directory_uri() . '/js/twentytwenty.min.js',
-    array('jellypress-scripts'),
-    $version,
-    true
-  );
-  wp_enqueue_script(
-    'ezpz-consultations-twentytwenty-js',
-    get_stylesheet_directory_uri() . '/js/jquery.twentytwenty.js',
-    array('jellypress-scripts'),
-    $version,
-    true
-  );
-  wp_enqueue_script(
-    'ezpz-consultations-event-move',
-    get_stylesheet_directory_uri() . '/js/jquery.event.move.js',
-    array('jellypress-scripts'),
-    $version,
-    true
-  );
 }
 
-add_action('acf/init', 'register_blocks', 20);
-add_action('wp_enqueue_scripts', 'enqueue_block_scripts');
-add_filter('ezpz_allowed_blocks', 'add_to_allowed_blocks', 10, 1);
-//change to ezpz_consultation_blocks
-$blocks = array('timeline', 'image-compare');
+add_action('acf/init', 'ezpzconsultations_register_blocks', 20);
+add_action('wp_enqueue_scripts', 'ezpzconsultations_enqueue_block_scripts');
+add_filter('allowed_block_types_all', 'ezpzconsultations_add_to_allowed_blocks', 20, 1);
 
-function register_blocks() {
+//change to ezpconsultation_blocks
+$blocks = array('timeline', 'image-compare', 'hero');
+
+function ezpzconsultations_register_blocks() {
   global $blocks;
   foreach ($blocks as $slug) {
 
@@ -72,14 +60,32 @@ function register_blocks() {
     }
   }
 }
-function add_to_allowed_blocks($allowed_blocks) {
+
+function ezpzconsultations_add_to_allowed_blocks($allowed_blocks) {
   global $blocks;
+
+  // var_dump("testtttt");
+
+  // unset($allowed_blocks[array_search('ezpz/hero-page', $allowed_blocks)]);
+  // unset($allowed_blocks[array_search('ezpz/hero-post', $allowed_blocks)]);
+
+  // Remove ezpz/hero-page and ezpz/hero-post from $allowed_blocks
+  // unset($allowed_blocks['ezpz/hero-post']);
+  // unset($allowed_blocks['ezpz/hero-page']);
+
   foreach ($blocks as $slug) {
     $allowed_blocks[] = 'ezpz/' . $slug;
   }
+
+  // var_dump($allowed_blocks);
+
   return $allowed_blocks;
 }
-function enqueue_block_scripts() {
+
+
+
+
+function ezpzconsultations_enqueue_block_scripts() {
   global $blocks;
   foreach ($blocks as $slug) {
     if (file_exists(get_stylesheet_directory(__FILE__) . '/blocks/' . $slug . '/scripts.js')) {
@@ -222,6 +228,8 @@ function ezpzconsultations_save_acf_local_json($group) {
     'group_65d6168f43085',
     'group_65d6172da0577',
     'group_65e1fd5aec57b',
+    'group_65e6eb7aed060',
+    'group_65e9b645cb80d',
     'group_64c2957a5ef4e'
   );
   if (in_array($group['key'], $groups)) {
@@ -298,9 +306,6 @@ function ezpzconsultations_save_theme_settings_to_json($post_id) {
   $secondary_colour_500 = $secondary_palette['500'];
 
 
-  error_log($primary_colour_500);
-  error_log($secondary_colour_500);
-  error_log($post_id);
   if ($post_id == 'globalcolors') {
     // See if theme.json exists
     $theme_json = get_stylesheet_directory() . '/theme.json';
@@ -308,20 +313,6 @@ function ezpzconsultations_save_theme_settings_to_json($post_id) {
       $theme_json = file_get_contents($theme_json);
       $theme_json = json_decode($theme_json, true);
 
-      error_log("anything");
-
-
-      // TODO: FOR PRIMARY AND SECONDARY GENERATE;
-      // primary-500
-      // primary-100
-      // sec
-      // Also force a white option - and black?
-      /**
-       * .block.bg-primary-500
-       * - You need to get your primary 500 value
-       * - Get the default font colour whoch will be whatever neutral, 900 resolves to
-       * compare against the bg-primary-500 colour, and against white. To see what has the best contrast afgainst the backgrpi8md
-       */
 
       $colors = array(
         "primary-100" => $primary_colour_100,
@@ -371,6 +362,13 @@ function ezpzconsultations_get_font_family($font_key, $theme_opts) {
 
   return $font_family;
 }
+/**
+ * Remove default additional CSS section from customizer
+ */
+function ezpzconsultations_customize_register($wp_customize) {
+  $wp_customize->remove_section('custom_css');
+}
+add_action('customize_register', 'ezpzconsultations_customize_register');
 
 /**
  * Outputs custom CSS in the header based on the ACF options
@@ -565,6 +563,7 @@ function ezpzconsultations_add_custom_css() {
         --font-secondary: <?php echo $secondary_font_family ?>;
 
         --color-headings-preferred: <?php echo $color_headings_preferred ?>;
+        --color-section-headings: <?php echo $color_headings_preferred ?>;
       }
 
 
@@ -595,7 +594,6 @@ function ezpzconsultations_add_custom_css() {
       ?>
 
       /* Buttons */
-      /* Primary button */
       <?php if (!empty($button_colour) || !empty($button_font_weight) || !empty($button_border_radius)) : ?>.button,
       [type=button],
       [type=reset],
@@ -643,8 +641,6 @@ function ezpzconsultations_add_custom_css() {
       <?php echo $css_class; ?>a:not(.button):focus,
       <?php echo $css_class; ?>a:not(.button):visited,
       <?php echo $css_class; ?>a:not(.button):link,
-
-
       <?php echo $css_class; ?>a:not(.button) {
         color: <?php echo ezpzconsultations_calculate_contrast($bg_color); ?>;
         --color-section-text: <?php echo ezpzconsultations_calculate_contrast($bg_color); ?>;
@@ -654,7 +650,6 @@ function ezpzconsultations_add_custom_css() {
 
       }
 
-
       <?php
       }
 
@@ -662,11 +657,8 @@ function ezpzconsultations_add_custom_css() {
     </style>
 
 <?php
-
-
   endif;
 }
-
 
 // Master To Do List:
 // Override header.php

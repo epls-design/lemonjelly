@@ -1,0 +1,88 @@
+/* Add your styles here, and they will be compiled down into the styles.css file. */
+.hero {
+	min-height: 50vh;
+	padding-top: 148.922px;
+	.hero-image {
+		height: 100%;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		&:before {
+			background: -webkit-gradient(
+				linear,
+				left top,
+				right top,
+				from(var(--color-primary-500)),
+				color-stop(70%, var(--color-secondary-500)),
+				to(var(--color-tertiary-500))
+			);
+			background: linear-gradient(
+				to right,
+				var(--color-primary-500) 0,
+				var(--color-secondary-500) 70%,
+				var(--color-tertiary-500) 100%
+			);
+			content: "";
+			display: block;
+			height: 100%;
+			opacity: 1;
+			opacity: 0.7;
+			position: absolute;
+			top: 0;
+			width: 100%;
+			z-index: 1;
+		}
+		&:after {
+			background: linear-gradient(
+				60deg,
+				rgba(0, 0, 0, 0.6),
+				rgba(0, 0, 0, 0) 60%
+			);
+			content: "";
+			display: block;
+			height: 100%;
+			mix-blend-mode: multiply;
+			opacity: 1;
+			opacity: 0.8;
+			position: absolute;
+			top: 0;
+			width: 100%;
+			z-index: 1;
+		}
+	}
+	&:before {
+		background: url(img/favicon_overlay.svg) no-repeat 100% 0;
+		bottom: -40%;
+		content: "";
+		display: block;
+		max-width: 43.75rem;
+		mix-blend-mode: darken;
+		opacity: 0.1;
+		position: absolute;
+		right: 0;
+		width: 70%;
+		z-index: 4;
+	}
+}
+.hero > .container {
+	position: relative;
+	z-index: 2;
+}
+@supports (aspect-ratio: 6/4) {
+	.hero:before {
+		aspect-ratio: 6 / 4;
+	}
+}
+
+//Navbar
+.main-navigation {
+	background: transparent;
+	background-color: transparent;
+	left: 0;
+	position: absolute;
+	top: 0;
+	-webkit-transition: background-color 0.3s ease, top 0.3s ease;
+	transition: background-color 0.3s ease, top 0.3s ease;
+	width: 100%;
+	z-index: 50000;
+}

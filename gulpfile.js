@@ -62,6 +62,8 @@ function watchTask(done) {
 	watch(["./src/scss/*.scss"], sassProcessSite);
 	watch("./blocks/**/*.scss", sassProcess);
 	watch(["./src/js/*.js"], series(javascriptLint, javascriptProcess));
+	// Watch for changes to acf
+	watch("acf/*.json", moveBlockJson);
 	done();
 }
 
@@ -91,6 +93,52 @@ function sassProcessSite() {
 			})
 		)
 		.pipe(dest("./"));
+}
+
+function moveBlockJson(done) {
+	/** Get All files within the acf folder
+	 * Loop through each file, and look for the property location.value
+	 * If location.param == 'block' then search in value for the text after the character '/'
+	 * Save this value as a variable and then check if a folder exists in /blocks
+	 * with the same name. If it does, move the file to that folder.
+	 */
+	// Get all files in acf-json
+	files = fs.readdirSync("acf");
+	let blocksFolder = "blocks";
+
+	files.forEach(function (stream, file) {
+		// Get the absolute path to the acf json file
+		// Get relative path to the acf json file
+		file = "acf/" + stream;
+		if (stream != ".DS_Store") {
+			// Convert the file into a json object
+			var jsonContent = JSON.parse(fs.readFileSync(file));
+
+			// If jsonContent.title contains 'Blocks > ' then we know it's a block
+			let acfTitle = jsonContent.title;
+
+			let blockName;
+
+			if (acfTitle.includes("Block > ")) {
+				blockName = acfTitle.split("Block > ")[1];
+			} else if (acfTitle.includes("Block &gt; ")) {
+				blockName = acfTitle.split("Block &gt; ")[1];
+			}
+
+			if (blockName) {
+				// Remove 'and' from the block name
+				blockName = blockName.replace("and", "");
+				// Replace whitespace with hyphens and make lowercase
+				blockName = blockName.replace(/\s+/g, "-").toLowerCase();
+				// Check if the block folder exists
+				if (fs.existsSync(blocksFolder + "/" + blockName)) {
+					// Move the file to the block folder
+					fs.renameSync(file, blocksFolder + "/" + blockName + "/" + stream);
+				}
+			}
+		}
+		done();
+	});
 }
 
 // Tasks which run on $ gulp build
