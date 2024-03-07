@@ -377,8 +377,6 @@ function ezpzconsultations_get_font_family($font_key, $theme_opts) {
  */
 add_action('wp_head', 'ezpzconsultations_add_custom_css', 100);
 //TODO: main header colors are also changing
-//add_action('admin_head', 'ezpzconsultations_add_custom_css', 100);
-
 
 function ezpzconsultations_add_custom_css() {
 
@@ -396,8 +394,9 @@ function ezpzconsultations_add_custom_css() {
       $error_colour = get_field('error_colour', 'globalcolors') ?: '#FF4444';
       $color_headings_preferred = get_field('headings_preferred_colour', 'globalcolors') ?: 'var(--color-headings-preferred)';
 
-      $custom_css = get_field('custom_css', 'custom_css') ?: '';
+      $custom_css = get_field('custom_css', 'customcss') ?: '';
 
+      var_dump($custom_css);
       // Typography / Fonts / Heading Colours
       $primary_font_family = get_field('primary_font_family', 'globaltypography') ?: 'var(--font-primary)';
       $secondary_font_family = get_field('secondary_font_family', 'globaltypography') ?: 'var(--font-primary)';
