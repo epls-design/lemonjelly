@@ -44,7 +44,7 @@ function ezpzconsultations_enqueue_styles() {
 
 add_action('acf/init', 'ezpzconsultations_register_blocks', 20);
 add_action('wp_enqueue_scripts', 'ezpzconsultations_enqueue_block_scripts');
-add_filter('allowed_block_types_all', 'ezpzconsultations_add_to_allowed_blocks', 20, 1);
+//add_filter('allowed_block_types_all', 'ezpzconsultations_add_to_allowed_blocks', 20, 1);
 
 //change to ezpconsultation_blocks
 $blocks = array('timeline', 'image-compare', 'hero');
@@ -401,15 +401,18 @@ function ezpzconsultations_add_custom_css() {
 
       $custom_css = get_field('custom_css', 'customcss') ?: '';
 
-      var_dump($custom_css);
+      // var_dump($custom_css);
       // Typography / Fonts / Heading Colours
       $primary_font_family = get_field('primary_font_family', 'globaltypography') ?: 'var(--font-primary)';
       $secondary_font_family = get_field('secondary_font_family', 'globaltypography') ?: 'var(--font-primary)';
 
       // Buttons
       $button_colour = get_field('colour', 'buttons') ?: "";
-      $button_border_radius = (get_field('border_radius', 'buttons') ?: ".5rem") . "px";
+      //TODO: button radius not working when customised
+      $button_border_radius = get_field('value', 'buttons');
+      $button_border_radius_unit = get_field('unit', 'buttons');
 
+      var_dump('customiseddddd' . $button_border_radius . $button_border_radius_unit);
       $button_font_weight = get_field('font_weight', 'buttons') ?: '400';
 
       $padding_decrease = get_field('padding_decrease', 'globalpadding') ?: '0';
@@ -478,7 +481,12 @@ function ezpzconsultations_add_custom_css() {
 
       //Buttons
       $button_colour = isset($theme_opts['buttons']['colour']) ? $theme_opts['buttons']['colour'] : "";
-      $button_border_radius = isset($theme_opts['buttons']['border_radius']) ? $theme_opts['buttons']['border_radius'] . 'px' : '.5rem';
+
+
+      $button_border_radius = isset($theme_opts['buttons']['border_radius_value']) ? $theme_opts['buttons']['border_radius_value'] : '.5rem';
+
+      $button_border_radius_unit = isset($theme_opts['buttons']['border_radius_unit']) ? $theme_opts['buttons']['border_radius_unit'] : 'px';
+
       $button_font_weight = isset($theme_opts['buttons']['font_weight']) ? $theme_opts['buttons']['font_weight'] : '400';
 
       $padding_decrease = isset($theme_opts['globalpadding']['padding_decrease']) ? $theme_opts['globalpadding']['padding_decrease'] : '0';
@@ -514,9 +522,9 @@ function ezpzconsultations_add_custom_css() {
     // Example usage with theme options
 
     //if ($theme_opts['branding']["main_logo"]) echo $theme_opts['branding']["main_logo"];
-    // echo "<pre>";
-    // var_dump($theme_opts);
-    // echo "</pre>";
+    echo "<pre>";
+    var_dump($theme_opts);
+    echo "</pre>";
 
     //Generate colours
     include('set-color-palette.php');
@@ -654,8 +662,7 @@ function ezpzconsultations_add_custom_css() {
       a.button,
       .button {
         <?php if ($button_font_weight) : ?>font-weight: <?php echo $button_font_weight; ?>;
-        <?php endif; ?><?php if ($button_border_radius) : ?>border-radius: <?php echo $button_border_radius; ?>;
-
+        <?php endif; ?><?php if ($button_border_radius) : ?>border-radius: <?php echo $button_border_radius . $button_border_radius_unit; ?>;
         <?php endif; ?><?php if (!empty($button_colour) && $button_colour == "primary") : ?>--button-color-theme: <?php echo $primary_colour_500 ?>;
         --button-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500); ?>;
         --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500); ?>;
