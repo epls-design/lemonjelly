@@ -63,7 +63,6 @@ function ezpzconsultations_register_blocks() {
 
 function ezpzconsultations_add_to_allowed_blocks($allowed_blocks) {
   global $blocks;
-
   // var_dump("testtttt");
 
   // unset($allowed_blocks[array_search('ezpz/hero-page', $allowed_blocks)]);
@@ -77,7 +76,7 @@ function ezpzconsultations_add_to_allowed_blocks($allowed_blocks) {
     $allowed_blocks[] = 'ezpz/' . $slug;
   }
 
-  // var_dump($allowed_blocks);
+  var_dump($allowed_blocks);
 
   return $allowed_blocks;
 }
@@ -383,6 +382,14 @@ function ezpzconsultations_add_custom_css() {
   if (isset($_POST['customized'])) {
     //get fields for customizer
     if (!empty($theme_opts)) :
+
+      //if ($theme_opts['branding']["main_logo"]) echo $theme_opts['branding']["main_logo"];
+      // $main_logo = get_field('branding', 'main_logo') ?: '';
+      // $main_logo_data = wp_get_attachment_image_src($main_logo, 'full');
+      // $original_image_url = $main_logo_data[0];
+      // var_dump($original_image_url);
+      //$main_logo = get_field('primary_colour', 'globalcolors') ?: '#ff3c74';
+
       // Global Colours
       $primary_colour = get_field('primary_colour', 'globalcolors') ?: '#ff3c74';
       $secondary_colour = get_field('secondary_colour', 'globalcolors') ?: '#ffa0cd';
@@ -449,6 +456,11 @@ function ezpzconsultations_add_custom_css() {
     endif;
   } else {
     if (!empty($theme_opts)) :
+      // $main_logo = $theme_opts['branding']['main_logo'];
+      // $main_logo_data = wp_get_attachment_image_src($main_logo, 'full');
+      // $original_image_url = $main_logo_data[0];
+      //var_dump($original_image_url);
+
       $primary_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['primary_colour'] : "#ff3c74";
       $secondary_colour = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['secondary_colour'] : "#ffa0cd";
       $neutral_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['neutral_colour'] : "#64748b";
@@ -527,6 +539,47 @@ function ezpzconsultations_add_custom_css() {
 ?>
 
     <style type="text/css">
+      /* Navbar */
+
+      .navbar-menu li a:hover::after {
+        background-color: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500); ?>;
+      }
+
+      .main-navigation .navbar-menu li a,
+      .main-navigation .navbar-menu li a:hover {
+        color: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500); ?>;
+      }
+
+      .main-navigation.bg-primary-500 {
+        background-color: <?php echo $primary_colour_500 ?>;
+        background: <?php echo $primary_colour_500 ?>;
+        z-index: 99;
+        position: fixed;
+      }
+
+      .main-navigation.bg-primary-500 .navbar-menu li a:hover::after {
+        background-color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500); ?>;
+      }
+
+
+      .main-navigation.bg-primary-500 .navbar-menu li a,
+      .main-navigation.bg-primary-500 .navbar-menu li a:hover {
+
+        color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500); ?>;
+
+      }
+
+      /* Hero */
+      .hero p,
+      .hero h1,
+      .hero h2,
+      .hero h3,
+      .hero h4,
+      .hero li,
+      .hero a {
+        color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500); ?> !important;
+      }
+
       /* Paddings */
       header.block,
       section.block {

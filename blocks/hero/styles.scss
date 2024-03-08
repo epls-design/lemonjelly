@@ -1,12 +1,21 @@
 /* Add your styles here, and they will be compiled down into the styles.css file. */
 .hero {
 	min-height: 50vh;
-	padding-top: 148.922px;
+	padding-top: 148.922px !important;
 	.hero-image {
 		height: 100%;
 		position: absolute;
 		top: 0;
 		width: 100%;
+		img {
+			height: 100%;
+			filter: grayscale(100%);
+			object-fit: cover;
+
+			object-position: center;
+			width: 100%;
+		}
+
 		&:before {
 			background: -webkit-gradient(
 				linear,
@@ -14,18 +23,17 @@
 				right top,
 				from(var(--color-primary-500)),
 				color-stop(70%, var(--color-secondary-500)),
-				to(var(--color-tertiary-500))
+				to(var(--color-secondary-300))
 			);
 			background: linear-gradient(
 				to right,
 				var(--color-primary-500) 0,
 				var(--color-secondary-500) 70%,
-				var(--color-tertiary-500) 100%
+				var(--color-secondary-300) 100%
 			);
 			content: "";
 			display: block;
 			height: 100%;
-			opacity: 1;
 			opacity: 0.7;
 			position: absolute;
 			top: 0;
@@ -63,6 +71,9 @@
 		width: 70%;
 		z-index: 4;
 	}
+	& + section {
+		z-index: 5;
+	}
 }
 .hero > .container {
 	position: relative;
@@ -81,7 +92,6 @@
 	left: 0;
 	position: absolute;
 	top: 0;
-	-webkit-transition: background-color 0.3s ease, top 0.3s ease;
 	transition: background-color 0.3s ease, top 0.3s ease;
 	width: 100%;
 	z-index: 50000;
