@@ -7,7 +7,7 @@
             "label": "Main Logo",
             "name": "main_logo",
             "aria-label": "",
-            "type": "text",
+            "type": "image",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -16,11 +16,16 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
         },
         {
             "key": "field_65d61effddf6f",
@@ -51,9 +56,9 @@
     "location": [
         [
             {
-                "param": "customizer",
+                "param": "options_page",
                 "operator": "==",
-                "value": "branding"
+                "value": "theme-options"
             }
         ]
     ],
@@ -66,5 +71,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1709894143
+    "modified": 1710257459
 }

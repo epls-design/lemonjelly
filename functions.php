@@ -44,7 +44,7 @@ function ezpzconsultations_enqueue_styles() {
 
 add_action('acf/init', 'ezpzconsultations_register_blocks', 20);
 add_action('wp_enqueue_scripts', 'ezpzconsultations_enqueue_block_scripts');
-//add_filter('allowed_block_types_all', 'ezpzconsultations_add_to_allowed_blocks', 20, 1);
+//add_filter('allowed_block_types_all', 'ezpzconsultations_add_to_allowed_blocks', 100, 1);
 
 //change to ezpconsultation_blocks
 $blocks = array('timeline', 'image-compare', 'hero');
@@ -409,13 +409,15 @@ function ezpzconsultations_add_custom_css() {
       // Buttons
       $button_colour = get_field('colour', 'buttons') ?: "";
       //TODO: button radius not working when customised
-      $button_border_radius = get_field('value', 'buttons');
-      $button_border_radius_unit = get_field('unit', 'buttons');
+      $button_border_radius = get_field('border_radius_value', 'buttons');
+      $button_border_radius_unit = get_field('border_radius_unit', 'buttons');
 
-      var_dump('customiseddddd' . $button_border_radius . $button_border_radius_unit);
       $button_font_weight = get_field('font_weight', 'buttons') ?: '400';
 
-      $padding_decrease = get_field('padding_decrease', 'globalpadding') ?: '0';
+      $padding_decrease_desktop = (get_field('padding_decrease_desktop', 'globalpadding') ?: '0') . 'px';
+      $padding_decrease_tablet = (get_field('padding_decrease_tablet', 'globalpadding') ?: '0') . 'px';
+
+      //var_dump('customiseddddd' . $padding_decrease_desktop . $padding_decrease_tablet);
 
       // Define an array of headings and their corresponding ACF field keys
       $font_fields = [
@@ -489,7 +491,8 @@ function ezpzconsultations_add_custom_css() {
 
       $button_font_weight = isset($theme_opts['buttons']['font_weight']) ? $theme_opts['buttons']['font_weight'] : '400';
 
-      $padding_decrease = isset($theme_opts['globalpadding']['padding_decrease']) ? $theme_opts['globalpadding']['padding_decrease'] : '0';
+      $padding_decrease_desktop = isset($theme_opts['globalpadding']['padding_decrease_desktop']) ? $theme_opts['globalpadding']['padding_decrease_desktop'] . 'px' : '0px';
+      $padding_decrease_tablet = isset($theme_opts['globalpadding']['padding_decrease_tablet']) ? $theme_opts['globalpadding']['padding_decrease_tablet'] . 'px' : '0px';
 
       /* Headings - Global Typography */
       // Define an array of headings, their corresponding CSS properties, and their corresponding font family keys
@@ -522,9 +525,9 @@ function ezpzconsultations_add_custom_css() {
     // Example usage with theme options
 
     //if ($theme_opts['branding']["main_logo"]) echo $theme_opts['branding']["main_logo"];
-    echo "<pre>";
-    var_dump($theme_opts);
-    echo "</pre>";
+    // echo "<pre>";
+    // var_dump($theme_opts);
+    // echo "</pre>";
 
     //Generate colours
     include('set-color-palette.php');
@@ -589,19 +592,12 @@ function ezpzconsultations_add_custom_css() {
       }
 
       /* Paddings */
-      header.block,
-      section.block {
-        padding-bottom: calc(0.5rem - <?php echo $padding_decrease; ?>px);
-        padding-top: calc(2rem - <?php echo $padding_decrease; ?>px);
-        position: relative;
-      }
-
       @media (min-width: 37.5em) {
 
         header.block,
         section.block {
-          padding-bottom: calc(2.5rem - <?php echo $padding_decrease; ?>px);
-          padding-top: calc(4rem - <?php echo $padding_decrease; ?>px);
+          padding-bottom: calc(2.5rem - <?php echo "min(max($padding_decrease_tablet, 0px), 20px)" ?>);
+          padding-top: calc(4rem - <?php echo "min(max($padding_decrease_tablet, 0px), 20px)" ?>);
         }
       }
 
@@ -609,8 +605,8 @@ function ezpzconsultations_add_custom_css() {
 
         header.block,
         section.block {
-          padding-bottom: calc(4.5rem - <?php echo $padding_decrease; ?>px);
-          padding-top: calc(6rem - <?php echo $padding_decrease; ?>px);
+          padding-bottom: calc(4.5rem - <?php echo "min(max($padding_decrease_desktop, 0px), 50px)" ?>);
+          padding-top: calc(6rem - <?php echo "min(max($padding_decrease_desktop, 0px), 50px)" ?>);
         }
       }
 

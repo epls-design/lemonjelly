@@ -20,11 +20,25 @@
 			"link": false,
 			"text": false
 		},
-		"customClassName": false,
+		"customClassName": true,
 		"html": false,
 		"multiple": false
 	},
-	"styles": [],
+	"styles": [
+		{
+			"name": "default",
+			"label": "Default",
+			"isDefault": true
+		},
+		{
+			"name": "bg-overlay-white",
+			"label": "White Overlay"
+		},
+		{
+			"name": "bg-overlay-black",
+			"label": "Black Overlay"
+		}
+	],
 	"acf": {
 		"mode": "preview",
 		"renderTemplate": "view.php",

@@ -14,18 +14,10 @@
 defined('ABSPATH') || exit;
 
 $is_menu_off_canvas = true; // change this to determine the menu type
-// $main_logo = isset($theme_opts['branding']['main_logo']) ? $theme_opts['branding']['main_logo'] : "";
-// var_dump($main_logo);
-$theme_opts = ezpzconsultations_get_theme_opts();
-// $logo_image = $theme_opts['branding']['main_logo'];
 
-// $image_id = $theme_opts['branding']['main_logo'];
-// $image_data = wp_get_attachment_image_src($image_id, 'full');
-// $original_image_url = $image_data[0];
-// var_dump($original_image_url);
-// echo "<pre>";
-// var_dump($theme_opts);
-// echo "</pre>";
+$fields = get_fields('options');
+$main_logo = $fields['main_logo'];
+
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
@@ -48,12 +40,10 @@ $theme_opts = ezpzconsultations_get_theme_opts();
       <nav id="site-navigation" class="navbar main-navigation">
         <div class="container">
           <div class="navbar-brand site-branding">
-            <?php if ($logo_image = $theme_opts['branding']['main_logo']) : ?>
+            <?php if ($main_logo) : ?>
               <span class="site-title navbar-item" style="display:block">
                 <a class="site-logo navbar-item" href="<?php echo esc_url(home_url('/')); ?>" rel="home">
-                  <!-- <?php echo wp_get_attachment_image($logo_image, 'full'); ?> -->
-                  <?php _e('<img src="https://ezpz-consultations-2023.local/wp-content/uploads/2024/03/epls-logo-e1623404884239.png" alt="' . get_bloginfo('description', 'display') . '">', 'jellypress'); ?>
-
+                  <?php echo wp_get_attachment_image($main_logo, 'full'); ?>
                 </a>
               </span>
             <?php endif; ?>
