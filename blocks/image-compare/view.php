@@ -2,6 +2,10 @@
 
 /**
  * Image Compare Block Template.
+ * NOTE: This block requires zurb-twentytwenty to be installed via npm.
+ * @see https://www.npmjs.com/package/zurb-twentytwenty
+ * The block javascript files are manually copied from NPM.
+ * So if the version ever gets bumped, you'll need to copy them here.
  *
  * @param array $block The block settings and attributes.
  * @param string $content The block inner HTML (empty).
@@ -22,6 +26,7 @@
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
+wp_enqueue_script('twentytwenty-init');
 
 $block_attributes = jellypress_get_block_attributes($block, $context);
 
@@ -33,12 +38,13 @@ $text_align = $block_attributes['text_align'];
 
 $first_image = $fields['first_image'];
 $second_image = $fields['second_image'];
+
 ?>
 
 <section class="<?php echo $block_attributes['class']; ?>" <?php echo $block_attributes['anchor']; ?>>
   <div class="container">
 
-    <div id="container1" class="twentytwenty-container">
+    <div class="twentytwenty-container">
       <!-- The before image is first -->
       <?php if ($first_image) {  ?>
         <img src="<?php echo $first_image; ?>" />

@@ -8,6 +8,7 @@ const pkg = require("./package.json");
 const fs = require("fs");
 const path = require("path");
 const glob = require("glob");
+var merge = require("merge-stream");
 
 var eslint = require("gulp-eslint");
 var uglify = require("gulp-uglify");
@@ -15,6 +16,7 @@ var concat = require("gulp-concat");
 var sass = require("gulp-sass")(require("sass"));
 var postcss = require("gulp-postcss");
 var pxtorem = require("postcss-pxtorem");
+var sassGlob = require("gulp-sass-glob");
 var autoprefixer = require("autoprefixer");
 var cssnano = require("cssnano");
 
@@ -29,7 +31,7 @@ var sassProcessors = [
 		mediaQuery: false, // Do not apply within media queries (we use em instead)
 		minPixelValue: 0,
 	}),
-	cssnano(),
+	// cssnano(),
 ];
 
 // Sets options which are used later on in this file
@@ -47,21 +49,27 @@ const opts = {
 		" *  License: <%= pkg.license %>\n" +
 		" *  Text Domain: <%= pkg.text_domain %> */ \n",
 };
-var sassOptions = {
-	errLogToConsole: true,
-	outputStyle: "expanded",
-};
-function sassProcess() {
-	return src("./blocks/**/*.scss")
-		.pipe(sass(sassOptions).on("error", sass.logError))
-		.pipe(postcss(sassProcessors))
-		.pipe(dest("./blocks"));
+
+function copyLibs() {
+	var twentytwenty = src(
+		"node_modules/zurb-twentytwenty/js/jquery.event.move.js"
+	)
+		.pipe(uglify({ mangle: true }))
+		.pipe(dest("./blocks/image-compare/lib/"));
+
+	var jQueryMove = src(
+		"node_modules/zurb-twentytwenty/js/jquery.twentytwenty.js"
+	)
+		.pipe(uglify({ mangle: true }))
+		.pipe(dest("./blocks/image-compare/lib/"));
+
+	return merge(twentytwenty, jQueryMove);
 }
+
 // Tasks which watch for changes in specified files/dirs and run tasks based on filetypes edited
 function watchTask(done) {
-	watch(["./src/scss/*.scss"], sassProcessSite);
-	watch("./blocks/**/*.scss", sassProcess);
-	watch(["./src/js/*.js"], series(javascriptLint, javascriptProcess));
+	watch(["./src/scss/*.scss", "blocks/**/*.scss"], sassProcessSite);
+	// watch(["./src/js/*.js"], series(javascriptLint, javascriptProcess));
 	// Watch for changes to acf
 	watch("acf/*.json", moveBlockJson);
 	done();
@@ -74,17 +82,18 @@ function javascriptLint(done) {
 }
 
 // Tasks which process the core javascript files
-function javascriptProcess() {
-	return src(["./src/js/*.js"])
-		.pipe(concat("theme.min.js"))
-		.pipe(uglify({ mangle: true }))
-		.pipe(dest("./js/"));
-}
+// function javascriptProcess() {
+// 	return src(["./src/js/*.js"])
+// 		.pipe(concat("theme.min.js"))
+// 		.pipe(uglify({ mangle: true }))
+// 		.pipe(dest("./js/"));
+// }
 
 // Process Theme Sass
 function sassProcessSite() {
 	return src("./src/scss/compile.scss")
-		.pipe(sass())
+		.pipe(sassGlob())
+		.pipe(sass({ includePaths: ["node_modules"] }).on("error", sass.logError))
 		.pipe(postcss(sassProcessors))
 		.pipe(rename("style.css"))
 		.pipe(
@@ -143,7 +152,8 @@ function moveBlockJson(done) {
 
 // Tasks which run on $ gulp build
 const buildScripts = series(
-	parallel(sassProcessSite, series(javascriptLint, javascriptProcess))
+	copyLibs
+	// parallel(sassProcessSite, series(javascriptLint, javascriptProcess))
 );
 
 // Tasks which run on $ gulp

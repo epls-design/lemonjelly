@@ -19,7 +19,15 @@ foreach ($block_functions_to_include as $block) {
  * Enqueue the child theme
  */
 add_action('wp_enqueue_scripts', 'ezpzconsultations_enqueue_styles');
-add_editor_style('style.css');
+
+
+
+function wpdocs_theme_add_editor_styles() {
+  add_editor_style('style.css');
+  add_editor_style('consultation.css');
+}
+add_action('admin_init', 'wpdocs_theme_add_editor_styles', 200);
+
 
 function ezpzconsultations_enqueue_styles() {
   $theme = wp_get_theme();
@@ -30,7 +38,14 @@ function ezpzconsultations_enqueue_styles() {
     'ezpz-consultations-style',
     get_stylesheet_directory_uri() . '/style.css',
     array('jellypress-styles'),
-    $version
+    $version // TODO: FILEMTIMES
+  );
+
+  wp_enqueue_style(
+    'editors-overrides',
+    get_stylesheet_directory_uri() . '/consultation.css',
+    array(),
+    filemtime(get_stylesheet_directory() . '/consultation.css')
   );
 
   wp_enqueue_script(
@@ -43,7 +58,6 @@ function ezpzconsultations_enqueue_styles() {
 }
 
 add_action('acf/init', 'ezpzconsultations_register_blocks', 20);
-add_action('wp_enqueue_scripts', 'ezpzconsultations_enqueue_block_scripts');
 //add_filter('allowed_block_types_all', 'ezpzconsultations_add_to_allowed_blocks', 100, 1);
 
 //change to ezpconsultation_blocks
@@ -68,7 +82,7 @@ function ezpzconsultations_add_to_allowed_blocks($allowed_blocks) {
   // unset($allowed_blocks[array_search('ezpz/hero-page', $allowed_blocks)]);
   // unset($allowed_blocks[array_search('ezpz/hero-post', $allowed_blocks)]);
 
-  // Remove ezpz/hero-page and ezpz/hero-post from $allowed_blocks
+  // TODO Remove ezpz/hero-page and ezpz/hero-post from $allowed_blocks
   // unset($allowed_blocks['ezpz/hero-post']);
   // unset($allowed_blocks['ezpz/hero-page']);
 
@@ -76,70 +90,11 @@ function ezpzconsultations_add_to_allowed_blocks($allowed_blocks) {
     $allowed_blocks[] = 'ezpz/' . $slug;
   }
 
-  var_dump($allowed_blocks);
+  // var_dump($allowed_blocks);
 
   return $allowed_blocks;
 }
 
-
-
-
-function ezpzconsultations_enqueue_block_scripts() {
-  global $blocks;
-  foreach ($blocks as $slug) {
-    if (file_exists(get_stylesheet_directory(__FILE__) . '/blocks/' . $slug . '/scripts.js')) {
-      $version = filemtime(get_stylesheet_directory(__FILE__) . '/blocks/' . $slug . '/scripts.js');
-
-      // Get file size
-      $size = filesize(get_stylesheet_directory(__FILE__) . '/blocks/' . $slug . '/scripts.js');
-
-      // If file size is greater than 0, enqueue the JS
-      if ($size > 0) {
-        wp_enqueue_script(
-          'block-' . $slug,
-          get_stylesheet_directory_uri() . '/blocks/' . $slug . '/scripts.js',
-          array('jquery', 'jellypress-scripts'),
-          $version,
-          true
-        );
-      }
-    }
-    // Register the CSS
-    if (file_exists(plugin_dir_path(__FILE__) . 'blocks/' . $slug . '/styles.css')) {
-      $version = filemtime(plugin_dir_path(__FILE__) . 'blocks/' . $slug . '/styles.css');
-
-      // Get file size
-      $size = filesize(plugin_dir_path(__FILE__) . 'blocks/' . $slug . '/styles.css');
-
-      // If file size is greater than 0, enqueue the CSS
-      if ($size > 0) {
-        wp_enqueue_style(
-          'block-' . $slug,
-          get_stylesheet_directory_uri() . '/blocks/' . $slug . '/styles.css',
-          array(),
-          $version
-        );
-      }
-    }
-  }
-}
-
-/**
- * Add ACF Option Page for Theme Designer
- */
-// if (function_exists('acf_add_options_page')) {
-//   acf_add_options_page(
-//     array(
-//       'page_title'     => __('Theme Designer', 'ezpzconsultations'),
-//       'menu_title'    => __('Theme Designer', 'ezpzconsultations'),
-//       'menu_slug'     => 'theme-designer',
-//       'capability'  => 'edit_posts',
-//       'icon_url' => 'dashicons-admin-customizer',
-//       'position' => 2,
-//       'autoload' => true,
-//     )
-//   );
-// }
 
 //I am using the https://github.com/mcguffin/acf-customizer
 //TODO : setup dependencies with tgmpluginactivation
@@ -369,10 +324,53 @@ function ezpzconsultations_customize_register($wp_customize) {
 }
 add_action('customize_register', 'ezpzconsultations_customize_register');
 
+
+
+add_action('acf/save_post', 'ezpzconsultations_generate_theme_override_css');
+function ezpzconsultations_generate_theme_override_css($post_id) {
+
+  // TODOD: CHECK I ITS ONE OF YOUR OPTIONS PAGES
+  error_log($post_id);
+
+  if ($post_id == 'globalcolors') {
+    // Get all the fields from customiser, and output into consultation.css
+
+
+    $primary_colour = get_field('primary_colour', 'globalcolors') ?: '#ff3c74';
+
+
+
+
+
+
+
+    $css_file = get_stylesheet_directory() . '/consultation.css';
+
+    if (!file_exists($css_file)) {
+      $css_file = fopen($css_file, "w");
+    }
+
+    //
+
+    $css_data = '
+    :root {
+      --color-primary-500: ' . $primary_colour . ';
+    }';
+
+    file_put_contents($css_file, $css_data);
+  }
+}
+
+
+
+
+
+
+
 /**
  * Outputs custom CSS in the header based on the ACF options
  */
-add_action('wp_head', 'ezpzconsultations_add_custom_css', 100);
+// add_action('wp_head', 'ezpzconsultations_add_custom_css', 100);
 //TODO: main header colors are also changing
 
 function ezpzconsultations_add_custom_css() {
@@ -459,7 +457,11 @@ function ezpzconsultations_add_custom_css() {
       }
 
     endif;
-  } else {
+  }
+
+
+  // TODO: ALL THIS ELSE STUFF NEEDS TO MOVE INTO ezpzconsultations_generate_theme_override_css
+  else {
     if (!empty($theme_opts)) :
       // $main_logo = $theme_opts['branding']['main_logo'];
       // $main_logo_data = wp_get_attachment_image_src($main_logo, 'full');
@@ -533,8 +535,10 @@ function ezpzconsultations_add_custom_css() {
     include('set-color-palette.php');
     include_once 'set-color-contrast.php';
 
+
     $primary_palette = ezpzconsultations_make_color_palette($primary_colour);
     $secondary_palette = ezpzconsultations_make_color_palette($secondary_colour);
+    $neutral_palette = ezpzconsultations_make_color_palette($neutral_colour);
 
     $primary_colour_100 = $primary_palette['100'];
     $primary_colour_500 = $primary_palette['500'];
@@ -542,7 +546,9 @@ function ezpzconsultations_add_custom_css() {
     $secondary_colour_100 = $secondary_palette['100'];
     $secondary_colour_500 = $secondary_palette['500'];
 
-    $neutral_palette = ezpzconsultations_make_color_palette($neutral_colour);
+    $neutral_colour_500 = $neutral_palette['500'];
+
+
     $success_palette = ezpzconsultations_make_color_palette($success_colour);
     $warning_palette = ezpzconsultations_make_color_palette($warning_colour);
     $error_palette = ezpzconsultations_make_color_palette($error_colour);
@@ -553,12 +559,12 @@ function ezpzconsultations_add_custom_css() {
       /* Navbar */
 
       .navbar-menu li a:hover::after {
-        background-color: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500); ?>;
+        background-color: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_500); ?>;
       }
 
       .main-navigation .navbar-menu li a,
       .main-navigation .navbar-menu li a:hover {
-        color: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500); ?>;
+        color: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_500); ?>;
       }
 
       .main-navigation.bg-primary-500 {
@@ -569,26 +575,31 @@ function ezpzconsultations_add_custom_css() {
       }
 
       .main-navigation.bg-primary-500 .navbar-menu li a:hover::after {
-        background-color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500); ?>;
+        background-color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500); ?>;
       }
 
 
       .main-navigation.bg-primary-500 .navbar-menu li a,
       .main-navigation.bg-primary-500 .navbar-menu li a:hover {
 
-        color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500); ?>;
+        color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500); ?>;
 
       }
 
       /* Hero */
-      .hero p,
-      .hero h1,
-      .hero h2,
-      .hero h3,
-      .hero h4,
-      .hero li,
-      .hero a {
-        color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500); ?> !important;
+      /* Default Overlay */
+      // TODO: Foixsop its not sass
+      .hero.default {
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p {
+          color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500); ?> !important;
+        }
       }
 
       /* Paddings */
@@ -660,11 +671,11 @@ function ezpzconsultations_add_custom_css() {
         <?php if ($button_font_weight) : ?>font-weight: <?php echo $button_font_weight; ?>;
         <?php endif; ?><?php if ($button_border_radius) : ?>border-radius: <?php echo $button_border_radius . $button_border_radius_unit; ?>;
         <?php endif; ?><?php if (!empty($button_colour) && $button_colour == "primary") : ?>--button-color-theme: <?php echo $primary_colour_500 ?>;
-        --button-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500); ?>;
-        --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500); ?>;
+        --button-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500); ?>;
+        --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500); ?>;
         <?php else : ?>--button-color-theme: <?php echo $secondary_colour_500 ?>;
-        --button-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500); ?>;
-        --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500); ?>;
+        --button-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_500); ?>;
+        --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_500); ?>;
         <?php endif; ?>
       }
 
@@ -681,9 +692,9 @@ function ezpzconsultations_add_custom_css() {
 
       foreach ($theme_bg_colors as $css_class => $bg_color) {
       ?><?php echo $css_class; ?> {
-        color: <?php echo ezpzconsultations_calculate_contrast($bg_color); ?>;
-        --color-section-text: <?php echo ezpzconsultations_calculate_contrast($bg_color); ?>;
-        --color-headings-preferred: <?php echo ezpzconsultations_calculate_contrast($bg_color); ?>
+        color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
+        --color-section-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
+        --color-headings-preferred: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>
       }
 
       <?php echo $css_class; ?>h1,
@@ -698,17 +709,15 @@ function ezpzconsultations_add_custom_css() {
       <?php echo $css_class; ?>a:not(.button):visited,
       <?php echo $css_class; ?>a:not(.button):link,
       <?php echo $css_class; ?>a:not(.button) {
-        color: <?php echo ezpzconsultations_calculate_contrast($bg_color); ?>;
-        --color-section-text: <?php echo ezpzconsultations_calculate_contrast($bg_color); ?>;
-        --color-headings-preferred: <?php echo ezpzconsultations_calculate_contrast($bg_color); ?>;
-        --button-color-text: <?php echo ezpzconsultations_calculate_contrast($bg_color); ?>;
-        border-color: <?php echo ezpzconsultations_calculate_contrast($bg_color); ?>;
-
+        color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
+        --color-section-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
+        --color-headings-preferred: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
+        --button-color-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
+        border-color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
       }
 
       <?php
       }
-
       ?>
     </style>
 

@@ -10,29 +10,25 @@ defined('ABSPATH') || exit;
 add_action('wp_enqueue_scripts', 'ezpzconsultations_enqueue_scripts');
 
 function ezpzconsultations_enqueue_scripts() {
-  $theme = wp_get_theme();
-
-  $version = $theme->get('Version');
-
-  wp_enqueue_script(
-    'ezpz-consultations-twentytwenty',
-    get_stylesheet_directory_uri() . '/blocks/image-compare/twentytwenty.min.js',
-    array('jellypress-scripts'),
-    $version,
+  wp_register_script(
+    'twentytwenty-init',
+    get_stylesheet_directory_uri() . '/blocks/image-compare/scripts.js',
+    array('twentytwenty'),
+    filemtime(get_stylesheet_directory() . '/blocks/image-compare/scripts.js'),
     true
   );
-  wp_enqueue_script(
-    'ezpz-consultations-twentytwenty-js',
-    get_stylesheet_directory_uri() . '/blocks/image-compare/jquery.twentytwenty.js',
-    array('jellypress-scripts'),
-    $version,
+  wp_register_script(
+    'twentytwenty',
+    get_stylesheet_directory_uri() . '/blocks/image-compare/lib/jquery.twentytwenty.js',
+    array('jquery', 'jquery-event-move'),
+    filemtime(get_stylesheet_directory() . '/blocks/image-compare/lib/jquery.twentytwenty.js'),
     true
   );
-  wp_enqueue_script(
-    'ezpz-consultations-event-move',
-    get_stylesheet_directory_uri() . '/blocks/image-compare/jquery.event.move.js',
-    array('jellypress-scripts'),
-    $version,
+  wp_register_script(
+    'jquery-event-move',
+    get_stylesheet_directory_uri() . '/blocks/image-compare/lib/jquery.event.move.js',
+    array('jquery'),
+    filemtime(get_stylesheet_directory() . '/blocks/image-compare/lib/jquery.event.move.js'),
     true
   );
 }

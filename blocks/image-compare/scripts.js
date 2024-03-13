@@ -1,5 +1,5 @@
 (function ($) {
 	$(function () {
-		$("#container1").twentytwenty();
+		$(".twentytwenty-container").twentytwenty();
 	});
 })(jQuery);
