@@ -1,0 +1,170 @@
+
+/* Buttons */
+  .button,
+  [type=button],
+  [type=reset],
+  [type=submit],
+  a.button,
+  .button {
+    font-weight: 800;border-radius: 2px;
+    --button-color-theme: #23ef3b;
+    --button-color-text: #2c333d;
+    --button-hover-color-text: #2c333d;
+    }
+
+:root {     --color-primary-25: #e9fdeb;
+    --color-primary-50: #d3fcd8;
+    --color-primary-100: #bdfac4;
+    --color-primary-200: #91f79d;
+    --color-primary-300: #65f476;
+    --color-primary-400: #44f158;
+    --color-primary-500: #23ef3b;
+    --color-primary-600: #1fdd34;
+    --color-primary-700: #1acb2c;
+    --color-primary-800: #16ba25;
+    --color-primary-900: #11a81e;
+    --color-primary-1000: #0e9c19;
+    --color-secondary-25: #f9fafa;
+    --color-secondary-50: #f3f5f5;
+    --color-secondary-100: #edf0ef;
+    --color-secondary-200: #e2e7e5;
+    --color-secondary-300: #d6dddb;
+    --color-secondary-400: #cdd5d3;
+    --color-secondary-500: #c4cecb;
+    --color-secondary-600: #b3bdba;
+    --color-secondary-700: #a2aca9;
+    --color-secondary-800: #929a98;
+    --color-secondary-900: #818987;
+    --color-secondary-1000: #767e7c;
+    --color-neutral-25: #eaebec;
+    --color-neutral-50: #d5d6d8;
+    --color-neutral-100: #c0c2c5;
+    --color-neutral-200: #96999e;
+    --color-neutral-300: #6b7077;
+    --color-neutral-400: #4c525a;
+    --color-neutral-500: #2c333d;
+    --color-neutral-600: #262d36;
+    --color-neutral-700: #21262e;
+    --color-neutral-800: #1b2027;
+    --color-neutral-900: #16191f;
+    --color-neutral-1000: #12151b;
+    --color-success-25: #e6faee;
+    --color-success-50: #ccf4dc;
+    --color-success-100: #b3efcb;
+    --color-success-200: #80e4a8;
+    --color-success-300: #4dd985;
+    --color-success-400: #26d06b;
+    --color-success-500: #00c851;
+    --color-success-600: #00b747;
+    --color-success-700: #00a63e;
+    --color-success-800: #009534;
+    --color-success-900: #00842b;
+    --color-success-1000: #007925;
+    --color-warning-25: #fff8eb;
+    --color-warning-50: #fff1d6;
+    --color-warning-100: #ffebc2;
+    --color-warning-200: #ffdd99;
+    --color-warning-300: #ffcf70;
+    --color-warning-400: #ffc552;
+    --color-warning-500: #ffbb33;
+    --color-warning-600: #edaa2d;
+    --color-warning-700: #db9a26;
+    --color-warning-800: #ca8920;
+    --color-warning-900: #b87919;
+    --color-warning-1000: #ac6e15;
+    --color-error-25: #ffecec;
+    --color-error-50: #ffdada;
+    --color-error-100: #ffc7c7;
+    --color-error-200: #ffa2a2;
+    --color-error-300: #ff7c7c;
+    --color-error-400: #ff6060;
+    --color-error-500: #ff4444;
+    --color-error-600: #ed3c3c;
+    --color-error-700: #db3333;
+    --color-error-800: #ca2b2b;
+    --color-error-900: #b82323;
+    --color-error-1000: #ac1e1e;
+}
+
+:root {
+  --color-primary-500: #23ef3b;
+}
+
+/* Navbar */
+
+  .navbar-menu li a:hover::after {
+    background-color: #2c333d;
+  }
+
+  .main-navigation .navbar-menu li a,
+  .main-navigation .navbar-menu li a:hover {
+    color: #2c333d;
+  }
+
+  .main-navigation.bg-primary-500 {
+    background-color: #23ef3b;
+    background: #23ef3b;
+    z-index: 99;
+    position: fixed;
+  }
+
+  .main-navigation.bg-primary-500 .navbar-menu li a:hover::after {
+    background-color: #2c333d;
+  }
+
+
+  .main-navigation.bg-primary-500 .navbar-menu li a,
+  .main-navigation.bg-primary-500 .navbar-menu li a:hover {
+
+    color: #2c333d;
+
+  }
+
+  /* Hero */
+  /* Default Overlay */
+  .hero.default h1,
+  .hero.default h2,
+  .hero.default h3,
+  .hero.default h4,
+  .hero.default h5,
+  .hero.default h6,
+  .hero.default p {
+    color: #2c333d !important;
+  }
+
+
+  /* Paddings */
+  @media (min-width: 37.5em) {
+
+    header.block,
+    section.block {
+      padding-bottom: calc(2.5rem - min(max(3px, 0px), 20px));
+      padding-top: calc(4rem - min(max(3px, 0px), 20px));
+    }
+  }
+
+  @media (min-width: 56.25em) {
+
+    header.block,
+    section.block {
+      padding-bottom: calc(4.5rem - min(max(46px, 0px), 50px));
+      padding-top: calc(6rem - min(max(46px, 0px), 50px));
+    }
+  }
+
+  /* Custom CSS from theme designer */
+  .test{
+font-size: 20px;
+}
+
+  /* Global Typography */
+  @import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&amp;family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap');
+
+  :root {
+    --font-primary: "Kode Mono", monospace;
+    --font-secondary: "Roboto", sans-serif;
+
+    --color-headings-preferred: #009669;
+    --color-section-headings: #009669;
+  }
+

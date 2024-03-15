@@ -357,6 +357,7 @@
 
 .twentytwenty-container img {
   width: 100%;
+  margin-bottom: 0;
 }
 
 /* Add your styles here, and they will be compiled down into the styles.css file. */
