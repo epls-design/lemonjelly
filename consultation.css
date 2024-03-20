@@ -1,41 +1,42 @@
 
-/* Buttons */
-  .button,
-  [type=button],
-  [type=reset],
-  [type=submit],
-  a.button,
-  .button {
+
+    /* Buttons */
+    .button,
+    [type=button],
+    [type=reset],
+    [type=submit],
+    a.button,
+    .button {
     font-weight: 800;border-radius: 2px;
-    --button-color-theme: #23ef3b;
+    --button-color-theme: #70e800;
     --button-color-text: #2c333d;
     --button-hover-color-text: #2c333d;
     }
 
-:root {     --color-primary-25: #e9fdeb;
-    --color-primary-50: #d3fcd8;
-    --color-primary-100: #bdfac4;
-    --color-primary-200: #91f79d;
-    --color-primary-300: #65f476;
-    --color-primary-400: #44f158;
-    --color-primary-500: #23ef3b;
-    --color-primary-600: #1fdd34;
-    --color-primary-700: #1acb2c;
-    --color-primary-800: #16ba25;
-    --color-primary-900: #11a81e;
-    --color-primary-1000: #0e9c19;
-    --color-secondary-25: #f9fafa;
-    --color-secondary-50: #f3f5f5;
-    --color-secondary-100: #edf0ef;
-    --color-secondary-200: #e2e7e5;
-    --color-secondary-300: #d6dddb;
-    --color-secondary-400: #cdd5d3;
-    --color-secondary-500: #c4cecb;
-    --color-secondary-600: #b3bdba;
-    --color-secondary-700: #a2aca9;
-    --color-secondary-800: #929a98;
-    --color-secondary-900: #818987;
-    --color-secondary-1000: #767e7c;
+    :root {     --color-primary-25: #f1fde6;
+    --color-primary-50: #e2facc;
+    --color-primary-100: #d4f8b3;
+    --color-primary-200: #b8f480;
+    --color-primary-300: #9bef4d;
+    --color-primary-400: #85eb26;
+    --color-primary-500: #70e800;
+    --color-primary-600: #64d600;
+    --color-primary-700: #58c500;
+    --color-primary-800: #4bb300;
+    --color-primary-900: #3fa100;
+    --color-primary-1000: #379600;
+    --color-secondary-25: #e7e7f5;
+    --color-secondary-50: #cfd0ec;
+    --color-secondary-100: #b8b8e2;
+    --color-secondary-200: #8889cf;
+    --color-secondary-300: #585abb;
+    --color-secondary-400: #3536ad;
+    --color-secondary-500: #11139e;
+    --color-secondary-600: #0f108f;
+    --color-secondary-700: #0d0e7f;
+    --color-secondary-800: #0a0b70;
+    --color-secondary-900: #080961;
+    --color-secondary-1000: #070757;
     --color-neutral-25: #eaebec;
     --color-neutral-50: #d5d6d8;
     --color-neutral-100: #c0c2c5;
@@ -86,85 +87,86 @@
     --color-error-1000: #ac1e1e;
 }
 
-:root {
-  --color-primary-500: #23ef3b;
+    :root {
+      --color-primary-500: #70e800;
+    }
+
+    /* Navbar */
+
+    .navbar-menu li a:hover::after {
+      background-color: #ffffff;
+    }
+
+    .main-navigation .navbar-menu li a,
+    .main-navigation .navbar-menu li a:hover {
+      color: #ffffff;
+    }
+
+    .main-navigation.bg-primary-500 {
+      background-color: #70e800;
+      background: #70e800;
+      z-index: 99;
+      position: fixed;
+    }
+
+    .main-navigation.bg-primary-500 .navbar-menu li a:hover::after {
+      background-color: #2c333d;
+    }
+
+
+    .main-navigation.bg-primary-500 .navbar-menu li a,
+    .main-navigation.bg-primary-500 .navbar-menu li a:hover {
+
+      color: #2c333d;
+
+    }
+
+    /* Hero */
+    /* Default Overlay */
+    .hero.default h1,
+    .hero.default h2,
+    .hero.default h3,
+    .hero.default h4,
+    .hero.default h5,
+    .hero.default h6,
+    .hero.default p {
+      color: #2c333d !important;
+    }
+
+
+    /* Paddings */
+    @media (min-width: 37.5em) {
+
+      header.block,
+      section.block {
+        padding-bottom: calc(2.5rem - min(max(5px, 0px), 20px));
+        padding-top: calc(4rem - min(max(5px, 0px), 20px));
+      }
+    }
+
+    @media (min-width: 56.25em) {
+
+      header.block,
+      section.block {
+        padding-bottom: calc(4.5rem - min(max(44px, 0px), 50px));
+        padding-top: calc(6rem - min(max(44px, 0px), 50px));
+      }
+    }
+
+    /* Custom CSS from theme designer */
+    .custom-css{
+color: red;
 }
 
-/* Navbar */
+    /* Global Typography */
+    @import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&amp;family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap');
 
-  .navbar-menu li a:hover::after {
-    background-color: #2c333d;
-  }
+    :root {
+      --font-primary: "Kode Mono", monospace;
+      --font-secondary: "Roboto", sans-serif;
 
-  .main-navigation .navbar-menu li a,
-  .main-navigation .navbar-menu li a:hover {
-    color: #2c333d;
-  }
-
-  .main-navigation.bg-primary-500 {
-    background-color: #23ef3b;
-    background: #23ef3b;
-    z-index: 99;
-    position: fixed;
-  }
-
-  .main-navigation.bg-primary-500 .navbar-menu li a:hover::after {
-    background-color: #2c333d;
-  }
-
-
-  .main-navigation.bg-primary-500 .navbar-menu li a,
-  .main-navigation.bg-primary-500 .navbar-menu li a:hover {
-
-    color: #2c333d;
-
-  }
-
-  /* Hero */
-  /* Default Overlay */
-  .hero.default h1,
-  .hero.default h2,
-  .hero.default h3,
-  .hero.default h4,
-  .hero.default h5,
-  .hero.default h6,
-  .hero.default p {
-    color: #2c333d !important;
-  }
-
-
-  /* Paddings */
-  @media (min-width: 37.5em) {
-
-    header.block,
-    section.block {
-      padding-bottom: calc(2.5rem - min(max(3px, 0px), 20px));
-      padding-top: calc(4rem - min(max(3px, 0px), 20px));
+      --color-headings-preferred: #0003e5;
+      --color-section-headings: #0003e5;
     }
-  }
 
-  @media (min-width: 56.25em) {
-
-    header.block,
-    section.block {
-      padding-bottom: calc(4.5rem - min(max(46px, 0px), 50px));
-      padding-top: calc(6rem - min(max(46px, 0px), 50px));
-    }
-  }
-
-  /* Custom CSS from theme designer */
-  .test{
-font-size: 20px;
-}
-
-  /* Global Typography */
-  @import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&amp;family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap');
-
-  :root {
-    --font-primary: "Kode Mono", monospace;
-    --font-secondary: "Roboto", sans-serif;
-
-    --color-headings-preferred: #009669;
-    --color-section-headings: #009669;
-  }
-
+    

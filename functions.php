@@ -325,14 +325,13 @@ function ezpzconsultations_customize_register($wp_customize) {
 add_action('customize_register', 'ezpzconsultations_customize_register');
 
 
-
 add_action('acf/save_post', 'ezpzconsultations_generate_theme_override_css');
 function ezpzconsultations_generate_theme_override_css($post_id) {
 
   // TODOD: CHECK I ITS ONE OF YOUR OPTIONS PAGES
   error_log($post_id);
 
-  if ($post_id == 'globalcolors') {
+  if ($post_id == 'globalcolors' || $post_id == 'globaltypography' || $post_id == 'buttons' || $post_id == 'customcss' || $post_id == 'branding' || $post_id == 'globalpadding') {
     // Get all the fields from customiser, and output into consultation.css
 
     $theme_opts = ezpzconsultations_get_theme_opts();
@@ -398,13 +397,15 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
       }
 
       //Generate colours
-      include('set-color-palette.php');
+      include_once('set-color-palette.php');
       include_once 'set-color-contrast.php';
-
 
       $primary_palette = ezpzconsultations_make_color_palette($primary_colour);
       $secondary_palette = ezpzconsultations_make_color_palette($secondary_colour);
       $neutral_palette = ezpzconsultations_make_color_palette($neutral_colour);
+      $success_palette = ezpzconsultations_make_color_palette($success_colour);
+      $warning_palette = ezpzconsultations_make_color_palette($warning_colour);
+      $error_palette = ezpzconsultations_make_color_palette($error_colour);
 
       $primary_colour_100 = $primary_palette['100'];
       $primary_colour_500 = $primary_palette['500'];
@@ -412,12 +413,8 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
       $secondary_colour_100 = $secondary_palette['100'];
       $secondary_colour_500 = $secondary_palette['500'];
 
+      $neutral_colour_100 = $neutral_palette['100'];
       $neutral_colour_500 = $neutral_palette['500'];
-
-
-      $success_palette = ezpzconsultations_make_color_palette($success_colour);
-      $warning_palette = ezpzconsultations_make_color_palette($warning_colour);
-      $error_palette = ezpzconsultations_make_color_palette($error_colour);
 
     endif;
 
@@ -435,16 +432,17 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
 
     // Button styles
     $css_data .= '
-/* Buttons */';
+
+    /* Buttons */';
 
     if (!empty($button_colour) || !empty($button_font_weight) || !empty($button_border_radius)) {
       $css_data .= '
-  .button,
-  [type=button],
-  [type=reset],
-  [type=submit],
-  a.button,
-  .button {
+    .button,
+    [type=button],
+    [type=reset],
+    [type=submit],
+    a.button,
+    .button {
     ';
 
       if ($button_font_weight) {
@@ -472,7 +470,7 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
       }
       $css_data .= '}
 
-';
+    ';
     }
 
     $css_data .= ':root { ';
@@ -497,87 +495,87 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
     $css_data .= "}\n";
 
     $css_data .= '
-:root {
-  --color-primary-500: ' . $primary_colour . ';
-}
-
-/* Navbar */
-
-  .navbar-menu li a:hover::after {
-    background-color: ' . ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_500) . ';
-  }
-
-  .main-navigation .navbar-menu li a,
-  .main-navigation .navbar-menu li a:hover {
-    color: ' . ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_500) . ';
-  }
-
-  .main-navigation.bg-primary-500 {
-    background-color: ' . $primary_colour_500 . ';
-    background: ' . $primary_colour_500 . ';
-    z-index: 99;
-    position: fixed;
-  }
-
-  .main-navigation.bg-primary-500 .navbar-menu li a:hover::after {
-    background-color: ' . ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500) . ';
-  }
-
-
-  .main-navigation.bg-primary-500 .navbar-menu li a,
-  .main-navigation.bg-primary-500 .navbar-menu li a:hover {
-
-    color: ' . ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500) . ';
-
-  }
-
-  /* Hero */
-  /* Default Overlay */
-  .hero.default h1,
-  .hero.default h2,
-  .hero.default h3,
-  .hero.default h4,
-  .hero.default h5,
-  .hero.default h6,
-  .hero.default p {
-    color: ' . ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500) . ' !important;
-  }
-
-
-  /* Paddings */
-  @media (min-width: 37.5em) {
-
-    header.block,
-    section.block {
-      padding-bottom: calc(2.5rem - ' . "min(max($padding_decrease_tablet, 0px), 20px)" . ');
-      padding-top: calc(4rem - ' . "min(max($padding_decrease_tablet, 0px), 20px)" . ');
+    :root {
+      --color-primary-500: ' . $primary_colour . ';
     }
-  }
 
-  @media (min-width: 56.25em) {
+    /* Navbar */
 
-    header.block,
-    section.block {
-      padding-bottom: calc(4.5rem - ' . "min(max($padding_decrease_desktop, 0px), 50px)" . ');
-      padding-top: calc(6rem - ' . "min(max($padding_decrease_desktop, 0px), 50px)" . ');
+    .navbar-menu li a:hover::after {
+      background-color: ' . ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_500) . ';
     }
-  }
 
-  /* Custom CSS from theme designer */
-  ' . $custom_css . '
+    .main-navigation .navbar-menu li a,
+    .main-navigation .navbar-menu li a:hover {
+      color: ' . ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_500) . ';
+    }
 
-  /* Global Typography */
-  @import url(\'' . $theme_opts['globaltypography']['primary_import_font_family'] . '\');
+    .main-navigation.bg-primary-500 {
+      background-color: ' . $primary_colour_500 . ';
+      background: ' . $primary_colour_500 . ';
+      z-index: 99;
+      position: fixed;
+    }
 
-  :root {
-    --font-primary: ' . $primary_font_family . ';
-    --font-secondary: ' . $secondary_font_family . ';
+    .main-navigation.bg-primary-500 .navbar-menu li a:hover::after {
+      background-color: ' . ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500) . ';
+    }
 
-    --color-headings-preferred: ' . $color_headings_preferred . ';
-    --color-section-headings: ' . $color_headings_preferred . ';
-  }
 
-';
+    .main-navigation.bg-primary-500 .navbar-menu li a,
+    .main-navigation.bg-primary-500 .navbar-menu li a:hover {
+
+      color: ' . ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500) . ';
+
+    }
+
+    /* Hero */
+    /* Default Overlay */
+    .hero.default h1,
+    .hero.default h2,
+    .hero.default h3,
+    .hero.default h4,
+    .hero.default h5,
+    .hero.default h6,
+    .hero.default p {
+      color: ' . ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500) . ' !important;
+    }
+
+
+    /* Paddings */
+    @media (min-width: 37.5em) {
+
+      header.block,
+      section.block {
+        padding-bottom: calc(2.5rem - ' . "min(max($padding_decrease_tablet, 0px), 20px)" . ');
+        padding-top: calc(4rem - ' . "min(max($padding_decrease_tablet, 0px), 20px)" . ');
+      }
+    }
+
+    @media (min-width: 56.25em) {
+
+      header.block,
+      section.block {
+        padding-bottom: calc(4.5rem - ' . "min(max($padding_decrease_desktop, 0px), 50px)" . ');
+        padding-top: calc(6rem - ' . "min(max($padding_decrease_desktop, 0px), 50px)" . ');
+      }
+    }
+
+    /* Custom CSS from theme designer */
+    ' . $custom_css . '
+
+    /* Global Typography */
+    @import url(\'' . $theme_opts['globaltypography']['primary_import_font_family'] . '\');
+
+    :root {
+      --font-primary: ' . $primary_font_family . ';
+      --font-secondary: ' . $secondary_font_family . ';
+
+      --color-headings-preferred: ' . $color_headings_preferred . ';
+      --color-section-headings: ' . $color_headings_preferred . ';
+    }
+
+    ';
 
     file_put_contents($css_file, $css_data);
   }
@@ -587,7 +585,7 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
 /**
  * Outputs custom CSS in the header based on the ACF options
  */
-// add_action('wp_head', 'ezpzconsultations_add_custom_css', 100);
+add_action('wp_head', 'ezpzconsultations_add_custom_css', 100);
 //TODO: main header colors are also changing
 
 function ezpzconsultations_add_custom_css() {
@@ -632,7 +630,7 @@ function ezpzconsultations_add_custom_css() {
       $padding_decrease_desktop = (get_field('padding_decrease_desktop', 'globalpadding') ?: '0') . 'px';
       $padding_decrease_tablet = (get_field('padding_decrease_tablet', 'globalpadding') ?: '0') . 'px';
 
-      //var_dump('customiseddddd' . $padding_decrease_desktop . $padding_decrease_tablet);
+      var_dump('customiseddddd' . $primary_colour);
 
       // Define an array of headings and their corresponding ACF field keys
       $font_fields = [
@@ -674,52 +672,230 @@ function ezpzconsultations_add_custom_css() {
       }
 
     endif;
+  } else {
+    if (!empty($theme_opts)) :
+
+      var_dump("not customised");
+      $primary_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['primary_colour'] : "#ff3c74";
+      $secondary_colour = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['secondary_colour'] : "#ffa0cd";
+      $neutral_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['neutral_colour'] : "#64748b";
+      $success_colour = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['success_colour'] : "#00c851";
+      $warning_colour = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['warning_colour'] : "#FFBB33";
+      $error_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['error_colour'] : "#FF4444";
+      $color_headings_preferred = isset($theme_opts['globalcolors']['headings_preferred_colour']) ? $theme_opts['globalcolors']['headings_preferred_colour'] : 'var(--color-headings-preferred)';
+      $custom_css = isset($theme_opts['customcss']['custom_css']) ? $theme_opts['customcss']['custom_css'] : "";
+
+      //Typography / Fonts / Heading Colours
+      $primary_font_family = isset($theme_opts['globaltypography']['primary_font_family']) ? $theme_opts['globaltypography']['primary_font_family'] : 'var(--font-primary)';
+      $secondary_font_family = isset($theme_opts['globaltypography']['secondary_font_family']) ? $theme_opts['globaltypography']['secondary_font_family'] : 'var(--font-primary)';
+
+
+      $padding_decrease_desktop = isset($theme_opts['globalpadding']['padding_decrease_desktop']) ? $theme_opts['globalpadding']['padding_decrease_desktop'] . 'px' : '0px';
+      $padding_decrease_tablet = isset($theme_opts['globalpadding']['padding_decrease_tablet']) ? $theme_opts['globalpadding']['padding_decrease_tablet'] . 'px' : '0px';
+
+
+
+
+    endif;
   }
 ?>
+  <?php
+  if (!empty($theme_opts)) :
+    // Example usage with theme options
 
-  <style type="text/css">
-    /* Set colour contrast for background colours */
-    <?php
-    $theme_bg_colors = array(
-      '.block.bg-primary-500 ' => $primary_colour_500,
-      '.block.bg-secondary-500 ' => $secondary_colour_500,
-      '.block.bg-primary-100 ' => $primary_colour_100,
-      '.block.bg-secondary-100 ' => $secondary_colour_100,
-    );
+    //if ($theme_opts['branding']["main_logo"]) echo $theme_opts['branding']["main_logo"];
+    // echo "<pre>";
+    // var_dump($theme_opts);
+    // echo "</pre>";
 
-    foreach ($theme_bg_colors as $css_class => $bg_color) {
-    ?><?php echo $css_class; ?> {
-      color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
-      --color-section-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
-      --color-headings-preferred: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>
-    }
+    //Generate colours
+    include_once('set-color-palette.php');
+    include_once 'set-color-contrast.php';
 
-    <?php echo $css_class; ?>h1,
-    <?php echo $css_class; ?>h2,
-    <?php echo $css_class; ?>h3,
-    <?php echo $css_class; ?>h4,
-    <?php echo $css_class; ?>h5,
-    <?php echo $css_class; ?>h6,
-    <?php echo $css_class; ?>a:not(.button),
-    <?php echo $css_class; ?>a:not(.button):hover,
-    <?php echo $css_class; ?>a:not(.button):focus,
-    <?php echo $css_class; ?>a:not(.button):visited,
-    <?php echo $css_class; ?>a:not(.button):link,
-    <?php echo $css_class; ?>a:not(.button) {
-      color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
-      --color-section-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
-      --color-headings-preferred: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
-      --button-color-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
-      border-color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
-    }
+    $primary_palette = ezpzconsultations_make_color_palette($primary_colour);
+    $secondary_palette = ezpzconsultations_make_color_palette($secondary_colour);
+    $neutral_palette = ezpzconsultations_make_color_palette($neutral_colour);
+    $success_palette = ezpzconsultations_make_color_palette($success_colour);
+    $warning_palette = ezpzconsultations_make_color_palette($warning_colour);
+    $error_palette = ezpzconsultations_make_color_palette($error_colour);
 
-    <?php
-    }
-    ?>
-  </style>
+
+    $primary_colour_100 = $primary_palette['100'];
+    $primary_colour_500 = $primary_palette['500'];
+
+    $secondary_colour_100 = $secondary_palette['100'];
+    $secondary_colour_500 = $secondary_palette['500'];
+
+    $neutral_colour_100 = $neutral_palette['100'];
+    $neutral_colour_500 = $neutral_palette['500'];
+
+  ?>
+
+    <style type="text/css">
+      /* Navbar */
+
+      .navbar-menu li a:hover::after {
+        background-color: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_500); ?>;
+      }
+
+      .main-navigation .navbar-menu li a,
+      .main-navigation .navbar-menu li a:hover {
+        color: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_500); ?>;
+      }
+
+      .main-navigation.bg-primary-500 {
+        background-color: <?php echo $primary_colour_500 ?>;
+        background: <?php echo $primary_colour_500 ?>;
+        z-index: 99;
+        position: fixed;
+      }
+
+      .main-navigation.bg-primary-500 .navbar-menu li a:hover::after {
+        background-color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500); ?>;
+      }
+
+
+      .main-navigation.bg-primary-500 .navbar-menu li a,
+      .main-navigation.bg-primary-500 .navbar-menu li a:hover {
+
+        color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500); ?>;
+
+      }
+
+      /* Hero */
+      .hero p,
+      .hero h1,
+      .hero h2,
+      .hero h3,
+      .hero h4,
+      .hero li,
+      .hero a {
+        color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500); ?> !important;
+      }
+
+      /* Paddings */
+      @media (min-width: 37.5em) {
+
+        header.block,
+        section.block {
+          padding-bottom: calc(2.5rem - <?php echo "min(max($padding_decrease_tablet, 0px), 20px)" ?>);
+          padding-top: calc(4rem - <?php echo "min(max($padding_decrease_tablet, 0px), 20px)" ?>);
+        }
+      }
+
+      @media (min-width: 56.25em) {
+
+        header.block,
+        section.block {
+          padding-bottom: calc(4.5rem - <?php echo "min(max($padding_decrease_desktop, 0px), 50px)" ?>);
+          padding-top: calc(6rem - <?php echo "min(max($padding_decrease_desktop, 0px), 50px)" ?>);
+        }
+      }
+
+      /* Custom CSS from theme designer */
+      <?php if ($custom_css) echo $custom_css; ?>
+      /* Global Typography */
+      @import url('<?php echo $theme_opts['globaltypography']['primary_import_font_family']; ?>');
+
+      :root {
+        --font-primary: <?php echo $primary_font_family ?>;
+        --font-secondary: <?php echo $secondary_font_family ?>;
+
+        --color-headings-preferred: <?php echo $color_headings_preferred ?>;
+        --color-section-headings: <?php echo $color_headings_preferred ?>;
+      }
+
+
+      /* Global Colours - Generate Colour Palette  */
+      <?php
+
+      echo ":root {\n";
+      foreach ($primary_palette as $key => $value) {
+        echo "    --color-primary-$key: $value;\n";
+      }
+      foreach ($secondary_palette as $key => $value) {
+        echo "    --color-secondary-$key: $value;\n";
+      }
+      foreach ($neutral_palette as $key => $value) {
+        echo "    --color-neutral-$key: $value;\n";
+      }
+      foreach ($success_palette as $key => $value) {
+        echo "    --color-success-$key: $value;\n";
+      }
+      foreach ($warning_palette as $key => $value) {
+        echo "    --color-warning-$key: $value;\n";
+      }
+      foreach ($error_palette as $key => $value) {
+        echo "    --color-error-$key: $value;\n";
+      }
+      echo "}\n";
+
+      ?>
+
+      /* Buttons */
+      <?php if (!empty($button_colour) || !empty($button_font_weight) || !empty($button_border_radius)) : ?>.button,
+      [type=button],
+      [type=reset],
+      [type=submit],
+      a.button,
+      .button {
+        <?php if ($button_font_weight) : ?>font-weight: <?php echo $button_font_weight; ?>;
+        <?php endif; ?><?php if ($button_border_radius) : ?>border-radius: <?php echo $button_border_radius . $button_border_radius_unit; ?>;
+        <?php endif; ?><?php if (!empty($button_colour) && $button_colour == "primary") : ?>--button-color-theme: <?php echo $primary_colour_500 ?>;
+        --button-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500); ?>;
+        --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500); ?>;
+        <?php else : ?>--button-color-theme: <?php echo $secondary_colour_500 ?>;
+        --button-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_500); ?>;
+        --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_500); ?>;
+        <?php endif; ?>
+      }
+
+      <?php endif; ?>
+
+      /* Set colour contrast for background colours */
+      <?php
+      $theme_bg_colors = array(
+        '.block.bg-primary-500 ' => $primary_colour_500,
+        '.block.bg-secondary-500 ' => $secondary_colour_500,
+        '.block.bg-primary-100 ' => $primary_colour_100,
+        '.block.bg-secondary-100 ' => $secondary_colour_100,
+      );
+
+      foreach ($theme_bg_colors as $css_class => $bg_color) {
+      ?><?php echo $css_class; ?> {
+        color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
+        --color-section-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
+        --color-headings-preferred: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>
+      }
+
+      <?php echo $css_class; ?>h1,
+      <?php echo $css_class; ?>h2,
+      <?php echo $css_class; ?>h3,
+      <?php echo $css_class; ?>h4,
+      <?php echo $css_class; ?>h5,
+      <?php echo $css_class; ?>h6,
+      <?php echo $css_class; ?>a:not(.button),
+      <?php echo $css_class; ?>a:not(.button):hover,
+      <?php echo $css_class; ?>a:not(.button):focus,
+      <?php echo $css_class; ?>a:not(.button):visited,
+      <?php echo $css_class; ?>a:not(.button):link,
+      <?php echo $css_class; ?>a:not(.button) {
+        color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
+        --color-section-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
+        --color-headings-preferred: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
+        --button-color-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
+        border-color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
+
+      }
+
+      <?php
+      }
+
+      ?>
+    </style>
 
 <?php
-
+  endif;
 }
 
 // Master To Do List:
