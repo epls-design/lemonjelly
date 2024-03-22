@@ -1,4 +1,6 @@
 
+    /* Global Typography */
+    @import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&amp;family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap');
 
     /* Buttons */
     .button,
@@ -8,35 +10,35 @@
     a.button,
     .button {
     font-weight: 800;border-radius: 2px;
-    --button-color-theme: #70e800;
+    --button-color-theme: #eeefde;
     --button-color-text: #2c333d;
     --button-hover-color-text: #2c333d;
     }
 
-    :root {     --color-primary-25: #f1fde6;
-    --color-primary-50: #e2facc;
-    --color-primary-100: #d4f8b3;
-    --color-primary-200: #b8f480;
-    --color-primary-300: #9bef4d;
-    --color-primary-400: #85eb26;
-    --color-primary-500: #70e800;
-    --color-primary-600: #64d600;
-    --color-primary-700: #58c500;
-    --color-primary-800: #4bb300;
-    --color-primary-900: #3fa100;
-    --color-primary-1000: #379600;
-    --color-secondary-25: #e7e7f5;
-    --color-secondary-50: #cfd0ec;
-    --color-secondary-100: #b8b8e2;
-    --color-secondary-200: #8889cf;
-    --color-secondary-300: #585abb;
-    --color-secondary-400: #3536ad;
-    --color-secondary-500: #11139e;
-    --color-secondary-600: #0f108f;
-    --color-secondary-700: #0d0e7f;
-    --color-secondary-800: #0a0b70;
-    --color-secondary-900: #080961;
-    --color-secondary-1000: #070757;
+    :root {     --color-primary-25: #fdfdfc;
+    --color-primary-50: #fcfcf8;
+    --color-primary-100: #fafaf5;
+    --color-primary-200: #f7f7ef;
+    --color-primary-300: #f3f4e8;
+    --color-primary-400: #f1f1e3;
+    --color-primary-500: #eeefde;
+    --color-primary-600: #dcddcd;
+    --color-primary-700: #cacbbb;
+    --color-primary-800: #b9baaa;
+    --color-primary-900: #a7a898;
+    --color-primary-1000: #9b9c8d;
+    --color-secondary-25: #e9f1f9;
+    --color-secondary-50: #d2e3f2;
+    --color-secondary-100: #bcd5ec;
+    --color-secondary-200: #8fb9df;
+    --color-secondary-300: #629dd2;
+    --color-secondary-400: #4088c8;
+    --color-secondary-500: #1e73be;
+    --color-secondary-600: #1a67ad;
+    --color-secondary-700: #165a9d;
+    --color-secondary-800: #124e8c;
+    --color-secondary-900: #0e417b;
+    --color-secondary-1000: #0c3971;
     --color-neutral-25: #eaebec;
     --color-neutral-50: #d5d6d8;
     --color-neutral-100: #c0c2c5;
@@ -87,14 +89,11 @@
     --color-error-1000: #ac1e1e;
 }
 
-    :root {
-      --color-primary-500: #70e800;
-    }
 
     /* Navbar */
 
     .navbar-menu li a:hover::after {
-      background-color: #ffffff;
+      background-color: #ffffff !important;
     }
 
     .main-navigation .navbar-menu li a,
@@ -103,8 +102,8 @@
     }
 
     .main-navigation.bg-primary-500 {
-      background-color: #70e800;
-      background: #70e800;
+      background-color: #eeefde;
+      background: #eeefde;
       z-index: 99;
       position: fixed;
     }
@@ -158,9 +157,6 @@
 color: red;
 }
 
-    /* Global Typography */
-    @import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&amp;family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap');
-
     :root {
       --font-primary: "Kode Mono", monospace;
       --font-secondary: "Roboto", sans-serif;
@@ -169,4 +165,117 @@ color: red;
       --color-section-headings: #0003e5;
     }
 
+    /* Set colour contrast for background colours */ 
+.block.bg-primary-500  {
+    color: #2c333d;
+    --color-section-text: #2c333d;
+    --color-headings-preferred: #2c333d;
+}
+.block.bg-primary-500 h1,
+.block.bg-primary-500 h2,
+.block.bg-primary-500 h3,
+.block.bg-primary-500 h4,
+.block.bg-primary-500 h5,
+.block.bg-primary-500 h6,
+.block.bg-primary-500 a:not(.button),
+.block.bg-primary-500 a:not(.button):hover,
+.block.bg-primary-500 a:not(.button):focus,
+.block.bg-primary-500 a:not(.button):visited,
+.block.bg-primary-500 a:not(.button):link,
+.block.bg-primary-500 a:not(.button) {
+    color: #2c333d;
+    --color-section-text: #2c333d;
+    --color-headings-preferred: #2c333d;
+    --button-color-text: #2c333d;
+    border-color: #2c333d;
+}
+.block.bg-secondary-500  {
+    color: #ffffff;
+    --color-section-text: #ffffff;
+    --color-headings-preferred: #ffffff;
+}
+.block.bg-secondary-500 h1,
+.block.bg-secondary-500 h2,
+.block.bg-secondary-500 h3,
+.block.bg-secondary-500 h4,
+.block.bg-secondary-500 h5,
+.block.bg-secondary-500 h6,
+.block.bg-secondary-500 a:not(.button),
+.block.bg-secondary-500 a:not(.button):hover,
+.block.bg-secondary-500 a:not(.button):focus,
+.block.bg-secondary-500 a:not(.button):visited,
+.block.bg-secondary-500 a:not(.button):link,
+.block.bg-secondary-500 a:not(.button) {
+    color: #ffffff;
+    --color-section-text: #ffffff;
+    --color-headings-preferred: #ffffff;
+    --button-color-text: #ffffff;
+    border-color: #ffffff;
+}
+.block.bg-primary-100  {
+    color: #2c333d;
+    --color-section-text: #2c333d;
+    --color-headings-preferred: #2c333d;
+}
+.block.bg-primary-100 h1,
+.block.bg-primary-100 h2,
+.block.bg-primary-100 h3,
+.block.bg-primary-100 h4,
+.block.bg-primary-100 h5,
+.block.bg-primary-100 h6,
+.block.bg-primary-100 a:not(.button),
+.block.bg-primary-100 a:not(.button):hover,
+.block.bg-primary-100 a:not(.button):focus,
+.block.bg-primary-100 a:not(.button):visited,
+.block.bg-primary-100 a:not(.button):link,
+.block.bg-primary-100 a:not(.button) {
+    color: #2c333d;
+    --color-section-text: #2c333d;
+    --color-headings-preferred: #2c333d;
+    --button-color-text: #2c333d;
+    border-color: #2c333d;
+}
+.block.bg-secondary-100  {
+    color: #2c333d;
+    --color-section-text: #2c333d;
+    --color-headings-preferred: #2c333d;
+}
+.block.bg-secondary-100 h1,
+.block.bg-secondary-100 h2,
+.block.bg-secondary-100 h3,
+.block.bg-secondary-100 h4,
+.block.bg-secondary-100 h5,
+.block.bg-secondary-100 h6,
+.block.bg-secondary-100 a:not(.button),
+.block.bg-secondary-100 a:not(.button):hover,
+.block.bg-secondary-100 a:not(.button):focus,
+.block.bg-secondary-100 a:not(.button):visited,
+.block.bg-secondary-100 a:not(.button):link,
+.block.bg-secondary-100 a:not(.button) {
+    color: #2c333d;
+    --color-section-text: #2c333d;
+    --color-headings-preferred: #2c333d;
+    --button-color-text: #2c333d;
+    border-color: #2c333d;
+}
+
+    h1 {
+        font-weight: 900;
+        font-family: var(--font-secondary);
+    }
+    
+    h2 {
+        font-weight: 200;
+        font-family: var(--font-secondary);
+    }
+    
+    h3 {
+        font-weight: 500;
+        font-family: var(--font-primary);
+    }
+    
+    h4 {
+        font-weight: 500;
+        font-family: var(--font-primary);
+    }
     

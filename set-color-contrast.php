@@ -11,5 +11,5 @@ function ezpzconsultations_calculate_contrast($color, $neutral_colour_500) {
 
   // Choose text color based on luminance
   return $luminance > 0.5 ? $neutral_colour_500 : '#ffffff'; // --color-neutral-900 = 2c333d for light backgrounds, White for dark backgrounds
-  var_dump($neutral_colour_500);
+  //var_dump($neutral_colour_500);
 }
