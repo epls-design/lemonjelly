@@ -58,7 +58,7 @@ function ezpzconsultations_enqueue_styles() {
 }
 
 add_action('acf/init', 'ezpzconsultations_register_blocks', 20);
-//add_filter('allowed_block_types_all', 'ezpzconsultations_add_to_allowed_blocks', 100, 1);
+add_filter('allowed_block_types_all', 'ezpzconsultations_add_to_allowed_blocks', 100, 1);
 
 //change to ezpconsultation_blocks
 $blocks = array('timeline', 'image-compare', 'hero');
@@ -77,24 +77,39 @@ function ezpzconsultations_register_blocks() {
 
 function ezpzconsultations_add_to_allowed_blocks($allowed_blocks) {
   global $blocks;
-  // var_dump("testtttt");
 
-  // unset($allowed_blocks[array_search('ezpz/hero-page', $allowed_blocks)]);
-  // unset($allowed_blocks[array_search('ezpz/hero-post', $allowed_blocks)]);
-
-  // TODO Remove ezpz/hero-page and ezpz/hero-post from $allowed_blocks
-  // unset($allowed_blocks['ezpz/hero-post']);
-  // unset($allowed_blocks['ezpz/hero-page']);
+  // Ensure $allowed_blocks is initialized as an array
+  if (!is_array($allowed_blocks)) {
+    $allowed_blocks = array();
+  }
 
   foreach ($blocks as $slug) {
     $allowed_blocks[] = 'ezpz/' . $slug;
   }
 
-  // var_dump($allowed_blocks);
+  // Remove 'ezpz/hero-page' and 'ezpz/hero-post' if they exist
+  $hero_page_index = array_search('ezpz/hero-page', $allowed_blocks);
+  if ($hero_page_index !== false) {
+    unset($allowed_blocks[$hero_page_index]);
+  }
+
+  $hero_post_index = array_search('ezpz/hero-post', $allowed_blocks);
+  if ($hero_post_index !== false) {
+    unset($allowed_blocks[$hero_post_index]);
+  }
+
+  // Re-index the array keys
+  $allowed_blocks = array_values($allowed_blocks);
+
+  //var_dump($allowed_blocks);
 
   return $allowed_blocks;
 }
-
+//Remove page-hero block from pages
+function remove_page_hero_block() {
+  remove_action('init', 'jellypress_block_templates', 20);
+}
+add_action('after_setup_theme', 'remove_page_hero_block');
 
 //I am using the https://github.com/mcguffin/acf-customizer
 //TODO : setup dependencies with tgmpluginactivation
@@ -328,7 +343,6 @@ add_action('customize_register', 'ezpzconsultations_customize_register');
 add_action('acf/save_post', 'ezpzconsultations_generate_theme_override_css');
 function ezpzconsultations_generate_theme_override_css($post_id) {
 
-  // TODOD: CHECK I ITS ONE OF YOUR OPTIONS PAGES
   //error_log($post_id);
 
   if ($post_id == 'globalcolors' || $post_id == 'globaltypography' || $post_id == 'buttons' || $post_id == 'customcss' || $post_id == 'branding' || $post_id == 'globalpadding') {
@@ -438,7 +452,6 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
 
     if (!empty($button_colour) || !empty($button_font_weight) || !empty($button_border_radius)) {
       $css_data .= '
-    .button,
     [type=button],
     [type=reset],
     [type=submit],
@@ -454,8 +467,7 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
         $css_data .= 'border-radius: ' . $button_border_radius . $button_border_radius_unit . ';';
       }
 
-      $css_data .= '
-    ';
+      $css_data .= '';
 
       // Check button color
       if (!empty($button_colour) && $button_colour == "primary") {
@@ -637,6 +649,7 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
     }
 
     file_put_contents($css_file, $css_data);
+    fclose($css_file);
   }
 }
 
@@ -856,8 +869,7 @@ function ezpzconsultations_add_custom_css() {
         ?>
 
         /* Buttons */
-        <?php if (!empty($button_colour) || !empty($button_font_weight) || !empty($button_border_radius)) : ?>.button,
-        [type=button],
+        <?php if (!empty($button_colour) || !empty($button_font_weight) || !empty($button_border_radius)) : ?>[type=button],
         [type=reset],
         [type=submit],
         a.button,
