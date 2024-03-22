@@ -26,7 +26,7 @@ function wpdocs_theme_add_editor_styles() {
   add_editor_style('style.css');
   add_editor_style('consultation.css');
 }
-add_action('admin_init', 'wpdocs_theme_add_editor_styles', 200);
+add_action('admin_init', 'wpdocs_theme_add_editor_styles', 500);
 
 
 function ezpzconsultations_enqueue_styles() {
@@ -329,14 +329,14 @@ add_action('acf/save_post', 'ezpzconsultations_generate_theme_override_css');
 function ezpzconsultations_generate_theme_override_css($post_id) {
 
   // TODOD: CHECK I ITS ONE OF YOUR OPTIONS PAGES
-  error_log($post_id);
+  //error_log($post_id);
 
   if ($post_id == 'globalcolors' || $post_id == 'globaltypography' || $post_id == 'buttons' || $post_id == 'customcss' || $post_id == 'branding' || $post_id == 'globalpadding') {
     // Get all the fields from customiser, and output into consultation.css
 
     $theme_opts = ezpzconsultations_get_theme_opts();
 
-    error_log(json_encode($theme_opts));
+    //error_log(json_encode($theme_opts));
 
     if (!empty($theme_opts)) :
       // $main_logo = $theme_opts['branding']['main_logo'];
