@@ -9,6 +9,60 @@
  *  Version: 1.0.0
  *  License: UNLICENSED
  *  Text Domain: ezpzconsultations */ 
+.bg-primary-100 {
+  --color-section-background: var(--color-primary-100);
+}
+
+.bg-secondary-100 {
+  --color-section-background: var(--color-secondary-100);
+}
+
+a.acf-icon {
+  -webkit-user-select: unset !important;
+     -moz-user-select: unset !important;
+      -ms-user-select: unset !important;
+          user-select: unset !important;
+  pointer-events: unset !important;
+}
+
+.main-navigation {
+  background: transparent;
+  background-color: transparent;
+  left: 0;
+  position: absolute;
+  top: 0;
+  -webkit-transition: background-color 0.3s ease, top 0.3s ease;
+  -o-transition: background-color 0.3s ease, top 0.3s ease;
+  transition: background-color 0.3s ease, top 0.3s ease;
+  width: 100%;
+  z-index: 50000;
+}
+.main-navigation.bg-primary-500 {
+  z-index: 99;
+  position: fixed;
+}
+.main-navigation .navbar-brand .site-logo img {
+  height: auto;
+  width: 100%;
+  max-width: 12.5rem;
+  vertical-align: top;
+}
+.main-navigation .navbar-menu li a {
+  background-color: transparent;
+}
+.main-navigation .navbar-menu li a:hover {
+  background-color: transparent;
+  color: var(--color-primary-500);
+}
+.main-navigation .navbar-menu li a:hover:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.13rem;
+  width: 100%;
+  height: 0.13rem;
+}
+
 /* Add your styles here, and they will be compiled down into the styles.css file. */
 .hero {
   min-height: 50vh;
@@ -34,7 +88,6 @@
   display: block;
   height: 100%;
   mix-blend-mode: multiply;
-  opacity: 0.8;
   position: absolute;
   top: 0;
   width: 100%;
@@ -108,17 +161,46 @@
     aspect-ratio: 6/4;
   }
 }
-.main-navigation {
-  background: transparent;
-  background-color: transparent;
-  left: 0;
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  HERO VIDEO
+*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.video-header {
+  position: relative;
+  background-color: var(--color-black);
+  height: 100%;
+  min-height: 25rem;
+  width: 100%;
+  overflow: hidden;
+}
+.video-header .video-title {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+.video-header video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  height: auto;
+  z-index: 0;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+      -ms-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+  width: auto;
+}
+.video-header:after {
+  background: -o-linear-gradient(30deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 60%);
+  background: linear-gradient(60deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 60%);
+  content: "";
+  display: block;
+  height: 100%;
+  mix-blend-mode: multiply;
   position: absolute;
   top: 0;
-  -webkit-transition: background-color 0.3s ease, top 0.3s ease;
-  -o-transition: background-color 0.3s ease, top 0.3s ease;
-  transition: background-color 0.3s ease, top 0.3s ease;
   width: 100%;
-  z-index: 50000;
+  z-index: 1;
 }
 
 /* Add your styles here, and they will be compiled down into the styles.css file. */

@@ -41,12 +41,16 @@ function ezpzconsultations_enqueue_styles() {
     $version // TODO: FILEMTIMES
   );
 
-  wp_enqueue_style(
-    'editors-overrides',
-    get_stylesheet_directory_uri() . '/consultation.css',
-    array(),
-    filemtime(get_stylesheet_directory() . '/consultation.css')
-  );
+  $consultation_css_path = get_stylesheet_directory() . '/consultation.css';
+
+  if (file_exists($consultation_css_path)) {
+    wp_enqueue_style(
+      'editors-overrides',
+      get_stylesheet_directory_uri() . '/consultation.css',
+      array(),
+      filemtime($consultation_css_path)
+    );
+  }
 
   wp_enqueue_script(
     'ezpz-consultations-theme',
@@ -429,7 +433,7 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
 
       $neutral_colour_100 = $neutral_palette['100'];
       $neutral_colour_500 = $neutral_palette['500'];
-
+      $neutral_colour_900 = $neutral_palette['900'];
     endif;
 
 
@@ -472,13 +476,13 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
       // Check button color
       if (!empty($button_colour) && $button_colour == "primary") {
         $css_data .= '--button-color-theme: ' . $primary_colour_500 . ';
-    --button-color-text: ' . ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500) . ';
-    --button-hover-color-text: ' . ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500) . ';
+    --button-color-text: ' . ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_900) . ';
+    --button-hover-color-text: ' . ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_900) . ';
     ';
       } else {
         $css_data .= '--button-color-theme: ' . $secondary_colour_500 . ';
-    --button-color-text: ' . ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_500) . ';
-    --button-hover-color-text: ' . ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_500) . ';
+    --button-color-text: ' . ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_900) . ';
+    --button-hover-color-text: ' . ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_900) . ';
     ';
       }
       $css_data .= '}
@@ -512,30 +516,28 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
     /* Navbar */
 
     .navbar-menu li a:hover::after {
-      background-color: ' . ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_500) . ' !important;
+      background-color: ' . ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_900) . ' !important;
     }
 
     .main-navigation .navbar-menu li a,
     .main-navigation .navbar-menu li a:hover {
-      color: ' . ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_500) . ';
+      color: ' . ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_900) . ';
     }
 
     .main-navigation.bg-primary-500 {
       background-color: ' . $primary_colour_500 . ';
       background: ' . $primary_colour_500 . ';
-      z-index: 99;
-      position: fixed;
     }
 
     .main-navigation.bg-primary-500 .navbar-menu li a:hover::after {
-      background-color: ' . ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500) . ';
+      background-color: ' . ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_900) . ';
     }
 
 
     .main-navigation.bg-primary-500 .navbar-menu li a,
     .main-navigation.bg-primary-500 .navbar-menu li a:hover {
 
-      color: ' . ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500) . ';
+      color: ' . ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_900) . ';
 
     }
 
@@ -548,7 +550,7 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
     .hero.default h5,
     .hero.default h6,
     .hero.default p {
-      color: ' . ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500) . ' !important;
+      color: ' . ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_900) . ';
     }
 
 
@@ -595,9 +597,9 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
 
     foreach ($theme_bg_colors as $css_class => $bg_color) {
       $css_data .= $css_class . " {\n";
-      $css_data .= "    color: " . ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500) . ";\n";
-      $css_data .= "    --color-section-text: " . ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500) . ";\n";
-      $css_data .= "    --color-headings-preferred: " . ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500) . ";\n";
+      $css_data .= "    color: " . ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900) . ";\n";
+      $css_data .= "    --color-section-text: " . ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900) . ";\n";
+      $css_data .= "    --color-headings-preferred: " . ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900) . ";\n";
       $css_data .= "}\n";
 
       $css_data .= $css_class . "h1,\n";
@@ -612,11 +614,11 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
       $css_data .= $css_class . "a:not(.button):visited,\n";
       $css_data .= $css_class . "a:not(.button):link,\n";
       $css_data .= $css_class . "a:not(.button) {\n";
-      $css_data .= "    color: " . ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500) . ";\n";
-      $css_data .= "    --color-section-text: " . ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500) . ";\n";
-      $css_data .= "    --color-headings-preferred: " . ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500) . ";\n";
-      $css_data .= "    --button-color-text: " . ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500) . ";\n";
-      $css_data .= "    border-color: " . ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500) . ";\n";
+      $css_data .= "    color: " . ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900) . ";\n";
+      $css_data .= "    --color-section-text: " . ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900) . ";\n";
+      $css_data .= "    --color-headings-preferred: " . ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900) . ";\n";
+      $css_data .= "    --button-color-text: " . ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900) . ";\n";
+      $css_data .= "    border-color: " . ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900) . ";\n";
       $css_data .= "}\n";
     }
 
@@ -702,7 +704,7 @@ function ezpzconsultations_add_custom_css() {
       $padding_decrease_desktop = (get_field('padding_decrease_desktop', 'globalpadding') ?: '0') . 'px';
       $padding_decrease_tablet = (get_field('padding_decrease_tablet', 'globalpadding') ?: '0') . 'px';
 
-      var_dump('customiseddddd' . $primary_colour);
+      //var_dump('customiseddddd' . $primary_colour);
 
       // Define an array of headings and their corresponding ACF field keys
       $font_fields = [
@@ -763,6 +765,7 @@ function ezpzconsultations_add_custom_css() {
 
       $neutral_colour_100 = $neutral_palette['100'];
       $neutral_colour_500 = $neutral_palette['500'];
+      $neutral_colour_900 = $neutral_palette['900'];
 ?>
 
 
@@ -771,12 +774,12 @@ function ezpzconsultations_add_custom_css() {
         /* Navbar */
 
         .navbar-menu li a:hover::after {
-          background-color: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_500); ?>;
+          background-color: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_900); ?>;
         }
 
         .main-navigation .navbar-menu li a,
         .main-navigation .navbar-menu li a:hover {
-          color: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_500); ?>;
+          color: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_900); ?>;
         }
 
         .main-navigation.bg-primary-500 {
@@ -787,14 +790,14 @@ function ezpzconsultations_add_custom_css() {
         }
 
         .main-navigation.bg-primary-500 .navbar-menu li a:hover::after {
-          background-color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500); ?>;
+          background-color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_900); ?>;
         }
 
 
         .main-navigation.bg-primary-500 .navbar-menu li a,
         .main-navigation.bg-primary-500 .navbar-menu li a:hover {
 
-          color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500); ?>;
+          color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_900); ?>;
 
         }
 
@@ -806,7 +809,7 @@ function ezpzconsultations_add_custom_css() {
         .hero h4,
         .hero li,
         .hero a {
-          color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500); ?> !important;
+          color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_900); ?> !important;
         }
 
         /* Paddings */
@@ -877,11 +880,11 @@ function ezpzconsultations_add_custom_css() {
           <?php if ($button_font_weight) : ?>font-weight: <?php echo $button_font_weight; ?>;
           <?php endif; ?><?php if ($button_border_radius) : ?>border-radius: <?php echo $button_border_radius . $button_border_radius_unit; ?>;
           <?php endif; ?><?php if (!empty($button_colour) && $button_colour == "primary") : ?>--button-color-theme: <?php echo $primary_colour_500 ?>;
-          --button-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500); ?>;
-          --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_500); ?>;
+          --button-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_900); ?>;
+          --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_900); ?>;
           <?php else : ?>--button-color-theme: <?php echo $secondary_colour_500 ?>;
-          --button-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_500); ?>;
-          --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_500); ?>;
+          --button-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_900); ?>;
+          --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_900); ?>;
           <?php endif; ?>
         }
 
@@ -898,9 +901,9 @@ function ezpzconsultations_add_custom_css() {
 
         foreach ($theme_bg_colors as $css_class => $bg_color) {
         ?><?php echo $css_class; ?> {
-          color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
-          --color-section-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
-          --color-headings-preferred: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>
+          color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900); ?>;
+          --color-section-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900); ?>;
+          --color-headings-preferred: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900); ?>
         }
 
         <?php echo $css_class; ?>h1,
@@ -915,11 +918,11 @@ function ezpzconsultations_add_custom_css() {
         <?php echo $css_class; ?>a:not(.button):visited,
         <?php echo $css_class; ?>a:not(.button):link,
         <?php echo $css_class; ?>a:not(.button) {
-          color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
-          --color-section-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
-          --color-headings-preferred: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
-          --button-color-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
-          border-color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_500); ?>;
+          color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900); ?>;
+          --color-section-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900); ?>;
+          --color-headings-preferred: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900); ?>;
+          --button-color-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900); ?>;
+          border-color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900); ?>;
 
         }
 
@@ -933,7 +936,7 @@ function ezpzconsultations_add_custom_css() {
   } else {
     if (!empty($theme_opts)) :
 
-      var_dump("not customised");
+      //var_dump("not customised");
       $primary_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['primary_colour'] : "#ff3c74";
       $secondary_colour = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['secondary_colour'] : "#ffa0cd";
       $neutral_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['neutral_colour'] : "#64748b";

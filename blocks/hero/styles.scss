@@ -39,7 +39,7 @@
 				display: block;
 				height: 100%;
 				mix-blend-mode: multiply;
-				opacity: 0.8;
+				//opacity: 0.8;
 				position: absolute;
 				top: 0;
 				width: 100%;
@@ -125,14 +125,48 @@
 	}
 }
 
-//Navbar
-.main-navigation {
-	background: transparent;
-	background-color: transparent;
-	left: 0;
-	position: absolute;
-	top: 0;
-	transition: background-color 0.3s ease, top 0.3s ease;
+// Video header
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  HERO VIDEO
+*~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.video-header {
+	position: relative;
+	background-color: var(--color-black);
+	height: 100%;
+	min-height: 25rem;
 	width: 100%;
-	z-index: 50000;
+	overflow: hidden;
+	.video-title {
+		position: relative;
+		z-index: 2;
+		text-align: center;
+	}
+	video {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		min-width: 100%;
+		min-height: 100%;
+		height: auto;
+		z-index: 0;
+		transform: translateX(-50%) translateY(-50%);
+		width: auto;
+	}
+	&:after {
+		background: linear-gradient(
+			60deg,
+			rgba(0, 0, 0, 0.6),
+			rgba(0, 0, 0, 0) 60%
+		);
+		content: "";
+		display: block;
+		height: 100%;
+		mix-blend-mode: multiply;
+		//opacity: 0.8;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 1;
+	}
 }
