@@ -21,14 +21,15 @@
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
+$fields = get_fields();
 
 $block_attributes = jellypress_get_block_attributes($block, $context);
 
 $allowed_blocks = jellypress_get_allowed_blocks();
 $block_template = jellypress_get_block_template();
 
-$block_attributes['class'] .= ' page-header hero';
-$fields = get_fields();
+$block_attributes['class']  .= 'page-header hero';
+
 
 $background_type = isset($fields['background_type']) ? $fields['background_type'] : '';
 
@@ -52,19 +53,14 @@ if ($background_type == 'image') {
 ?>
 
 
-<style>
-  .hero-image:after,
-  .video-header:after {
-    opacity: <?php echo $fields['background_overlay_opacity'] / 100; ?>;
-  }
-</style>
+
 
 <header class="<?php echo $block_attributes['class']; ?> <?php echo $hero_class; ?>" <?php echo $block_attributes['anchor']; ?> <?php if (!empty($bg_color)) {
                                                                                                                                   echo 'style="background-color:' . $bg_color . ';"';
                                                                                                                                 } ?>>
 
   <?php if (isset($background_image)) :   ?>
-    <figure class="hero-image">
+    <figure class="hero-image overlay-opacity-<?php echo $fields['background_overlay_opacity']; ?>">
       <?php echo wp_get_attachment_image($background_image, 'full'); ?>
     </figure>
   <?php endif; ?>
@@ -79,7 +75,7 @@ if ($background_type == 'image') {
 
     ?>
       <?php if (isset($video_source)) : ?>
-
+        <div class="video-overlay video-overlay-opacity-<?php echo $fields['background_overlay_opacity']; ?>"></div>
         <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
           <source src="<?php echo $video_source; ?>" type="video/mp4">
         </video>

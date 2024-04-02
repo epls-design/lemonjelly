@@ -115,6 +115,14 @@
 		z-index: 5;
 	}
 }
+@for $i from 1 through 100 {
+	@if $i % 10 == 0 {
+		.overlay-opacity-#{$i}::after {
+			opacity: $i * 0.01 !important;
+		}
+	}
+}
+
 .hero > .container {
 	position: relative;
 	z-index: 2;
@@ -153,20 +161,21 @@
 		transform: translateX(-50%) translateY(-50%);
 		width: auto;
 	}
-	&:after {
-		background: linear-gradient(
-			60deg,
-			rgba(0, 0, 0, 0.6),
-			rgba(0, 0, 0, 0) 60%
-		);
-		content: "";
-		display: block;
-		height: 100%;
-		mix-blend-mode: multiply;
-		//opacity: 0.8;
-		position: absolute;
-		top: 0;
-		width: 100%;
-		z-index: 1;
+}
+.video-overlay {
+	background-color: var(--color-black);
+	height: 100%;
+	left: 0;
+	opacity: 0.6;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 1;
+}
+@for $i from 1 through 100 {
+	@if $i % 10 == 0 {
+		.video-overlay-opacity-#{$i} {
+			opacity: $i * 0.01 !important;
+		}
 	}
 }

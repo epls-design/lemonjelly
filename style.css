@@ -151,6 +151,46 @@ a.acf-icon {
   z-index: 5;
 }
 
+.overlay-opacity-10::after {
+  opacity: 0.1 !important;
+}
+
+.overlay-opacity-20::after {
+  opacity: 0.2 !important;
+}
+
+.overlay-opacity-30::after {
+  opacity: 0.3 !important;
+}
+
+.overlay-opacity-40::after {
+  opacity: 0.4 !important;
+}
+
+.overlay-opacity-50::after {
+  opacity: 0.5 !important;
+}
+
+.overlay-opacity-60::after {
+  opacity: 0.6 !important;
+}
+
+.overlay-opacity-70::after {
+  opacity: 0.7 !important;
+}
+
+.overlay-opacity-80::after {
+  opacity: 0.8 !important;
+}
+
+.overlay-opacity-90::after {
+  opacity: 0.9 !important;
+}
+
+.overlay-opacity-100::after {
+  opacity: 1 !important;
+}
+
 .hero > .container {
   position: relative;
   z-index: 2;
@@ -190,17 +230,56 @@ a.acf-icon {
           transform: translateX(-50%) translateY(-50%);
   width: auto;
 }
-.video-header:after {
-  background: -o-linear-gradient(30deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 60%);
-  background: linear-gradient(60deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 60%);
-  content: "";
-  display: block;
+
+.video-overlay {
+  background-color: var(--color-black);
   height: 100%;
-  mix-blend-mode: multiply;
+  left: 0;
+  opacity: 0.6;
   position: absolute;
   top: 0;
   width: 100%;
   z-index: 1;
+}
+
+.video-overlay-opacity-10 {
+  opacity: 0.1 !important;
+}
+
+.video-overlay-opacity-20 {
+  opacity: 0.2 !important;
+}
+
+.video-overlay-opacity-30 {
+  opacity: 0.3 !important;
+}
+
+.video-overlay-opacity-40 {
+  opacity: 0.4 !important;
+}
+
+.video-overlay-opacity-50 {
+  opacity: 0.5 !important;
+}
+
+.video-overlay-opacity-60 {
+  opacity: 0.6 !important;
+}
+
+.video-overlay-opacity-70 {
+  opacity: 0.7 !important;
+}
+
+.video-overlay-opacity-80 {
+  opacity: 0.8 !important;
+}
+
+.video-overlay-opacity-90 {
+  opacity: 0.9 !important;
+}
+
+.video-overlay-opacity-100 {
+  opacity: 1 !important;
 }
 
 /* Add your styles here, and they will be compiled down into the styles.css file. */
