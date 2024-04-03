@@ -60,7 +60,7 @@ if (is_array($fields) && isset($fields['background_overlay_opacity'])) {
   $background_overlay_opacity = $fields['background_overlay_opacity'];
 } else {
   // Default value
-  $background_overlay_opacity = 10;
+  $background_overlay_opacity = 0.10;
 }
 
 ?>
@@ -87,7 +87,7 @@ if (is_array($fields) && isset($fields['background_overlay_opacity'])) {
     ?>
 
       <?php if (isset($video_source)) : ?>
-        <div class="video-overlay" style="opacity: <?php echo $background_overlay_opacity; ?>;"></div>
+        <div class="video-overlay video-overlay-opacity-<?php if ($background_overlay_opacity) echo $background_overlay_opacity; ?>"></div>
         <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
           <source src="<?php echo $video_source; ?>" type="video/mp4">
         </video>
