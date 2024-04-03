@@ -87,7 +87,7 @@ if (is_array($fields) && isset($fields['background_overlay_opacity'])) {
     ?>
 
       <?php if (isset($video_source)) : ?>
-        <div class="video-overlay video-overlay-opacity-<?php if ($background_overlay_opacity) echo $background_overlay_opacity; ?>"></div>
+        <div class="hero-video-overlay hero-video-overlay-opacity-<?php if ($background_overlay_opacity) echo $background_overlay_opacity; ?>"></div>
         <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
           <source src="<?php echo $video_source; ?>" type="video/mp4">
         </video>

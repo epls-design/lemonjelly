@@ -116,7 +116,7 @@
                     "aria-label": "",
                     "type": "image",
                     "instructions": "Please upload poster artwork for the video. This is displayed before the video is loaded, and in place of the video on some mobile devices. <strong>Min 600px x 400px<\/strong>",
-                    "required": 0,
+                    "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
@@ -141,7 +141,7 @@
                     "aria-label": "",
                     "type": "file",
                     "instructions": "Add up to three video sources (usually an .mp4 is sufficient, however you can also add webm and ogg files to support older browsers). <strong>Max video size 10MB.<\/strong>",
-                    "required": 0,
+                    "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
@@ -178,7 +178,7 @@
                     "aria-label": "",
                     "type": "select",
                     "instructions": "Please select the video's aspect ratio.",
-                    "required": 0,
+                    "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
@@ -241,5 +241,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1712065514
+    "modified": 1712158639
 }

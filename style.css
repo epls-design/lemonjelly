@@ -63,6 +63,10 @@ a.acf-icon {
   height: 0.13rem;
 }
 
+.editor-styles-wrapper .timeline {
+  min-width: 31.25rem;
+}
+
 /* Add your styles here, and they will be compiled down into the styles.css file. */
 .hero {
   min-height: 50vh;
@@ -231,8 +235,8 @@ a.acf-icon {
   width: auto;
 }
 
-.video-overlay {
-  background-color: var(--color-black);
+.hero-video-overlay {
+  background-color: var(--color-primary-500);
   height: 100%;
   left: 0;
   opacity: 0.6;
@@ -242,43 +246,51 @@ a.acf-icon {
   z-index: 1;
 }
 
-.video-overlay-opacity-10 {
+.bg-overlay-white .hero-video-overlay {
+  background-color: var(--color-white);
+}
+
+.bg-overlay-black .hero-video-overlay {
+  background-color: var(--color-black);
+}
+
+.hero-video-overlay-opacity-10 {
   opacity: 0.1 !important;
 }
 
-.video-overlay-opacity-20 {
+.hero-video-overlay-opacity-20 {
   opacity: 0.2 !important;
 }
 
-.video-overlay-opacity-30 {
+.hero-video-overlay-opacity-30 {
   opacity: 0.3 !important;
 }
 
-.video-overlay-opacity-40 {
+.hero-video-overlay-opacity-40 {
   opacity: 0.4 !important;
 }
 
-.video-overlay-opacity-50 {
+.hero-video-overlay-opacity-50 {
   opacity: 0.5 !important;
 }
 
-.video-overlay-opacity-60 {
+.hero-video-overlay-opacity-60 {
   opacity: 0.6 !important;
 }
 
-.video-overlay-opacity-70 {
+.hero-video-overlay-opacity-70 {
   opacity: 0.7 !important;
 }
 
-.video-overlay-opacity-80 {
+.hero-video-overlay-opacity-80 {
   opacity: 0.8 !important;
 }
 
-.video-overlay-opacity-90 {
+.hero-video-overlay-opacity-90 {
   opacity: 0.9 !important;
 }
 
-.video-overlay-opacity-100 {
+.hero-video-overlay-opacity-100 {
   opacity: 1 !important;
 }
 

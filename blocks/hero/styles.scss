@@ -162,8 +162,8 @@
 		width: auto;
 	}
 }
-.video-overlay {
-	background-color: var(--color-black);
+.hero-video-overlay {
+	background-color: var(--color-primary-500);
 	height: 100%;
 	left: 0;
 	opacity: 0.6;
@@ -172,9 +172,20 @@
 	width: 100%;
 	z-index: 1;
 }
+.bg-overlay-white {
+	.hero-video-overlay {
+		background-color: var(--color-white);
+	}
+}
+.bg-overlay-black {
+	.hero-video-overlay {
+		background-color: var(--color-black);
+	}
+}
+
 @for $i from 1 through 100 {
 	@if $i % 10 == 0 {
-		.video-overlay-opacity-#{$i} {
+		.hero-video-overlay-opacity-#{$i} {
 			opacity: $i * 0.01 !important;
 		}
 	}
