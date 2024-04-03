@@ -50,9 +50,20 @@ if ($background_type == 'image') {
   $video_source = isset($fields['video_source']) ? $fields['video_source'] : '';
   //var_dump("it is video");
 }
+
+
 ?>
 
+<?php
+// Check if $fields is an array and 'background_overlay_opacity' is set within it
+if (is_array($fields) && isset($fields['background_overlay_opacity'])) {
+  $background_overlay_opacity = $fields['background_overlay_opacity'];
+} else {
+  // Default value
+  $background_overlay_opacity = 10;
+}
 
+?>
 
 
 <header class="<?php echo $block_attributes['class']; ?> <?php echo $hero_class; ?>" <?php echo $block_attributes['anchor']; ?> <?php if (!empty($bg_color)) {
@@ -60,7 +71,7 @@ if ($background_type == 'image') {
                                                                                                                                 } ?>>
 
   <?php if (isset($background_image)) :   ?>
-    <figure class="hero-image overlay-opacity-<?php echo $fields['background_overlay_opacity']; ?>">
+    <figure class="hero-image overlay-opacity-<?php if ($background_overlay_opacity) echo $background_overlay_opacity; ?>">
       <?php echo wp_get_attachment_image($background_image, 'full'); ?>
     </figure>
   <?php endif; ?>
@@ -74,12 +85,14 @@ if ($background_type == 'image') {
       $aspect_ratio = get_sub_field('aspect_ratio');
 
     ?>
+
       <?php if (isset($video_source)) : ?>
-        <div class="video-overlay video-overlay-opacity-<?php echo $fields['background_overlay_opacity']; ?>"></div>
+        <div class="video-overlay" style="opacity: <?php echo $background_overlay_opacity; ?>;"></div>
         <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
           <source src="<?php echo $video_source; ?>" type="video/mp4">
         </video>
       <?php endif; ?>
+
       <style type="text/css">
         #hero {
           background-color: <?php the_sub_field('color'); ?>;

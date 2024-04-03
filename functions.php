@@ -439,11 +439,10 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
 
 
 
-    $css_file = get_stylesheet_directory() . '/consultation.css';
+    $css_file_path = get_stylesheet_directory() . '/consultation.css';
 
-    if (!file_exists($css_file)) {
-      $css_file = fopen($css_file, "w");
-    }
+    // Open the file in "w" mode to create it if it doesn't exist or truncate it if it does
+    $css_file = fopen($css_file_path, "w");
 
     $css_data = '';
 
@@ -650,8 +649,12 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
     ";
     }
 
-    file_put_contents($css_file, $css_data);
-    fclose($css_file);
+    //file_put_contents($css_file, $css_data);
+    // Write the CSS data to the file
+    if ($css_file) {
+      fwrite($css_file, $css_data);
+      fclose($css_file);
+    }
   }
 }
 
