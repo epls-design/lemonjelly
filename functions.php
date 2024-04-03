@@ -50,7 +50,7 @@ function ezpzconsultations_enqueue_styles() {
       filemtime($consultation_css_path)
     );
   }
-  $theme_min_path = get_stylesheet_directory() . '/style.css';
+  $theme_min_path = get_stylesheet_directory() . '/js/theme.min.js';
 
   if (file_exists($theme_min_path)) {
     wp_enqueue_script(
