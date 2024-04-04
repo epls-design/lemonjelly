@@ -39,7 +39,7 @@ $block_template = array(
 
 $block_template = jellypress_get_block_template($block_template);
 
-$block_attributes['class']  .= ' page-header hero';
+$block_attributes['class']  .= ' page-header hero ';
 
 
 $background_type = isset($fields['background_type']) ? $fields['background_type'] : '';
