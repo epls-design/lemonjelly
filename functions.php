@@ -15,6 +15,22 @@ foreach ($block_functions_to_include as $block) {
     include_once $directory;
 }
 
+//TODO change hero name to consultation-hero
+function ezpzconsultations_block_templates() {
+  $post_type_object = get_post_type_object('page');
+
+  $post_type_object->template = array(
+    array('ezpz/hero', array(
+      'lock' => array(
+        'move'   => true,
+        'remove' => true,
+      ),
+    )),
+    array('ezpz/section', array()),
+  );
+}
+add_action('init', 'ezpzconsultations_block_templates', 30);
+
 /**
  * Enqueue the child theme
  */
@@ -265,7 +281,7 @@ function ezpzconsultations_save_theme_settings_to_json($post_id) {
   $primary_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['primary_colour'] : "#ff3c74";
   $secondary_colour = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['secondary_colour'] : "#ffa0cd";
 
-  include_once 'set-color-palette.php';
+  include_once 'theme-helpers.php';
   $primary_palette = ezpzconsultations_make_color_palette($primary_colour);
   $secondary_palette = ezpzconsultations_make_color_palette($secondary_colour);
 
@@ -407,8 +423,7 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
       }
 
       //Generate colours
-      include_once('set-color-palette.php');
-      include_once 'set-color-contrast.php';
+      include_once('theme-helpers.php');
 
       $primary_palette = ezpzconsultations_make_color_palette($primary_colour);
       $secondary_palette = ezpzconsultations_make_color_palette($secondary_colour);
@@ -734,8 +749,7 @@ function ezpzconsultations_add_custom_css() {
       }
 
       //Generate colours
-      include_once('set-color-palette.php');
-      include_once 'set-color-contrast.php';
+      include_once('theme-helpers.php');
 
       $primary_palette = ezpzconsultations_make_color_palette($primary_colour);
       $secondary_palette = ezpzconsultations_make_color_palette($secondary_colour);
