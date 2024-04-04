@@ -9,7 +9,7 @@
             "aria-label": "",
             "type": "button_group",
             "instructions": "Please select the type of content you want to use for the hero background.",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -21,7 +21,7 @@
                 "color": "<i class=\"dashicons dashicons-color-picker\"><\/i> Color",
                 "video": "<i class=\"dashicons dashicons-format-video\"><\/i> Video"
             },
-            "default_value": "",
+            "default_value": "color",
             "return_format": "value",
             "allow_null": 0,
             "layout": "horizontal"
@@ -33,7 +33,7 @@
             "aria-label": "",
             "type": "image",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": [
                 [
                     {
@@ -60,39 +60,13 @@
             "preview_size": "medium"
         },
         {
-            "key": "field_6602c1927905b",
-            "label": "Background Colour",
-            "name": "background_color",
-            "aria-label": "",
-            "type": "color_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_6602b6d07bbe7",
-                        "operator": "==",
-                        "value": "color"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "enable_opacity": 0,
-            "return_format": "string"
-        },
-        {
             "key": "field_6602b7fbd0300",
             "label": "Background Video",
             "name": "background_video",
             "aria-label": "",
             "type": "group",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": [
                 [
                     {
@@ -140,7 +114,7 @@
                     "name": "video_source",
                     "aria-label": "",
                     "type": "file",
-                    "instructions": "Add up to three video sources (usually an .mp4 is sufficient, however you can also add webm and ogg files to support older browsers). <strong>Max video size 10MB.<\/strong>",
+                    "instructions": "Add up to three video sources (usually an .mp4 is sufficient, however you can also add webm and ogg files to support older browsers). <strong>Max video size 15MB.<\/strong>",
                     "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -151,8 +125,8 @@
                     "return_format": "url",
                     "library": "all",
                     "min_size": "",
-                    "max_size": "",
-                    "mime_types": ""
+                    "max_size": 15,
+                    "mime_types": "webm, ogg, mp4"
                 },
                 {
                     "key": "field_6602b94ff0ae5",
@@ -208,8 +182,16 @@
             "aria-label": "",
             "type": "range",
             "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6602b6d07bbe7",
+                        "operator": "!=",
+                        "value": "color"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -220,7 +202,7 @@
             "max": 100,
             "step": 10,
             "prepend": "",
-            "append": ""
+            "append": "%"
         }
     ],
     "location": [
@@ -241,5 +223,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1712158639
+    "modified": 1712224242
 }

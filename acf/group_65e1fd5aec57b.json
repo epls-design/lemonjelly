@@ -21,7 +21,7 @@
             "max": 50,
             "step": "",
             "prepend": "",
-            "append": ""
+            "append": "px"
         },
         {
             "key": "field_65f081ce1565a",
@@ -42,7 +42,7 @@
             "max": 20,
             "step": "",
             "prepend": "",
-            "append": ""
+            "append": "px"
         }
     ],
     "location": [
@@ -63,5 +63,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1710261921
+    "modified": 1712224620
 }

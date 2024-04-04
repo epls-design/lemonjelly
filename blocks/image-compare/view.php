@@ -43,7 +43,13 @@ $second_image = $fields['second_image'];
 
 <section class="<?php echo $block_attributes['class']; ?>" <?php echo $block_attributes['anchor']; ?>>
   <div class="container">
-
+    <?php if ($content || $is_preview) : ?>
+      <header class="row justify-center">
+        <div class="col md-10 lg-8">
+          <InnerBlocks className="<?php echo $text_align; ?>" allowedBlocks=" <?php echo $allowed_blocks; ?>" template="<?php echo $block_template; ?>" />
+        </div>
+      </header>
+    <?php endif; ?>
     <div class="twentytwenty-container">
       <!-- The before image is first -->
       <?php if ($first_image) {  ?>

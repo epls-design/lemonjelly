@@ -122,8 +122,9 @@ add_action('init', function () {
   if (function_exists('acf_add_customizer_section')) {
     $panel_id = acf_add_customizer_panel(array(
       'title'        => 'Theme Designer',
-
+      'description' => '<style>#sub-accordion-panel-themedesigner .description.customize-panel-description{display:block !important;}</style> To update the favicon and logo, visit the <a href="/wp-admin/admin.php?page=theme-options">options page</a>.',
     ));
+
     acf_add_customizer_section(array(
       'title'        => 'Global Colors',
       'storage_type' => 'option',
@@ -142,11 +143,6 @@ add_action('init', function () {
     ));
     acf_add_customizer_section(array(
       'title'        => 'Custom CSS',
-      'storage_type' => 'option',
-      'panel'        => $panel_id,
-    ));
-    acf_add_customizer_section(array(
-      'title'        => 'Branding',
       'storage_type' => 'option',
       'panel'        => $panel_id,
     ));
@@ -226,7 +222,6 @@ function ezpzconsultations_get_theme_opts() {
   $prefixes = [
     'globalcolors',
     'globaltypography',
-    'branding',
     'buttons',
     'customcss',
     'globalpadding'
@@ -350,7 +345,7 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
 
   //error_log($post_id);
 
-  if ($post_id == 'globalcolors' || $post_id == 'globaltypography' || $post_id == 'buttons' || $post_id == 'customcss' || $post_id == 'branding' || $post_id == 'globalpadding') {
+  if ($post_id == 'globalcolors' || $post_id == 'globaltypography' || $post_id == 'buttons' || $post_id == 'customcss' || $post_id == 'globalpadding') {
     // Get all the fields from customiser, and output into consultation.css
 
     $theme_opts = ezpzconsultations_get_theme_opts();
@@ -358,10 +353,6 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
     //error_log(json_encode($theme_opts));
 
     if (!empty($theme_opts)) :
-      // $main_logo = $theme_opts['branding']['main_logo'];
-      // $main_logo_data = wp_get_attachment_image_src($main_logo, 'full');
-      // $original_image_url = $main_logo_data[0];
-      //var_dump($original_image_url);
 
       $primary_colour = isset($theme_opts['globalcolors']['primary_colour']) ? $theme_opts['globalcolors']['primary_colour'] : "#ff3c74";
       $secondary_colour = isset($theme_opts['globalcolors']['secondary_colour']) ? $theme_opts['globalcolors']['secondary_colour'] : "#ffa0cd";
@@ -673,13 +664,6 @@ function ezpzconsultations_add_custom_css() {
   if (isset($_POST['customized'])) {
     //get fields for customizer
     if (!empty($theme_opts)) :
-
-      //if ($theme_opts['branding']["main_logo"]) echo $theme_opts['branding']["main_logo"];
-      // $main_logo = get_field('branding', 'main_logo') ?: '';
-      // $main_logo_data = wp_get_attachment_image_src($main_logo, 'full');
-      // $original_image_url = $main_logo_data[0];
-      // var_dump($original_image_url);
-      //$main_logo = get_field('primary_colour', 'globalcolors') ?: '#ff3c74';
 
       // Global Colours
       $primary_colour = get_field('primary_colour', 'globalcolors') ?: '#ff3c74';

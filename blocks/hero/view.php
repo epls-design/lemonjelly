@@ -26,31 +26,36 @@ $fields = get_fields();
 $block_attributes = jellypress_get_block_attributes($block, $context);
 
 $allowed_blocks = jellypress_get_allowed_blocks();
-$block_template = jellypress_get_block_template();
 
-$block_attributes['class']  .= 'page-header hero';
+$block_template = array(
+  array(
+    'ezpz/post-title', array('className' => 'h2'), array()
+  ),
+  array(
+    'core/paragraph', array('fontSize' => 'medium', 'placeholder' => 'Write Something here...'), array()
+  )
+  // array('ezpz/buttons', array())
+);
+
+$block_template = jellypress_get_block_template($block_template);
+
+$block_attributes['class']  .= ' page-header hero';
 
 
 $background_type = isset($fields['background_type']) ? $fields['background_type'] : '';
 
-//var_dump($background_type);
+
 $hero_class = '';
 
 if ($background_type == 'image') {
   $background_image = isset($fields['background_image']) ? $fields['background_image'] : '';
-  //var_dump("it is image");
 } elseif ($background_type == 'color') {
-  $bg_color = isset($fields['background_color']) ? $fields['background_color'] : '';
-
-  //var_dump("it is color");
 } elseif ($background_type == 'video') {
   $hero_class = "video-header";
   $video_array = isset($fields['background_video']) ? $fields['background_video'] : array();
   $poster = $video_array['video_poster'];
   $video_source = isset($fields['video_source']) ? $fields['video_source'] : '';
-  //var_dump("it is video");
 }
-
 
 ?>
 
@@ -66,11 +71,8 @@ if (is_array($fields) && isset($fields['background_overlay_opacity'])) {
 ?>
 
 
-<header class="<?php echo $block_attributes['class']; ?> <?php echo $hero_class; ?>" <?php echo $block_attributes['anchor']; ?> <?php if (!empty($bg_color)) {
-                                                                                                                                  echo 'style="background-color:' . $bg_color . ';"';
-                                                                                                                                } ?>>
-
-  <?php if (isset($background_image)) :   ?>
+<header class="<?php echo $block_attributes['class']; ?>  <?php echo $hero_class; ?>" <?php echo $block_attributes['anchor']; ?>>
+  <?php if (!empty($background_image)) :   ?>
     <figure class="hero-image overlay-opacity-<?php if ($background_overlay_opacity) echo $background_overlay_opacity; ?>">
       <?php echo wp_get_attachment_image($background_image, 'full'); ?>
     </figure>
@@ -86,18 +88,12 @@ if (is_array($fields) && isset($fields['background_overlay_opacity'])) {
 
     ?>
 
-      <?php if (isset($video_source)) : ?>
+      <?php if (!empty($video_source)) : ?>
         <div class="hero-video-overlay hero-video-overlay-opacity-<?php if ($background_overlay_opacity) echo $background_overlay_opacity; ?>"></div>
-        <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+        <video poster="<?php echo wp_get_attachment_image_url($video_poster, 'large'); ?>" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
           <source src="<?php echo $video_source; ?>" type="video/mp4">
         </video>
       <?php endif; ?>
-
-      <style type="text/css">
-        #hero {
-          background-color: <?php the_sub_field('color'); ?>;
-        }
-      </style>
     <?php endwhile; ?>
   <?php endif; ?>
 

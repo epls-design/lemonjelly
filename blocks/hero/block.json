@@ -15,7 +15,7 @@
 		"alignText": false,
 		"anchor": false,
 		"color": {
-			"background": false,
+			"background": true,
 			"gradients": false,
 			"link": false,
 			"text": false
