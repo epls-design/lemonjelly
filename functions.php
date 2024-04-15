@@ -962,6 +962,57 @@ function ezpzconsultations_add_custom_css() {
 <?php
 }
 
+
+add_action('wp_head', 'update_favicon');
+function update_favicon() {
+  $favicon_url = get_field('favicon', 'option');
+
+  // Check if favicon URL exists
+  if ($favicon_url) {
+    // Update favicon links with the ACF URL
+    echo '<link rel="shortcut icon" type="image/x-icon" href="' . esc_url($favicon_url) . '">';
+    echo '<link rel="icon" type="image/png" href="' . esc_url($favicon_url) . '" sizes="194x194">';
+    echo '<link rel="icon" type="image/png" href="' . esc_url($favicon_url) . '" sizes="96x96">';
+    echo '<link rel="icon" type="image/png" href="' . esc_url($favicon_url) . '" sizes="32x32">';
+    echo '<link rel="icon" type="image/png" href="' . esc_url($favicon_url) . '" sizes="16x16">';
+    echo '<link rel="apple-touch-icon" href="' . esc_url($favicon_url) . '">';
+    echo '<link rel="mask-icon" href="' . esc_url($favicon_url) . '" color="#5bbad5">';
+  } else {
+    // Fallback to default favicon links if ACF field is empty
+    if (file_exists(ABSPATH . '/favicon.ico'))                   echo '<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">';
+    if (file_exists(ABSPATH . '/favicon/favicon-194x194.png'))   echo '<link rel="icon" type="image/png" href="/favicon/favicon-194x194.png" sizes="194x194">';
+    if (file_exists(ABSPATH . '/favicon/favicon-96x96.png'))     echo '<link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96">';
+    if (file_exists(ABSPATH . '/favicon/favicon-32x32.png'))     echo '<link rel="icon" type="image/png" href="/favicon/favicon-32x32.png" sizes="32x32">';
+    if (file_exists(ABSPATH . '/favicon/favicon-16x16.png'))     echo '<link rel="icon" type="image/png" href="/favicon/favicon-16x16.png" sizes="16x16">';
+    if (file_exists(ABSPATH . '/favicon/apple-touch-icon.png'))  echo '<link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">';
+    if (file_exists(ABSPATH . '/favicon/safari-pinned-tab.svg')) echo '<link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#5bbad5">'; // Note: change the color to match your branding
+  }
+
+  // Check and add other favicon-related links if they exist
+  if (file_exists(ABSPATH . '/site.webmanifest'))              echo '<link rel="manifest" href="/site.webmanifest">';
+  if (file_exists(ABSPATH . '/browserconfig.xml'))             echo '<meta name="msapplication-config" content="/browserconfig.xml">';
+  echo '<meta name="theme-color" content="#ffffff">';
+}
+
+// Add favicon to admin areas
+add_action('login_head', 'add_favicon_to_admin');
+add_action('admin_head', 'add_favicon_to_admin');
+function add_favicon_to_admin() {
+  // Get the URL of the uploaded favicon image from ACF
+  $favicon_url = get_field('favicon', 'option');
+
+  // Check if favicon URL exists
+  if ($favicon_url) {
+    // Update favicon link in admin areas with the ACF URL
+    echo '<link rel="shortcut icon" type="image/x-icon" href="' . esc_url($favicon_url) . '">';
+  } else {
+    // Fallback to default favicon link if ACF field is empty
+    if (file_exists(ABSPATH . '/favicon.ico')) echo '<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">';
+  }
+}
+
+
+
 // Master To Do List:
 // Override header.php
 // Add custom blocks
