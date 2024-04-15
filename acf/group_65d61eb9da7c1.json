@@ -8,7 +8,7 @@
             "name": "main_logo",
             "aria-label": "",
             "type": "image",
-            "instructions": "",
+            "instructions": "Used in the Navbar",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -33,7 +33,7 @@
             "name": "favicon",
             "aria-label": "",
             "type": "image",
-            "instructions": "",
+            "instructions": "A small 80x80 graphic shown in the browser tab",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -71,5 +71,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1710257459
+    "modified": 1713175797
 }

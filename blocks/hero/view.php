@@ -87,10 +87,20 @@ if (is_array($fields) && isset($fields['background_overlay_opacity'])) {
       $aspect_ratio = get_sub_field('aspect_ratio');
 
     ?>
+      <?php if (!empty($external_video_link)) : ?>
+        <div class="hero-video-full">
+          var_dump
+          <?php echo jellypress_embed_video(get_sub_field('external_video_link')); ?>
+        </div>
+
+        <a href="javascript:void(0);" class="align-middle play-button no-underline hide-below-md">
+          <?php echo jellypress_icon('play') . jellypress_icon('close'); ?><span class="hero-play-label"><?php echo __('Play full video', 'jellypress'); ?></span>
+        </a>
+      <?php endif; ?>
 
       <?php if (!empty($video_source)) : ?>
         <div class="hero-video-overlay hero-video-overlay-opacity-<?php if ($background_overlay_opacity) echo $background_overlay_opacity; ?>"></div>
-        <video poster="<?php echo wp_get_attachment_image_url($video_poster, 'large'); ?>" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+        <video playsinline autoplay muted loop disablePictureInPicture controlsList="nodownload" poster="<?php echo wp_get_attachment_image_url($video_poster, 'large'); ?>">
           <source src="<?php echo $video_source; ?>" type="video/mp4">
         </video>
       <?php endif; ?>

@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	let scrollpos = window.scrollY;
 
 	const header = document.querySelector(".navbar.main-navigation");
-	console.log(header);
+
 	let scrollChange = 50;
 
 	const add_class_on_scroll = () => header.classList.add("bg-primary-500");
