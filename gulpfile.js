@@ -31,7 +31,7 @@ var sassProcessors = [
 		mediaQuery: false, // Do not apply within media queries (we use em instead)
 		minPixelValue: 0,
 	}),
-	// cssnano(),
+	cssnano(),
 ];
 
 // Sets options which are used later on in this file
