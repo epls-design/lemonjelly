@@ -562,11 +562,10 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
 
     /* Paddings */
     @media (min-width: 37.5em) {
-
       header.block,
       section.block {
-        padding-bottom: calc(2.5rem - ' . "min(max($padding_decrease_tablet, 0px), 20px)" . ');
-        padding-top: calc(4rem - ' . "min(max($padding_decrease_tablet, 0px), 20px)" . ');
+        padding-bottom: ' . "min(max($padding_decrease_tablet, 32px), 75px)" . ';
+        padding-top: ' . "min(max($padding_decrease_tablet, 32px), 75px)" . ';
       }
     }
 
@@ -574,8 +573,9 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
 
       header.block,
       section.block {
-        padding-bottom: calc(4.5rem - ' . "min(max($padding_decrease_desktop, 0px), 50px)" . ');
-        padding-top: calc(6rem - ' . "min(max($padding_decrease_desktop, 0px), 50px)" . ');
+        padding-bottom: ' . "min(max($padding_decrease_desktop, 32px), 100px)" . ';
+        padding-top: ' . "min(max($padding_decrease_desktop, 32px), 100px)" . ';
+
       }
     }
 
@@ -819,8 +819,8 @@ function ezpzconsultations_add_custom_css() {
 
           header.block,
           section.block {
-            padding-bottom: calc(2.5rem - <?php echo "min(max($padding_decrease_tablet, 0px), 20px)" ?>);
-            padding-top: calc(4rem - <?php echo "min(max($padding_decrease_tablet, 0px), 20px)" ?>);
+            padding-bottom: <?php echo "min(max($padding_decrease_tablet, 32px), 75px)" ?>;
+            padding-top: <?php echo "min(max($padding_decrease_tablet, 32px), 75px)" ?>;
           }
         }
 
@@ -828,9 +828,11 @@ function ezpzconsultations_add_custom_css() {
 
           header.block,
           section.block {
-            padding-bottom: calc(4.5rem - <?php echo "min(max($padding_decrease_desktop, 0px), 50px)" ?>);
-            padding-top: calc(6rem - <?php echo "min(max($padding_decrease_desktop, 0px), 50px)" ?>);
+            padding-bottom: <?php echo "min(max($padding_decrease_desktop, 32px), 100px)" ?>;
+            padding-top: <?php echo "min(max($padding_decrease_desktop, 32px), 100px)" ?>;
           }
+
+
         }
 
         /* Custom CSS from theme designer */
@@ -962,7 +964,7 @@ function ezpzconsultations_add_custom_css() {
 <?php
 }
 
-
+//FAVICONS
 add_action('wp_head', 'update_favicon');
 function update_favicon() {
   $favicon_url = get_field('favicon', 'option');

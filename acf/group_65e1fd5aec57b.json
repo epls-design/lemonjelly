@@ -4,11 +4,11 @@
     "fields": [
         {
             "key": "field_65e1fd5b7eda6",
-            "label": "Padding Decrease Desktop",
+            "label": "Padding Desktop",
             "name": "padding_decrease_desktop",
             "aria-label": "",
             "type": "range",
-            "instructions": "Enter the pixel value by which you would like to decrease the padding.",
+            "instructions": "Enter the pixel value.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -17,19 +17,19 @@
                 "id": ""
             },
             "default_value": "",
-            "min": "",
-            "max": 50,
+            "min": 32,
+            "max": 100,
             "step": "",
             "prepend": "",
             "append": "px"
         },
         {
             "key": "field_65f081ce1565a",
-            "label": "Padding Decrease Tablet",
+            "label": "Padding Tablet",
             "name": "padding_decrease_tablet",
             "aria-label": "",
             "type": "range",
-            "instructions": "Enter the pixel value by which you would like to decrease the padding.",
+            "instructions": "Enter the pixel value",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -38,8 +38,8 @@
                 "id": ""
             },
             "default_value": "",
-            "min": "",
-            "max": 20,
+            "min": 32,
+            "max": 75,
             "step": "",
             "prepend": "",
             "append": "px"
@@ -63,5 +63,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1712224620
+    "modified": 1713262005
 }
