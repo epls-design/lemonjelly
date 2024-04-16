@@ -6,7 +6,7 @@
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
-$block_functions_to_include = array('image-compare', 'timeline', 'hero');
+$block_functions_to_include = array('image-compare', 'timeline', 'consultation-hero');
 
 foreach ($block_functions_to_include as $block) {
   $directory = get_stylesheet_directory() . '/blocks/' . $block . '/functions.php';
@@ -20,7 +20,7 @@ function ezpzconsultations_block_templates() {
   $post_type_object = get_post_type_object('page');
 
   $post_type_object->template = array(
-    array('ezpz/hero', array(
+    array('ezpz/consultation-hero', array(
       'lock' => array(
         'move'   => true,
         'remove' => true,
@@ -82,7 +82,7 @@ add_action('acf/init', 'ezpzconsultations_register_blocks', 20);
 add_filter('allowed_block_types_all', 'ezpzconsultations_add_to_allowed_blocks', 100, 1);
 
 //change to ezpconsultation_blocks
-$blocks = array('timeline', 'image-compare', 'hero');
+$blocks = array('timeline', 'image-compare', 'consultation-hero');
 
 function ezpzconsultations_register_blocks() {
   global $blocks;
@@ -455,8 +455,6 @@ function ezpzconsultations_generate_theme_override_css($post_id) {
 
     // Button styles
     $css_data .= '
-    /* Global Typography */
-    @import url(\'' . $theme_opts['globaltypography']['primary_import_font_family'] . '\');
 
     /* Buttons */';
 
@@ -838,7 +836,6 @@ function ezpzconsultations_add_custom_css() {
         /* Custom CSS from theme designer */
         <?php if ($custom_css) echo $custom_css; ?>
         /* Global Typography */
-        @import url('<?php echo $theme_opts['globaltypography']['primary_import_font_family']; ?>');
 
         :root {
           --font-primary: <?php echo $primary_font_family ?>;

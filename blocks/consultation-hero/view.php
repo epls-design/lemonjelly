@@ -89,7 +89,7 @@ if (is_array($fields) && isset($fields['background_overlay_opacity'])) {
     ?>
       <?php if (!empty($external_video_link)) : ?>
         <div class="hero-video-full">
-          var_dump
+
           <?php echo jellypress_embed_video(get_sub_field('external_video_link')); ?>
         </div>
 
@@ -111,7 +111,7 @@ if (is_array($fields) && isset($fields['background_overlay_opacity'])) {
   <div class="container">
     <div class="row">
       <div class="col md-10 lg-8">
-        <InnerBlocks templateLock="all" allowedBlocks="<?php echo $allowed_blocks; ?>" template="<?php echo $block_template; ?>" />
+        <InnerBlocks templateLock="false" allowedBlocks="<?php echo $allowed_blocks; ?>" template="<?php echo $block_template; ?>" />
       </div>
     </div>
   </div>

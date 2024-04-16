@@ -1,6 +1,6 @@
 {
     "key": "group_65e9b645cb80d",
-    "title": "Block > Hero",
+    "title": "Block > Consultation Hero",
     "fields": [
         {
             "key": "field_6602b6d07bbe7",
@@ -182,7 +182,7 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "ezpz\/hero"
+                "value": "ezpz\/consultation-hero"
             }
         ]
     ],
@@ -195,5 +195,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1713191220
+    "modified": 1713266775
 }

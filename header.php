@@ -27,6 +27,18 @@ $main_logo = $fields['main_logo'];
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <link rel="profile" href="https://gmpg.org/xfn/11">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <?php
+  $theme_opts = ezpzconsultations_get_theme_opts();
+  $font_family = htmlspecialchars_decode($theme_opts['globaltypography']['primary_import_font_family']);
+
+  if (!empty($font_family)) {
+    echo '<link href="' . $font_family . '" rel="stylesheet">';
+  }
+  ?>
+
   <?php wp_head(); ?>
 </head>
 
