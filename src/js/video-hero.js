@@ -7,8 +7,8 @@
 			const navHeight = $("#site-navigation").outerHeight();
 
 			$(".video-header")
-				.css("min-height", `calc(100vh - ${navHeight}px)`)
-				.css("min-height", `calc(100dvh - ${navHeight}px)`);
+				.css("min-height", `calc(75vh - ${navHeight}px)`)
+				.css("min-height", `calc(75dvh - ${navHeight}px)`);
 		}
 	}
 
