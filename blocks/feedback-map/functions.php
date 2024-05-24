@@ -12,8 +12,10 @@ class ezpzFeedbackMap {
   function __construct() {
     add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
     add_filter('upload_mimes', [$this, 'allow_kml_upload']);
-    add_action('wp_ajax_feedback_map_entries', [$this, 'ajax_handler']);
-    add_action('wp_ajax_nopriv_feedback_map_entries', [$this, 'ajax_handler']);
+    add_action('wp_ajax_feedback_map_entries', [$this, 'get_markers']);
+    add_action('wp_ajax_nopriv_feedback_map_entries', [$this, 'get_markers']);
+    add_action('wp_ajax_like_feedback_entry', [$this, 'like_entry']);
+    add_action('wp_ajax_nopriv_like_feedback_entry', [$this, 'like_entry']);
   }
 
   function enqueue_scripts() {
@@ -98,6 +100,8 @@ class ezpzFeedbackMap {
 
       foreach ($entry as $key => $value) {
 
+        $user_feedback['entry_id'] = $entry['id'];
+
         // If the field label is 'Lat' or 'Latitude' or 'Lng' or 'Longitude' then push  it to the top level of the array
         if (preg_match('/lat(itude)?|lng(itude)?/i', $field_mapping[$key]['label'])) {
           if (preg_match('/lat(itude)?/i', $field_mapping[$key]['label'])) {
@@ -106,6 +110,11 @@ class ezpzFeedbackMap {
             $user_feedback['lng'] = $value;
           }
 
+          continue;
+        }
+
+        if ($field_mapping[$key]['label'] == 'Likes') {
+          $user_feedback['likes'] = $value;
           continue;
         }
 
@@ -145,7 +154,48 @@ class ezpzFeedbackMap {
     return $user_feedback_all;
   }
 
-  function ajax_handler() {
+  function like_entry() {
+    // Check nonce
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'feedback-map-nonce')) {
+      wp_send_json_error('Invalid nonce');
+      die();
+    }
+
+    $entry_id = $_POST['entryId'];
+
+    $entry_exists = GFAPI::entry_exists($entry_id);
+
+    if (!$entry_exists) {
+      wp_send_json_error('Entry not found', 404);
+      die();
+    }
+
+    $entry = GFAPI::get_entry($entry_id);
+    if ($entry) {
+
+      // Get the field id for the 'Likes' field
+      $form = GFAPI::get_form($entry['form_id']);
+      $likes_field = array_search('Likes', array_column($form['fields'], 'label'));
+      $likes_field_id = $form['fields'][$likes_field]['id'];
+
+      $likes = $entry[$likes_field_id] ?? 0;
+      $likes++;
+
+      GFAPI::update_entry_field(
+        $entry_id,
+        $likes_field_id,
+        $likes
+      );
+
+      wp_send_json_success($likes, 200);
+    } else {
+      wp_send_json_error('Entry not found', 404);
+    }
+    die(); // Required to terminate immediately and return a proper response
+  }
+
+
+  function get_markers() {
     // Check nonce
     if (!isset($_GET['nonce']) || !wp_verify_nonce($_GET['nonce'], 'feedback-map-nonce')) {
       wp_send_json_error('Invalid nonce');

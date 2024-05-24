@@ -31,8 +31,6 @@
 			return "";
 		}
 
-		console.log(markerData);
-
 		var content = document.createElement("div");
 		var ul = document.createElement("ul");
 
@@ -47,12 +45,44 @@
 			}
 		}
 
-		// Append Like button
-		if (markerData.allowLikes) {
+		// Append Like button if likes are enabled
+		if (markerData.likes !== undefined) {
+			let currentLikes = markerData.likes ? markerData.likes : 0;
+
 			var likeButton = document.createElement("button");
-			likeButton.classList.add("like-button");
-			likeButton.innerHTML = "Like";
-			likeButton.addEventListener("click", function () {});
+			likeButton.classList.add("like-button", "button", "success", "xsmall");
+
+			likeButton.innerHTML = currentLikes + " likes";
+
+			if (markerData.userHasLiked) {
+				likeButton.disabled = true;
+				likeButton.title = "You have already liked this";
+			}
+
+			likeButton.addEventListener("click", function () {
+				if (markerData.userHasLiked) {
+					return;
+				}
+				$.ajax({
+					type: "POST",
+					url: feedbackMapsParams.ajaxUrl,
+					data: {
+						action: "like_feedback_entry",
+						entryId: markerData["entry_id"],
+						nonce: feedbackMapsParams.nonce,
+					},
+					dataType: "json",
+					success: function (response, textStatus, xhr) {
+						let respData = response.data;
+						likeButton.innerHTML = respData + " likes";
+						likeButton.disabled = true;
+						markerData.userHasLiked = true;
+						markerData.likes = respData;
+					},
+					error: function (error) {},
+				});
+			});
+
 			content.appendChild(likeButton);
 		}
 
@@ -98,8 +128,6 @@
 		if (!formId) {
 			return;
 		}
-
-		let formEntries = [];
 
 		// Get form entries using AJAX
 		$.ajax({

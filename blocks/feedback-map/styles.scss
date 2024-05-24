@@ -25,6 +25,27 @@
 
 	.gm-style-iw {
 		width: 300px;
+
+		[aria-label="Close"] {
+			width: 20px !important;
+			height: 20px !important;
+			right: 4px !important;
+			top: 4px !important;
+			span {
+				width: 20px !important;
+				height: 20px !important;
+				margin: 0 !important;
+			}
+		}
+	}
+
+	button.like-button {
+		// TODO: Add a nice icon here
+		margin-bottom: 0;
+		&[disabled] {
+			opacity: 1;
+			--button-color-theme: var(--color-success-50);
+		}
 	}
 }
 
