@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "ezpz/feedback-map",
+	"title": "Interactive Feedback Map",
+	"category": "media",
+	"icon": "location",
+	"description": "Embeds an interactive Google Map on the page which allows the user to add feedback and view other's feedback.",
+	"keywords": ["map", "google", "feedback", "interactive", "embed", "location"],
+	"version": "1.0.0",
+	"textdomain": "jellypress",
+	"supports": {
+		"align": false,
+		"alignText": false,
+		"anchor": true,
+		"color": {
+			"background": false,
+			"gradients": false,
+			"link": false,
+			"text": false
+		},
+		"customClassName": false,
+		"html": false
+	},
+	"styles": [],
+	"viewScript": ["feedback-map-init"],
+	"editorScript": ["feedback-map-init"],
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "view.php",
+		"postTypes": []
+	}
+}

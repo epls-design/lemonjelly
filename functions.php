@@ -6,7 +6,7 @@
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
-$block_functions_to_include = array('image-compare', 'timeline', 'consultation-hero');
+$block_functions_to_include = array('image-compare', 'timeline', 'consultation-hero', 'feedback-map');
 
 foreach ($block_functions_to_include as $block) {
   $directory = get_stylesheet_directory() . '/blocks/' . $block . '/functions.php';
@@ -80,14 +80,11 @@ function ezpzconsultations_enqueue_styles() {
 add_action('acf/init', 'ezpzconsultations_register_blocks', 20);
 add_filter('allowed_block_types_all', 'ezpzconsultations_add_to_allowed_blocks', 100, 1);
 
-//change to ezpconsultation_blocks
-$blocks = array('timeline', 'image-compare', 'consultation-hero');
+$blocks = array('timeline', 'image-compare', 'consultation-hero', 'feedback-map');
 
 function ezpzconsultations_register_blocks() {
   global $blocks;
   foreach ($blocks as $slug) {
-
-    //var_dump(get_stylesheet_directory(__FILE__) . '/blocks/' . $slug . '/block.json');
     if (file_exists(get_stylesheet_directory(__FILE__) . '/blocks/' . $slug . '/block.json')) {
       // Register ACF block
       register_block_type(get_stylesheet_directory(__FILE__) . '/blocks/' . $slug);
@@ -231,7 +228,8 @@ function ezpzconsultations_save_acf_local_json($group) {
     'group_65e1fd5aec57b',
     'group_65e6eb7aed060',
     'group_65e9b645cb80d',
-    'group_64c2957a5ef4e'
+    'group_64c2957a5ef4e',
+    'group_6650768a4a243'
   );
   if (in_array($group['key'], $groups)) {
     add_filter('acf/settings/save_json', function () {

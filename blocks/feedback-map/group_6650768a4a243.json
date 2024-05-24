@@ -1,0 +1,87 @@
+{
+    "key": "group_6650768a4a243",
+    "title": "Block > Feedback Map",
+    "fields": [
+        {
+            "key": "field_6650768ac4e3b",
+            "label": "Intro Text",
+            "name": "intro_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "This text appears when the map is ready, prompting the user to get started.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": "",
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_665077fa0e68c",
+            "label": "Gravity Form ID",
+            "name": "gravity_form_id",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Please enter the ID of the gravity form which is used on this interactive map",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 1,
+            "max": "",
+            "placeholder": "",
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6650782e0e68d",
+            "label": "KML File",
+            "name": "overlay_source",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "If you would like to upload an overlay file (eg. to show a red line drawing) you can do so here.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "ezpz\/feedback-map"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1716549719
+}
