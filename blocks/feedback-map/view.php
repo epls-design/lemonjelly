@@ -55,13 +55,10 @@ $block_classlist = implode(' ', $block_classlist);
     ];
 
     if ($fields['zoom']) $map_attributes['data-zoom'] = $fields['zoom'];
+    if ($fields['gravity_form_id']) $map_attributes['data-form-id'] = $fields['gravity_form_id'];
+    if ($fields['overlay_source'])  $map_attributes['data-overlay-source'] = $fields['overlay_source'];
 
-
-    if ($fields['overlay_source']) {
-
-      $fields['overlay_source'] = 'https://epls.design/dev/test.kml'; // TODO: remove this line on production
-      $map_attributes['data-overlay-source'] = $fields['overlay_source'];
-    }
+    $map_attributes['aria-label'] = isset($fields['aria_label']) ? $fields['aria_label'] : __('Interactive Map', 'jellypress');
 
     if (!empty($map_attributes)) {
       $map_attrs = '';
@@ -70,7 +67,7 @@ $block_classlist = implode(' ', $block_classlist);
       }
     }
 
-
+    // TODO: Add an aria suitable fallback for the map
     echo '<div class="feedback-map" ' . $map_attrs . '></div>';
   }
   ?>

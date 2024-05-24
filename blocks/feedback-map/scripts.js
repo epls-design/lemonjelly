@@ -1,4 +1,131 @@
 (function ($) {
+	// TODO: ADD event listener for esc, if active infowindow close it
+
+	/**
+	 * Shows the UI elements on a map
+	 * @param {google.maps.Map} map - The map object
+	 */
+	function showMapInterface(map) {
+		map.setOptions({
+			mapTypeControl: true,
+			mapTypeControlOptions: {
+				mapTypeIds: ["roadmap", "satellite"],
+				style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+			},
+			zoomControl: true,
+			zoomControlOptions: {
+				position: google.maps.ControlPosition.RIGHT_TOP,
+			},
+		});
+
+		return map;
+	}
+
+	/**
+	 * Generates the markup for a given marker
+	 * @param {Object} markerData - The data for the marker
+	 * @returns {HTMLElement} - The marker content
+	 */
+	function generateMarkerContent(markerData) {
+		if (!markerData.fields) {
+			return "";
+		}
+
+		console.log(markerData);
+
+		var content = document.createElement("div");
+		var ul = document.createElement("ul");
+
+		content.classList.add("marker-content");
+		content.appendChild(ul);
+
+		for (let key in markerData.fields) {
+			if (markerData.fields[key].isHidden !== true) {
+				var li = document.createElement("li");
+				li.innerHTML = `<span class="field-label">${markerData.fields[key].label}: </span><span class="value">${markerData.fields[key].value}</span>`;
+				ul.appendChild(li);
+			}
+		}
+
+		// Append Like button
+		if (markerData.allowLikes) {
+			var likeButton = document.createElement("button");
+			likeButton.classList.add("like-button");
+			likeButton.innerHTML = "Like";
+			likeButton.addEventListener("click", function () {});
+			content.appendChild(likeButton);
+		}
+
+		return content;
+	}
+
+	/**
+	 * Adds a marker to the map
+	 * @param {google.maps.Map} map - The map object
+	 * @param {Object} markerData - The data for the marker
+	 * @returns  {google.maps.Marker} - The marker object
+	 */
+	function addMarker(map, markerData) {
+		var latLng = {
+			lat: parseFloat(markerData.lat),
+			lng: parseFloat(markerData.lng),
+		};
+
+		// TODO: Move to https://developers.google.com/maps/documentation/javascript/reference/advanced-markers#AdvancedMarkerElement
+		var marker = new google.maps.Marker({
+			position: latLng,
+			map: map,
+			// TODO: ICON OVERRIDE WOULD BE NICE
+		});
+
+		// Show the marker content when clicked
+		// TODO: CENTER MAP ON MARKER
+		google.maps.event.addListener(marker, "click", function () {
+			map.infowindow.setOptions({
+				content: generateMarkerContent(markerData),
+			});
+			map.infowindow.open(map, marker);
+		});
+
+		return marker;
+	}
+
+	function plotMarkers(map) {
+		// Get the jQuery element the map is attached to
+		let $mapElement = $(map.getDiv());
+
+		let formId = $mapElement.data("form-id");
+		if (!formId) {
+			return;
+		}
+
+		let formEntries = [];
+
+		// Get form entries using AJAX
+		$.ajax({
+			type: "GET",
+			url: feedbackMapsParams.ajaxUrl,
+			data: {
+				action: "feedback_map_entries",
+				formId: formId,
+				nonce: feedbackMapsParams.nonce,
+			},
+			dataType: "json",
+			success: function (response, textStatus, xhr) {
+				let formEntries = response.data;
+				if (formEntries.length) {
+					formEntries.forEach(function (entry) {
+						addMarker(map, entry);
+					});
+				}
+			},
+			error: function (error) {
+				// NO ENTRIES FOUND
+				// console.error(error);
+			},
+		});
+	}
+
 	/**
 	 * Initialises a single feedback map using the Google Maps Javascript API
 	 * @see https://developers.google.com/maps/documentation/javascript/ for documentation
@@ -8,16 +135,21 @@
 	 */
 	async function initialiseFeedbackMap($mapElement) {
 		let map;
+		let mapZoom = $mapElement.data("zoom") ? $mapElement.data("zoom") : 15;
+		let minMapZoom = mapZoom - 3 < 12 ? 12 : mapZoom - 3; // Dont let min Zoom go below 12
 
 		let mapProps = {
 			center: {
 				lat: $mapElement.data("lat"),
 				lng: $mapElement.data("lng"),
 			},
-			zoom: $mapElement.data("zoom") ? $mapElement.data("zoom") : 15,
-			mapTypeId: "hybrid",
-			streetViewControl: false,
-			fullscreenControl: false,
+			zoom: mapZoom,
+			mapTypeId: "satellite",
+			scrollwheel: false,
+			disableDefaultUI: true,
+			minZoom: minMapZoom,
+			maxZoom: 20,
+			// TODO: Add in restrictions for mapBounds?
 		};
 
 		async function initMap() {
@@ -56,6 +188,19 @@
 		// TODO: need to add in filters
 
 		await initMap();
+
+		// TODO: DISPLAY INTRO TEXT IF FIRST TIME HERE
+
+		// When the map is ready, show the UI elements
+		showMapInterface(map);
+
+		plotMarkers(map);
+
+		map.infowindow = new google.maps.InfoWindow();
+
+		// TODO: PLOT MARKERS + CLUSTER THEM
+		// TODO: ADD FILTERING TO MARKERS
+
 		return map;
 	}
 

@@ -3,6 +3,26 @@
     "title": "Block > Feedback Map",
     "fields": [
         {
+            "key": "field_6650a978391cd",
+            "label": "Aria Label",
+            "name": "aria_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Aria accessible label for the map",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Interactive Map",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_6650768ac4e3b",
             "label": "Intro Text",
             "name": "intro_text",
@@ -145,5 +165,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1716555266
+    "modified": 1716562341
 }
