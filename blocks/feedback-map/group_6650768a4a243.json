@@ -45,6 +45,68 @@
             "append": ""
         },
         {
+            "key": "field_66508cd63cf40",
+            "label": "Latitude",
+            "name": "latitude",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Starting Latitude for the map",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "51.077197",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_66508d063cf41",
+            "label": "Longitude",
+            "name": "longitude",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Starting Longitude for the map",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "-1.2980275",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_66508dd93a5c3",
+            "label": "Zoom",
+            "name": "zoom",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Starting zoom level for the map",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 14,
+            "min": 0,
+            "max": 21,
+            "placeholder": "",
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_6650782e0e68d",
             "label": "KML File",
             "name": "overlay_source",
@@ -58,11 +120,11 @@
                 "class": "",
                 "id": ""
             },
-            "return_format": "array",
+            "return_format": "url",
             "library": "all",
             "min_size": "",
             "max_size": "",
-            "mime_types": ""
+            "mime_types": "kml"
         }
     ],
     "location": [
@@ -83,5 +145,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1716549719
+    "modified": 1716555266
 }

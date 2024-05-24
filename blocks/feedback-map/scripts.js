@@ -1,35 +1,61 @@
 (function ($) {
 	/**
 	 * Initialises a single feedback map using the Google Maps Javascript API
-	 * @param {*} $map - jQuery object of the map element
+	 * @see https://developers.google.com/maps/documentation/javascript/ for documentation
+	 *
+	 * @param {*} $mapElement - jQuery object of the map element
 	 * @returns {google.maps.Map} - The map object
 	 */
-	function initialiseFeedbackMap($map) {
+	async function initialiseFeedbackMap($mapElement) {
 		let map;
 
-		async function initMap() {
-			const { Map } = await google.maps.importLibrary("maps");
+		let mapProps = {
+			center: {
+				lat: $mapElement.data("lat"),
+				lng: $mapElement.data("lng"),
+			},
+			zoom: $mapElement.data("zoom") ? $mapElement.data("zoom") : 15,
+			mapTypeId: "hybrid",
+			streetViewControl: false,
+			fullscreenControl: false,
+		};
 
-			/**
-			 * TODO: PASS THROUGH THE FOLOWING PARAMS TO THE FUNCTION
-			 * -- lat
-			 * -- lng
-			 */
-			map = new Map($map[0], {
-				center: { lat: -34.397, lng: 150.644 },
-				zoom: 8,
-				mapTypeId: "satellite",
-			});
+		async function initMap() {
+			// Destructure the objects required  from the google maps library
+			const { Map, KmlLayer } = await google.maps.importLibrary("maps");
+
+			// Create a new map
+			map = new Map($mapElement[0], mapProps);
+
+			// If there is KML data load it in
+			// @link https://developers.google.com/maps/documentation/javascript/kml
+			if ($mapElement.data("overlay-source")) {
+				let overlaySource = $mapElement.data("overlay-source");
+
+				// Remove the data attr from the map element
+				$mapElement.removeAttr("data-overlay-source");
+
+				// Create a new KML layer
+				var kmlLayer = new KmlLayer(overlaySource, {
+					suppressInfoWindows: true,
+					preserveViewport: true,
+					map: map,
+				});
+
+				kmlLayer.addListener("status_changed", function () {
+					if (kmlLayer.getStatus() !== "OK") {
+						// Error handling for KML layer
+						console.error("KML Layer failed to load:", kmlLayer.getStatus());
+					}
+				});
+			}
 		}
 
 		// TODO: NEED TO GET ENTRIES FROM G FORM AND PLOT THEM
 		// TODO: Need to add the ability to pin a comment
-		// TODO: Need to load in a KML
 		// TODO: need to add in filters
 
-		initMap();
-
-		// FIXME: Map is not returnin because it is being returned before the async function is resolved
+		await initMap();
 		return map;
 	}
 
@@ -53,7 +79,6 @@
 					entries.forEach(function (entry) {
 						if (entry.isIntersecting) {
 							var map = initialiseFeedbackMap($(entry.target));
-							console.log(map);
 							observeFeedbackMaps.unobserve(entry.target);
 						}
 					});

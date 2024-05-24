@@ -45,7 +45,33 @@ $block_classlist = implode(' ', $block_classlist);
       )
       . '</div></div>';
   } elseif ($api_key) {
-    echo '<div class="feedback-map"></div>';
+
+    /**
+     * Build up attributes
+     */
+    $map_attributes = [
+      'data-lat' => $fields['latitude'],
+      'data-lng' => $fields['longitude'],
+    ];
+
+    if ($fields['zoom']) $map_attributes['data-zoom'] = $fields['zoom'];
+
+
+    if ($fields['overlay_source']) {
+
+      $fields['overlay_source'] = 'https://epls.design/dev/test.kml'; // TODO: remove this line on production
+      $map_attributes['data-overlay-source'] = $fields['overlay_source'];
+    }
+
+    if (!empty($map_attributes)) {
+      $map_attrs = '';
+      foreach ($map_attributes as $key => $value) {
+        $map_attrs .= $key . '="' . $value . '" ';
+      }
+    }
+
+
+    echo '<div class="feedback-map" ' . $map_attrs . '></div>';
   }
   ?>
 </section>

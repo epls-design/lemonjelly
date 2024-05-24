@@ -16,3 +16,11 @@ add_action('wp_enqueue_scripts', function () {
     true
   );
 });
+
+
+function jellypress_allow_kml_upload($mimes) {
+  $mimes['kml'] = 'text/xml';
+  $mimes['kmz'] = 'application/zip';
+  return $mimes;
+}
+add_filter('upload_mimes', 'jellypress_allow_kml_upload');
