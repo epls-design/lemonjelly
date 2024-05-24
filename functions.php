@@ -204,6 +204,22 @@ function ezpzconsultations_get_options_by_prefix($prefix) {
  */
 function ezpzconsultations_load_acf_local_json($paths) {
   $paths[] = get_stylesheet_directory() . '/acf';
+
+  // Check if there are any in the /blocks directory
+  $blocks = get_stylesheet_directory() . '/blocks';
+  if (is_dir($blocks)) {
+    $block_folders = array_diff(scandir($blocks), array('..', '.'));
+    foreach ($block_folders as $block_folder) {
+      $block_folder_path = $blocks . '/' . $block_folder;
+      if (is_dir($block_folder_path)) {
+        $block_json = $block_folder_path . '/block.json';
+        if (file_exists($block_json)) {
+          $paths[] = $block_folder_path;
+        }
+      }
+    }
+  }
+
   return $paths;
 }
 function ezpzconsultations_save_acf_local_json($group) {
