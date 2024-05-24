@@ -1,5 +1,74 @@
 (function ($) {
 	// TODO: ADD event listener for esc, if active infowindow close it
+	// TODO Add esc e vent listener, if add Feedback is active, close it
+	// TODO: Add intro screen
+	// TODO: ADD CLUSTERING
+	// TODO: ADD filters
+	// TODO: On Gravity Form submit, close the feedback form and add a marker to the map opening the infowindow
+
+	function addUserFeedback(map) {
+		// Find .map-interactivity button and add an event listener
+		let $mapElement = $(map.getDiv());
+
+		let allowsFeedback = $mapElement.data("feedback-active");
+
+		if (allowsFeedback != true) {
+			return;
+		}
+
+		let feedbackButton = $mapElement
+			.closest(".feedback-map-wrapper")
+			.find(".share-feedback-button");
+
+		let addMarkerControls = $mapElement
+			.closest(".feedback-map-wrapper")
+			.find(".add-marker-controls");
+
+		if (!feedbackButton.length) {
+			return;
+		}
+
+		feedbackButton.on("click", function () {
+			if (map.infowindow) {
+				map.infowindow.close();
+			}
+
+			addMarkerControls.fadeIn(150);
+			addMarkerControls.attr("aria-hidden", "false");
+
+			feedbackButton.fadeOut(150);
+			feedbackButton.attr("aria-expanded", "true");
+
+			map.hasActiveModal = true;
+		});
+
+		let feedbackButtonOpener = $mapElement
+			.closest(".feedback-map-wrapper")
+			.find(".open-feedback-modal");
+
+		feedbackButtonOpener.on("click", function () {
+			let latLng = map.getCenter();
+			let $form = $mapElement.closest(".feedback-map-wrapper").find("form");
+			let $latInput = $form.find(".gfield.latitude input");
+			let $lngInput = $form.find(".gfield.longitude input");
+
+			$latInput.val(latLng.lat());
+			$lngInput.val(latLng.lng());
+		});
+
+		let cancelButton = $mapElement
+			.closest(".feedback-map-wrapper")
+			.find(".cancel");
+
+		cancelButton.on("click", function () {
+			addMarkerControls.fadeOut(150);
+			addMarkerControls.attr("aria-hidden", "true");
+			feedbackButton.fadeIn(150);
+			feedbackButton.attr("aria-expanded", "false");
+
+			map.hasActiveModal = false;
+		});
+	}
 
 	/**
 	 * Shows the UI elements on a map
@@ -111,10 +180,12 @@
 		// Show the marker content when clicked
 		// TODO: CENTER MAP ON MARKER
 		google.maps.event.addListener(marker, "click", function () {
-			map.infowindow.setOptions({
-				content: generateMarkerContent(markerData),
-			});
-			map.infowindow.open(map, marker);
+			if (!map.hasActiveModal) {
+				map.infowindow.setOptions({
+					content: generateMarkerContent(markerData),
+				});
+				map.infowindow.open(map, marker);
+			}
 		});
 
 		return marker;
@@ -211,23 +282,13 @@
 			}
 		}
 
-		// TODO: NEED TO GET ENTRIES FROM G FORM AND PLOT THEM
-		// TODO: Need to add the ability to pin a comment
-		// TODO: need to add in filters
-
 		await initMap();
 
-		// TODO: DISPLAY INTRO TEXT IF FIRST TIME HERE
-
-		// When the map is ready, show the UI elements
 		showMapInterface(map);
-
 		plotMarkers(map);
+		addUserFeedback(map);
 
 		map.infowindow = new google.maps.InfoWindow();
-
-		// TODO: PLOT MARKERS + CLUSTER THEM
-		// TODO: ADD FILTERING TO MARKERS
 
 		return map;
 	}

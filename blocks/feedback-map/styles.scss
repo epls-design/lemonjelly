@@ -49,4 +49,85 @@
 	}
 }
 
+.feedback-map-wrapper {
+	position: relative;
+	.share-feedback-button {
+		position: absolute;
+		bottom: 5%;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 1;
+		margin: 0;
+	}
+
+	.add-marker-controls {
+		--crosshair-size: 3rem;
+		pointer-events: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: radial-gradient(
+			circle,
+			rgba(0, 0, 0, 0.6) 45%,
+			rgba(0, 0, 0, 0.3) 100%
+		);
+		.button-list {
+			pointer-events: auto;
+		}
+		.description {
+			p {
+				color: white;
+				font-size: var(--font-size--2);
+				text-align: center;
+				max-width: 500px;
+			}
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			position: absolute;
+			top: calc(50% + var(--crosshair-size));
+			left: 50%;
+			transform: translateX(-50%);
+		}
+		.button.white.ghost {
+			color: var(--button-color-theme);
+			text-decoration: none;
+			&:hover,
+			&:focus {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	// TODO: Sort out padding and overflow on the modal, so that the focus outlines are visible
+
+	.crosshair {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: var(--crosshair-size);
+		height: var(--crosshair-size);
+		border: 1px solid white;
+		border-radius: 50%;
+		span {
+			height: 2px;
+			width: calc(var(--crosshair-size) * 0.6);
+			background-color: white;
+			transform-origin: center;
+			display: block;
+			position: absolute;
+		}
+		.vertical {
+			transform: rotate(90deg);
+		}
+	}
+}
+
 // TODO: STYLE UP THE GOOGLE UI ELEMENTS

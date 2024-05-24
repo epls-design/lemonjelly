@@ -60,6 +60,9 @@ $block_classlist = implode(' ', $block_classlist);
 
     $map_attributes['aria-label'] = isset($fields['aria_label']) ? $fields['aria_label'] : __('Interactive Map', 'jellypress');
 
+    if ($fields['feedback_active']) $map_attributes['data-feedback-active'] = 'true';
+    else $map_attributes['data-feedback-active'] = 'false';
+
     if (!empty($map_attributes)) {
       $map_attrs = '';
       foreach ($map_attributes as $key => $value) {
@@ -68,7 +71,46 @@ $block_classlist = implode(' ', $block_classlist);
     }
 
     // TODO: Add an aria suitable fallback for the map
-    echo '<div class="feedback-map" ' . $map_attrs . '></div>';
+
+  ?>
+
+    <div class="feedback-map-wrapper">
+      <div class="feedback-map" <?php echo $map_attrs; ?>></div>
+
+      <?php if ($fields['feedback_active']) { ?>
+
+        <button class="button success share-feedback-button small" aria-controls="<?php echo 'marker-add-' . $fields['gravity_form_id']; ?>" aria-expanded="false"><?php _e('Share your feedback', 'jellypress'); ?></button>
+        <div class="add-marker-controls" id="marker-add-<?php echo $fields['gravity_form_id']; ?>" style="display:none;">
+          <span class="crosshair">
+            <span class="vertical"></span>
+            <span class="horizontal"></span>
+          </span>
+          <div class="description">
+            <p><?php _e('Position the crosshair on the location where you would like to add feedback, and then click on "Add feedback here"', 'jellypress'); ?></p>
+            <div class="button-list">
+              <button class="button xsmall success open-feedback-modal" onclick="toggleModal('add-feedback-<?php echo $fields['gravity_form_id']; ?>');">
+                <?php _e('Add feedback here', 'jellypress'); ?>
+              </button>
+              <button class="button ghost white xsmall cancel">
+                <?php _e('Cancel', 'jellypress'); ?>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <dialog class="modal bg-white feedback-modal" id="add-feedback-<?php echo $fields['gravity_form_id']; ?>">
+          <div class="modal-content">
+            <?php
+            echo do_shortcode('[gravityform id="' . $fields['gravity_form_id'] . '" title="false"  ajax="true"]')
+            ?>
+          </div>
+        </dialog>
+
+      <?php } ?>
+
+    </div>
+
+  <?php
   }
   ?>
 </section>

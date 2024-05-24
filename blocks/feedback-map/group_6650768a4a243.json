@@ -145,6 +145,26 @@
             "min_size": "",
             "max_size": "",
             "mime_types": "kml"
+        },
+        {
+            "key": "field_6650c72baddfe",
+            "label": "Open for Feedback?",
+            "name": "feedback_active",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
         }
     ],
     "location": [
@@ -165,5 +185,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1716562341
+    "modified": 1716569931
 }
