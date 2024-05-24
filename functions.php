@@ -15,7 +15,6 @@ foreach ($block_functions_to_include as $block) {
     include_once $directory;
 }
 
-//TODO change hero name to consultation-hero
 function ezpzconsultations_block_templates() {
   $post_type_object = get_post_type_object('page');
 
@@ -790,12 +789,14 @@ function ezpzconsultations_add_custom_css() {
         /* Navbar */
 
         .navbar-menu li a:hover::after {
-          background-color: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_900); ?>;
+          background-color: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_900);
+                            ?>;
         }
 
         .main-navigation .navbar-menu li a,
         .main-navigation .navbar-menu li a:hover {
-          color: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_900); ?>;
+          color: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_900);
+                  ?>;
         }
 
         .main-navigation.bg-primary-500 {
@@ -806,14 +807,16 @@ function ezpzconsultations_add_custom_css() {
         }
 
         .main-navigation.bg-primary-500 .navbar-menu li a:hover::after {
-          background-color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_900); ?>;
+          background-color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_900);
+                            ?>;
         }
 
 
         .main-navigation.bg-primary-500 .navbar-menu li a,
         .main-navigation.bg-primary-500 .navbar-menu li a:hover {
 
-          color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_900); ?>;
+          color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_900);
+                  ?>;
 
         }
 
@@ -825,7 +828,8 @@ function ezpzconsultations_add_custom_css() {
         .hero h4,
         .hero li,
         .hero a {
-          color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_900); ?> !important;
+          color: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_900);
+                  ?> !important;
         }
 
         /* Paddings */
@@ -850,7 +854,7 @@ function ezpzconsultations_add_custom_css() {
         }
 
         /* Custom CSS from theme designer */
-        <?php if ($custom_css) echo $custom_css; ?>
+        <?php if ($custom_css) echo $custom_css ?>
         /* Global Typography */
 
         :root {
@@ -863,27 +867,32 @@ function ezpzconsultations_add_custom_css() {
 
 
         /* Global Colours - Generate Colour Palette  */
-        <?php
+        <?php echo ":root {\n";
 
-        echo ":root {\n";
         foreach ($primary_palette as $key => $value) {
           echo "    --color-primary-$key: $value;\n";
         }
+
         foreach ($secondary_palette as $key => $value) {
           echo "    --color-secondary-$key: $value;\n";
         }
+
         foreach ($neutral_palette as $key => $value) {
           echo "    --color-neutral-$key: $value;\n";
         }
+
         foreach ($success_palette as $key => $value) {
           echo "    --color-success-$key: $value;\n";
         }
+
         foreach ($warning_palette as $key => $value) {
           echo "    --color-warning-$key: $value;\n";
         }
+
         foreach ($error_palette as $key => $value) {
           echo "    --color-error-$key: $value;\n";
         }
+
         echo "}\n";
 
         ?>
@@ -894,22 +903,31 @@ function ezpzconsultations_add_custom_css() {
         [type=submit],
         a.button,
         .button {
-          <?php if ($button_font_weight) : ?>font-weight: <?php echo $button_font_weight; ?>;
-          <?php endif; ?><?php if ($button_border_radius) : ?>border-radius: <?php echo $button_border_radius . $button_border_radius_unit; ?>;
-          <?php endif; ?><?php if (!empty($button_colour) && $button_colour == "primary") : ?>--button-color-theme: <?php echo $primary_colour_500 ?>;
-          --button-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_900); ?>;
-          --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_900); ?>;
+          <?php if ($button_font_weight) : ?>font-weight: <?php echo $button_font_weight;
+                                                          ?>;
+          <?php endif;
+          ?><?php if ($button_border_radius) : ?>border-radius: <?php echo $button_border_radius . $button_border_radius_unit;
+                                                        ?>;
+          <?php endif;
+          ?><?php if (!empty($button_colour) && $button_colour == "primary") : ?>--button-color-theme: <?php echo $primary_colour_500 ?>;
+          --button-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_900);
+                                ?>;
+          --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($primary_colour_500, $neutral_colour_900);
+                                      ?>;
           <?php else : ?>--button-color-theme: <?php echo $secondary_colour_500 ?>;
-          --button-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_900); ?>;
-          --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_900); ?>;
-          <?php endif; ?>
+          --button-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_900);
+                                ?>;
+          --button-hover-color-text: <?php echo ezpzconsultations_calculate_contrast($secondary_colour_500, $neutral_colour_900);
+                                      ?>;
+          <?php endif;
+          ?>
         }
 
-        <?php endif; ?>
+        <?php endif;
+        ?>
 
         /* Set colour contrast for background colours */
-        <?php
-        $theme_bg_colors = array(
+        <?php $theme_bg_colors = array(
           '.block.bg-primary-500 ' => $primary_colour_500,
           '.block.bg-secondary-500 ' => $secondary_colour_500,
           '.block.bg-primary-100 ' => $primary_colour_100,
@@ -917,29 +935,52 @@ function ezpzconsultations_add_custom_css() {
         );
 
         foreach ($theme_bg_colors as $css_class => $bg_color) {
-        ?><?php echo $css_class; ?> {
-          color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900); ?>;
-          --color-section-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900); ?>;
-          --color-headings-preferred: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900); ?>
+        ?><?php echo $css_class;
+
+    ?> {
+          color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900);
+                  ?>;
+          --color-section-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900);
+                                ?>;
+          --color-headings-preferred: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900);
+                                      ?>
         }
 
-        <?php echo $css_class; ?>h1,
-        <?php echo $css_class; ?>h2,
-        <?php echo $css_class; ?>h3,
-        <?php echo $css_class; ?>h4,
-        <?php echo $css_class; ?>h5,
-        <?php echo $css_class; ?>h6,
-        <?php echo $css_class; ?>a:not(.button),
-        <?php echo $css_class; ?>a:not(.button):hover,
-        <?php echo $css_class; ?>a:not(.button):focus,
-        <?php echo $css_class; ?>a:not(.button):visited,
-        <?php echo $css_class; ?>a:not(.button):link,
-        <?php echo $css_class; ?>a:not(.button) {
-          color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900); ?>;
-          --color-section-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900); ?>;
-          --color-headings-preferred: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900); ?>;
-          --button-color-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900); ?>;
-          border-color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900); ?>;
+        <?php echo $css_class;
+        ?>h1,
+        <?php echo $css_class;
+        ?>h2,
+        <?php echo $css_class;
+        ?>h3,
+        <?php echo $css_class;
+        ?>h4,
+        <?php echo $css_class;
+        ?>h5,
+        <?php echo $css_class;
+        ?>h6,
+        <?php echo $css_class;
+        ?>a:not(.button),
+        <?php echo $css_class;
+        ?>a:not(.button):hover,
+        <?php echo $css_class;
+        ?>a:not(.button):focus,
+        <?php echo $css_class;
+        ?>a:not(.button):visited,
+        <?php echo $css_class;
+        ?>a:not(.button):link,
+        <?php echo $css_class;
+
+        ?>a:not(.button) {
+          color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900);
+                  ?>;
+          --color-section-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900);
+                                ?>;
+          --color-headings-preferred: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900);
+                                      ?>;
+          --button-color-text: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900);
+                                ?>;
+          border-color: <?php echo ezpzconsultations_calculate_contrast($bg_color, $neutral_colour_900);
+                        ?>;
 
         }
 
