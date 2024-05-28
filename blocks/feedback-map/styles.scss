@@ -131,3 +131,20 @@
 }
 
 // TODO: STYLE UP THE GOOGLE UI ELEMENTS
+
+.modal.feedback-modal {
+	--modal-max-width: 500px;
+	padding: 0rem;
+	.modal-content {
+		padding: 1rem;
+	}
+	// TODO: Move .modal-close elsewhere?
+}
+
+.feedback-map-filters {
+	position: absolute;
+	top: 0.75rem;
+	right: 0.75rem;
+	background: var(--color-white);
+	padding: 0.75rem;
+}
