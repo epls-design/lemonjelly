@@ -1,8 +1,8 @@
 (function ($) {
 	// TODO: ADD event listener for esc, if active infowindow close it
-	// TODO Add esc e vent listener, if add Feedback is active, close it
+	// TODO Add esc e vent listener, if add Feedback is active, close it (there is already one on the modal, but need to close the button too)
 	// TODO: Add intro screen
-	// TODO: ADD CLUSTERING
+	// TODO: ADD CLUSTERING https://developers.google.com/maps/documentation/javascript/marker-clustering
 	// TODO: On Gravity Form submit, close the feedback form and add a marker to the map opening the infowindow
 
 	/********************************************
@@ -97,7 +97,7 @@
 				});
 				map.infowindow.open(map, marker);
 
-				map.setCenter(marker.getPosition());
+				map.panTo(marker.getPosition());
 			}
 		});
 

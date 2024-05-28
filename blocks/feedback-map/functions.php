@@ -42,6 +42,13 @@ class ezpzFeedbackMap {
   function process_entries($form_id) {
     $form = GFAPI::get_form($form_id);
 
+    $entry_transient_name = 'feedback_map_entries_' . $form_id;
+    $entry_transient = get_transient($entry_transient_name);
+
+    if ($entry_transient) {
+      return $entry_transient;
+    }
+
     $user_feedback_all = [];
     $field_mapping = [];
 
@@ -151,6 +158,8 @@ class ezpzFeedbackMap {
       $user_feedback_all[] = $user_feedback;
     }
 
+    set_transient($entry_transient_name, $user_feedback_all, 5 * MINUTE_IN_SECONDS);
+
     return $user_feedback_all;
   }
 
@@ -203,8 +212,6 @@ class ezpzFeedbackMap {
     }
 
     $form_id = $_GET['formId'];
-
-    // TODO: SET THEM INTO A TRANSIENT FOR 5 MINUTES
 
     $form = GFAPI::get_form($form_id);
     if ($form) {

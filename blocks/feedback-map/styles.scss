@@ -130,7 +130,7 @@
 	}
 }
 
-// TODO: STYLE UP THE GOOGLE UI ELEMENTS
+// TODO: STYLE UP THE GOOGLE UI ELEMENTS - make sure they dont inherit the jellypress colors. Make the zoom a little smaller
 
 .modal.feedback-modal {
 	--modal-max-width: 500px;
@@ -138,7 +138,7 @@
 	.modal-content {
 		padding: 1rem;
 	}
-	// TODO: Move .modal-close elsewhere?
+	// TODO: Move .modal-close outside of the modal.
 }
 
 .feedback-map-filters {

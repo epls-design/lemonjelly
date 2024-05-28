@@ -89,7 +89,6 @@ $block_classlist = implode(' ', $block_classlist);
     }
 
     // TODO: Find a nice way to change marker colors and icons. Pass through as attributes? What about when its filtered
-
     // TODO: Add an aria suitable fallback for the map
 
   ?>
