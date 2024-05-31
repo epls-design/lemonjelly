@@ -1,9 +1,52 @@
 (function ($) {
 	// TODO: ADD event listener for esc, if active infowindow close it
 	// TODO Add esc e vent listener, if add Feedback is active, close it (there is already one on the modal, but need to close the button too)
-	// TODO: Add intro screen
 	// TODO: ADD CLUSTERING https://developers.google.com/maps/documentation/javascript/marker-clustering
-	// TODO: On Gravity Form submit, close the feedback form and add a marker to the map opening the infowindow
+	// TODO: On Gravity Form submit, close the feedback form and add a marker to the map opening the infowindow ? (or just show a message) - See what client wants in the end
+
+	/********************************************
+	 * HELPERS
+	 ********************************************/
+
+	function darkenColor(color, percent) {
+		// Remove the hash at the start if it's there
+		color = color.replace(/^#/, "");
+
+		// Parse the r, g, b values
+		let r = parseInt(color.substring(0, 2), 16);
+		let g = parseInt(color.substring(2, 4), 16);
+		let b = parseInt(color.substring(4, 6), 16);
+
+		// Calculate the darker color values
+		r = Math.floor(r * (1 - percent / 100));
+		g = Math.floor(g * (1 - percent / 100));
+		b = Math.floor(b * (1 - percent / 100));
+
+		// Ensure the values are within the valid range (0-255)
+		r = Math.max(0, Math.min(255, r));
+		g = Math.max(0, Math.min(255, g));
+		b = Math.max(0, Math.min(255, b));
+
+		// Convert back to hex and return the darkened color
+		return (
+			"#" +
+			[r, g, b]
+				.map((value) => {
+					let hex = value.toString(16);
+					return hex.length === 1 ? "0" + hex : hex;
+				})
+				.join("")
+		);
+	}
+
+	/********************************************
+	 * EVENT LISTENERS - ESC KEYS
+	 ********************************************/
+
+	// document.addEventListener("jfModalClosed", function (event) {
+	// 	console.log(event.detail);
+	// 	// Object { closedModalId: "modal-group-1" }
+	// });
 
 	/********************************************
 	 * PLOT MARKERS
@@ -61,7 +104,12 @@
 	 * @param {Object} markerData - The data for the marker
 	 * @returns {google.maps.Marker} - The marker object
 	 */
+
+	// TODO: Move to https://developers.google.com/maps/documentation/javascript/reference/advanced-markers#AdvancedMarkerElement before deprecated
 	function addMarker(map, markerData) {
+		let $mapElement = $(map.getDiv());
+		let hasFilter = $mapElement.data("filterby");
+
 		var latLng = {
 			lat: parseFloat(markerData.lat),
 			lng: parseFloat(markerData.lng),
@@ -70,24 +118,75 @@
 		let markerProps = {
 			position: latLng,
 			map: map,
-			// TODO: ICON OVERRIDE WOULD BE NICE
 		};
 
-		let $mapElement = $(map.getDiv());
+		let baseColor = "#ff0000";
 
 		// If the map has a filter, get the relevant field, and add the attributes to the marker
-		let hasFilter = $mapElement.data("filterby");
 		if (hasFilter) {
 			let value = markerData.fields[hasFilter].value;
 			if (value !== "") {
-				// TODO: CHECK WHAT HAPPENS IF ARRAY - EG CHECKBOX
-				// TODO: IN HERE WE WOULD CHANGE THE COLOR OF THE MARKER TOO BASED ON THE FILTER
+				// If value is not an array (eg. a string) make it into an array - this is so markers can have multiple filters
+				if (!Array.isArray(value)) {
+					value = [value];
+				}
+
+				/**
+				 * Determine whether or or not the marker should be colored based on the first item in the filter array
+				 * If the filter is not found, the marker will be colored red by default
+				 */
+				let baseColorLookup = value[0] ? value[0] : null;
+
+				if (baseColorLookup) {
+					let relevantFilter = $mapElement
+						.closest(".feedback-map-wrapper")
+						.find(
+							".feedback-map-filter input[value='" + baseColorLookup + "']"
+						);
+
+					if (relevantFilter.length > 0) {
+						var style = getComputedStyle(relevantFilter[0]);
+						let accentColor = style.getPropertyValue("--accent-color");
+
+						if (accentColor) baseColor = accentColor;
+					}
+				}
+
 				markerProps.filter = value;
 			}
+			$mapElement.removeAttr("data-filterby");
 		}
 
-		// TODO: Move to https://developers.google.com/maps/documentation/javascript/reference/advanced-markers#AdvancedMarkerElement
+		// Example usage:
+		let strokeColor = darkenColor(baseColor, 40);
+
+		const svgMarker = {
+			path: "M4.9,2C3.6,0.7,1.9,0,0,0l0,0c-1.9,0-3.6,0.7-4.9,2C-6.3,3.4-7,5-7,7c0,1,0.2,2.1,0.8,3.4c0.5,1.3,1.1,2.4,1.7,3.4 s1.3,2.1,2.1,3.1c0.8,1.1,1.4,1.8,1.7,2.2c0.3,0.4,0.6,0.6,0.8,0.9l0.8-0.8c0.5-0.6,1-1.3,1.7-2.3s1.4-2,2-3.1 			c0.7-1.1,1.3-2.3,1.8-3.5C6.7,9.1,7,8,7,7C7,5,6.3,3.4,4.9,2z M0,10.1c-1.8,0-3.2-1.5-3.2-3.2S-1.8,3.8,0,3.8S3.2,5.2,3.2,7 			S1.8,10.1,0,10.1z",
+			fillColor: baseColor,
+			fillOpacity: 1,
+			strokeWeight: 1.2,
+			strokeColor: strokeColor,
+			rotation: 0,
+			scale: 2,
+			anchor: new google.maps.Point(0, 20),
+		};
+
+		markerProps.icon = svgMarker;
+
 		var marker = new google.maps.Marker(markerProps);
+
+		// Darken marker on hover
+		marker.addListener("mouseover", function () {
+			marker.setIcon({
+				...svgMarker,
+				fillColor: darkenColor(baseColor, 10),
+			});
+		});
+
+		// Reset marker on mouseout
+		marker.addListener("mouseout", function () {
+			marker.setIcon(svgMarker);
+		});
 
 		// Show the marker content when clicked
 		google.maps.event.addListener(marker, "click", function () {
@@ -187,6 +286,7 @@
 				mapTypeIds: ["roadmap", "satellite"],
 				style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
 			},
+			scaleControl: true,
 			zoomControl: true,
 			zoomControlOptions: {
 				position: google.maps.ControlPosition.RIGHT_BOTTOM,
@@ -194,6 +294,32 @@
 		});
 
 		return map;
+	}
+
+	/**
+	 * If the map has an intro screen, add event listener to the button to start the map and remove the intro screen
+	 *
+	 * @param {*} map  - The map object
+	 */
+	function addIntroScreen(map) {
+		let $mapElement = $(map.getDiv());
+		let hasIntro = $mapElement.data("has-intro");
+
+		if (!hasIntro) return;
+
+		let introElement = $mapElement
+			.closest(".feedback-map-wrapper")
+			.find(".feedback-map-intro");
+		let button = introElement.find("button").get(0);
+
+		button.addEventListener("click", function () {
+			introElement.fadeOut(300);
+			$mapElement.addClass("user-interacted");
+
+			setTimeout(() => {
+				$mapElement.removeAttr("data-has-intro");
+			}, 300);
+		});
 	}
 
 	/********************************************
@@ -238,13 +364,15 @@
 			if (map.activeFilters.length > 0) {
 				map.markers.forEach(function (marker) {
 					if (marker.filter) {
-						if (map.activeFilters.includes(marker.filter)) {
-							marker.setVisible(true);
+						if (marker.filter) {
+							marker.setVisible(
+								marker.filter.some((filter) =>
+									map.activeFilters.includes(filter)
+								)
+							);
 						} else {
 							marker.setVisible(false);
 						}
-					} else {
-						marker.setVisible(false);
 					}
 				});
 			} else {
@@ -273,6 +401,8 @@
 		if (allowsFeedback != true) {
 			return;
 		}
+
+		$mapElement.removeAttr("data-feedback-active");
 
 		let feedbackButton = $mapElement
 			.closest(".feedback-map-wrapper")
@@ -357,8 +487,41 @@
 			disableDefaultUI: true,
 			minZoom: minMapZoom,
 			maxZoom: 20,
-			// TODO: Add in restrictions for mapBounds?
 		};
+
+		/**
+		 * If the map has a restriction provided, calculate the lat and lng bounds
+		 */
+		if ($mapElement.data("restriction")) {
+			const distance = $mapElement.data("restriction"); // Distance in meters
+			const earthRadius = 6371000;
+
+			const latOffset = (distance / earthRadius) * (180 / Math.PI);
+			const lngOffset =
+				(distance /
+					(earthRadius *
+						Math.cos(($mapElement.data("lat") * Math.PI) / 180.0))) *
+				(180 / Math.PI);
+
+			const latMaxDistance = $mapElement.data("lat") + latOffset;
+			const latMinDistance = $mapElement.data("lat") - latOffset;
+			const lngMaxDistance = $mapElement.data("lng") + lngOffset;
+			const lngMinDistance = $mapElement.data("lng") - lngOffset;
+
+			mapBounds = {
+				north: latMaxDistance,
+				south: latMinDistance,
+				west: lngMinDistance,
+				east: lngMaxDistance,
+			};
+
+			mapProps.restriction = {
+				latLngBounds: mapBounds,
+				strictBounds: false,
+			};
+
+			$mapElement.removeAttr("data-restriction");
+		}
 
 		async function initMap() {
 			// Destructure the objects required  from the google maps library
@@ -399,6 +562,7 @@
 		plotMarkers(map);
 		addUserFeedback(map);
 		addFiltering(map);
+		addIntroScreen(map);
 
 		// Set up an infoWindow and activeFilters property on the map object
 		map.infowindow = new google.maps.InfoWindow();
@@ -449,13 +613,9 @@
 	// If we are in the editor, run on render_block_preview
 	if (window.acf) {
 		window.acf.addAction(
-			"render_block_preview",
-			function ($elem, blockDetails) {
-				// FIXME: THIS IS NOT INITIALISING THE MAP ON THE EDITOR
-				console.log($elem, blockDetails);
-				if ($elem[0].innerHTML.includes("feedback-map")) {
-					initialiseAllMaps();
-				}
+			"render_block_preview/type=ezpz/feedback-map",
+			function () {
+				initialiseAllMaps();
 			}
 		);
 	} else {

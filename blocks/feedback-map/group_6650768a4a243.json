@@ -23,77 +23,6 @@
             "append": ""
         },
         {
-            "key": "field_6650768ac4e3b",
-            "label": "Intro Text",
-            "name": "intro_text",
-            "aria-label": "",
-            "type": "textarea",
-            "instructions": "This text appears when the map is ready, prompting the user to get started.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "rows": "",
-            "placeholder": "",
-            "new_lines": ""
-        },
-        {
-            "key": "field_665077fa0e68c",
-            "label": "Gravity Form ID",
-            "name": "gravity_form_id",
-            "aria-label": "",
-            "type": "number",
-            "instructions": "Please enter the ID of the gravity form which is used on this interactive map",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "min": 1,
-            "max": "",
-            "placeholder": "",
-            "step": "",
-            "prepend": "#",
-            "append": ""
-        },
-        {
-            "key": "field_665593ea18311",
-            "label": "Filter by field",
-            "name": "filter_by_field",
-            "aria-label": "",
-            "type": "number",
-            "instructions": "You can allow the user to filter markers by a given field ID (see Gravity Form for field IDs).\r\nThe field must be of type: checkbox, radio or select.",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_665077fa0e68c",
-                        "operator": "!=empty"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "min": 1,
-            "max": "",
-            "placeholder": "",
-            "step": "",
-            "prepend": "#",
-            "append": ""
-        },
-        {
             "key": "field_6650c72baddfe",
             "label": "Open for Feedback?",
             "name": "feedback_active",
@@ -119,6 +48,83 @@
             "ui_on_text": "",
             "ui_off_text": "",
             "ui": 1
+        },
+        {
+            "key": "field_665077fa0e68c",
+            "label": "Gravity Form ID",
+            "name": "gravity_form_id",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Please enter the ID of the gravity form which is used on this interactive map",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 1,
+            "max": "",
+            "placeholder": "",
+            "step": "",
+            "prepend": "#",
+            "append": ""
+        },
+        {
+            "key": "field_6650768ac4e3b",
+            "label": "Intro Text",
+            "name": "intro_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "This text appears when the map is ready, prompting the user to get started.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6650c72baddfe",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "We want to find out what you think of our proposed plans. You can provide your feedback on the interactive map, and explore the thoughts of others in your communitty.",
+            "maxlength": "",
+            "rows": "",
+            "placeholder": "",
+            "new_lines": "wpautop"
+        },
+        {
+            "key": "field_6659cf7ec33a4",
+            "label": "Button text",
+            "name": "button_text",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Text for the button that appears in the introduction modal",
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6650768ac4e3b",
+                        "operator": "!=empty"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Get started",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         },
         {
             "key": "field_66508cd63cf40",
@@ -201,6 +207,107 @@
             "min_size": "",
             "max_size": "",
             "mime_types": "kml"
+        },
+        {
+            "key": "field_6659e703231d1",
+            "label": "Restrict map bounds",
+            "name": "restriction",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "You can restrict the bounds of the map by providing a distance in meters",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 500,
+            "max": 5000,
+            "placeholder": "",
+            "step": 100,
+            "prepend": "",
+            "append": "mtrs"
+        },
+        {
+            "key": "field_665593ea18311",
+            "label": "Filter by field",
+            "name": "filter_by_field",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "You can allow the user to filter markers by a given field ID (see Gravity Form for field IDs).\r\nThe field must be of type: checkbox, radio or select.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_665077fa0e68c",
+                        "operator": "!=empty"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 1,
+            "max": "",
+            "placeholder": "",
+            "step": "",
+            "prepend": "#",
+            "append": ""
+        },
+        {
+            "key": "field_6659ed6a80656",
+            "label": "Filter Colours",
+            "name": "filter_colors",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "By default, all markers will display as standard Google Maps markers. If you would like to colour code the markers and filters, add your colours to this field. The colours will apply in the same order as your filters are set up in the relevant Gravity Form Field.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_665593ea18311",
+                        "operator": "!=empty"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 1,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add Colour",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_6659edc080657",
+                    "label": "Colour",
+                    "name": "color",
+                    "aria-label": "",
+                    "type": "color_picker",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "enable_opacity": 0,
+                    "return_format": "string",
+                    "parent_repeater": "field_6659ed6a80656"
+                }
+            ]
         }
     ],
     "location": [
@@ -221,5 +328,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1716884599
+    "modified": 1717169716
 }

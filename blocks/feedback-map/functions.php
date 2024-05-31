@@ -11,6 +11,7 @@ class ezpzFeedbackMap {
 
   function __construct() {
     add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
+    add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
     add_filter('upload_mimes', [$this, 'allow_kml_upload']);
     add_action('wp_ajax_feedback_map_entries', [$this, 'get_markers']);
     add_action('wp_ajax_nopriv_feedback_map_entries', [$this, 'get_markers']);
@@ -19,6 +20,18 @@ class ezpzFeedbackMap {
   }
 
   function enqueue_scripts() {
+    // Register Google Maps if not already registered
+    if (!wp_script_is('googlemaps', 'registered')) {
+      $get_gmaps_api = get_global_option('google_maps_api_key');
+      wp_register_script(
+        'googlemaps',
+        'https://maps.googleapis.com/maps/api/js?key=' . $get_gmaps_api,
+        array(),
+        null,
+        true
+      );
+    }
+
     wp_register_script(
       'feedback-map-init',
       get_stylesheet_directory_uri() . '/blocks/feedback-map/scripts.js',
@@ -42,12 +55,12 @@ class ezpzFeedbackMap {
   function process_entries($form_id) {
     $form = GFAPI::get_form($form_id);
 
-    $entry_transient_name = 'feedback_map_entries_' . $form_id;
-    $entry_transient = get_transient($entry_transient_name);
+    // $entry_transient_name = 'feedback_map_entries_' . $form_id;
+    // $entry_transient = get_transient($entry_transient_name);
 
-    if ($entry_transient) {
-      return $entry_transient;
-    }
+    // if ($entry_transient) {
+    //   return $entry_transient;
+    // }
 
     $user_feedback_all = [];
     $field_mapping = [];

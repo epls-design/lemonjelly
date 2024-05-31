@@ -2,6 +2,25 @@
 	height: 90vh;
 	min-height: 600px;
 
+	&.user-interacted::before {
+		opacity: 0;
+	}
+
+	&[data-has-intro="1"] {
+		&::before {
+			transition: opacity 0.3s ease;
+			content: "";
+			display: block;
+			background: rgba(0, 0, 0, 0.8);
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			z-index: 2;
+		}
+	}
+
 	.marker-content {
 		ul {
 			list-style-type: none;
@@ -23,6 +42,7 @@
 		font-size: var(--font-size--1);
 	}
 
+	// info window
 	.gm-style-iw {
 		width: 300px;
 
@@ -39,14 +59,50 @@
 		}
 	}
 
+	// Zoom control - simple hack to make it smaller
+	.gm-bundled-control {
+		transform: scale(0.8);
+	}
+	.gm-control-active {
+		background: white !important;
+	}
+
 	button.like-button {
-		// TODO: Add a nice icon here
+		&::before {
+			content: "";
+			background-color: currentColor;
+			display: inline-block;
+			width: 1em;
+			height: 1em;
+			margin-right: 0.5em;
+			mask: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Zz48cGF0aCBkPSJNMjAsNDEuNkgzLjVjLTEuNSwwLTIuNywxLjItMi43LDIuN3Y0My44YzAsMS41LDEuMiwyLjcsMi43LDIuN0gyMGMxLjUsMCwyLjctMS4yLDIuNy0yLjdWNDQuNEMyMi43LDQyLjgsMjEuNSw0MS42LDIwLDQxLjZ6Ii8+PHBhdGggZD0iTTk5LjIsNDYuOGMwLTQuNS0zLjEtOS04LjktOUg2My44YzMuOC02LjgsNC45LTE2LjMsMi4zLTIzLjNjLTEuOS01LjEtNS42LTguMS0xMC40LTguNGwtMC4xLDBjLTMuMS0wLjItNS44LDIuMS02LjEsNS4zYy0wLjcsNi45LTMuNywxOS4yLTguMSwyMy41Yy0zLjcsMy43LTYuOCw1LjItMTIsNy43Yy0wLjgsMC40LTEuNiwxLjItMi40LDEuMmMwLDAuMiwwLDAuNCwwLDAuNnY0My40YzAuNiwwLjIsMS4yLDAuNCwxLjksMC42YzguNiwzLDE2LDUuNSwyNy4zLDUuNWgyMS41YzUuOSwwLDguOS00LjUsOC45LTljMC0xLjMtMC4zLTIuNy0wLjgtM2MxLjktMC40LDMuNy0xLjMsNC45LTIuN2MxLjQtMS42LDIuMi0zLjgsMi4yLTYuMWMwLTEuMy0wLjMtMi42LTAuOC0zLjljNC43LTAuOCw3LjEtNC44LDcuMS04LjhDMTAyLjIsNTIuOCw5OC40LDUxLjUsOTkuMiw0Ni44eiIvPjwvZz48L3N2Zz4=")
+				center / contain no-repeat;
+		}
+
 		margin-bottom: 0;
 		&[disabled] {
 			opacity: 1;
 			--button-color-theme: var(--color-success-50);
+
+			&::before {
+				animation: likePop 0.3s ease-in;
+				opacity: 0.4;
+			}
 		}
 	}
+}
+
+.feedback-map-intro {
+	background-color: var(--color-white);
+	padding: 1.5rem;
+	z-index: 3;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 80%;
+	max-width: 500px;
+	min-width: 200px;
 }
 
 .feedback-map-wrapper {
@@ -102,8 +158,6 @@
 		}
 	}
 
-	// TODO: Sort out padding and overflow on the modal, so that the focus outlines are visible
-
 	.crosshair {
 		display: flex;
 		align-items: center;
@@ -130,15 +184,18 @@
 	}
 }
 
-// TODO: STYLE UP THE GOOGLE UI ELEMENTS - make sure they dont inherit the jellypress colors. Make the zoom a little smaller
-
 .modal.feedback-modal {
-	--modal-max-width: 500px;
-	padding: 0rem;
+	--modal-max-width: 900px;
 	.modal-content {
-		padding: 1rem;
+		padding: 0 1.5rem;
+		margin: 0 -1.5rem;
+		// Hide the scrollbar
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+		&::-webkit-scrollbar {
+			display: none;
+		}
 	}
-	// TODO: Move .modal-close outside of the modal.
 }
 
 .feedback-map-filters {
@@ -147,4 +204,27 @@
 	right: 0.75rem;
 	background: var(--color-white);
 	padding: 0.75rem;
+}
+
+.feedback-map-filter {
+	display: flex;
+	align-items: center;
+	input {
+		accent-color: var(--accent-color);
+		top: 0;
+	}
+}
+
+@keyframes likePop {
+	0% {
+		transform: scale(1) rotate(0deg);
+		opacity: 1;
+	}
+	50% {
+		transform: scale(2.4) rotate(-10deg);
+	}
+	100% {
+		transform: scale(1) rotate(0deg);
+		opacity: 0.4;
+	}
 }

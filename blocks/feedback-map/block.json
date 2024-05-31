@@ -1,6 +1,6 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "ezpz/feedback-map",
 	"title": "Interactive Feedback Map",
 	"category": "media",
@@ -21,6 +21,20 @@
 		},
 		"customClassName": false,
 		"html": false
+	},
+	"attributes": {
+		"outerContainer": {
+			"type": "string",
+			"default": "feedback-map"
+		},
+		"backgroundColor": {
+			"type": "string",
+			"default": "transparent"
+		}
+	},
+	"providesContext": {
+		"ezpz/outerContainer": "outerContainer",
+		"ezpz/backgroundColor": "backgroundColor"
 	},
 	"styles": [],
 	"viewScript": ["feedback-map-init"],
