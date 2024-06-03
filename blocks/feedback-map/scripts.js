@@ -1,8 +1,8 @@
 (function ($) {
-	// TODO: ADD event listener for esc, if active infowindow close it
-	// TODO Add esc e vent listener, if add Feedback is active, close it (there is already one on the modal, but need to close the button too)
 	// TODO: ADD CLUSTERING https://developers.google.com/maps/documentation/javascript/marker-clustering
-	// TODO: On Gravity Form submit, close the feedback form and add a marker to the map opening the infowindow ? (or just show a message) - See what client wants in the end
+	let userProvidingFeedback;
+	let globalMap;
+	let infoWindowActive = false;
 
 	/********************************************
 	 * HELPERS
@@ -40,25 +40,136 @@
 	}
 
 	/********************************************
-	 * EVENT LISTENERS - ESC KEYS
+	 * EVENT LISTENERS
 	 ********************************************/
 
-	// document.addEventListener("jfModalClosed", function (event) {
-	// 	console.log(event.detail);
-	// 	// Object { closedModalId: "modal-group-1" }
-	// });
+	// Listen for markersPlotted
+	document.addEventListener("markersPlotted", function (event) {
+		const urlParams = new URLSearchParams(window.location.search);
+		const entryID = urlParams.get("entryID");
+		if (entryID) {
+			// Search glboalMap.markers for the item where marker.entryID == entryID
+			let markerToOpen = globalMap.markers.find(
+				(marker) => marker.entryID == entryID
+			);
 
+			if (markerToOpen) {
+				google.maps.event.trigger(markerToOpen, "click");
+				$("html, body").animate(
+					{
+						scrollTop: $(globalMap.getDiv()).offset().top - 100,
+					},
+					200
+				);
+			}
+		}
+	});
+
+	// Close the feedback form when the ESC key is pressed
+	document.addEventListener("keydown", function (event) {
+		// User providing feedback, close the feedback form
+		if (event.key === "Escape" && userProvidingFeedback) {
+			userProvidingFeedback = false;
+
+			let $mapElement = $(globalMap.getDiv()),
+				feedbackButton = $mapElement
+					.closest(".feedback-map-wrapper")
+					.find(".share-feedback-button"),
+				addMarkerControls = $mapElement
+					.closest(".feedback-map-wrapper")
+					.find(".add-marker-controls");
+
+			addMarkerControls.fadeOut(150);
+			addMarkerControls.attr("aria-hidden", "true");
+			globalMap.hasActiveModal = false;
+
+			setTimeout(() => {
+				feedbackButton.fadeIn(150);
+				feedbackButton.attr("aria-expanded", "false");
+			}, 200);
+		} else if (event.key === "Escape" && infoWindowActive) {
+			globalMap.infowindow.close();
+			infoWindowActive = false;
+		}
+	});
+
+	// Failsafe for closing the infowindow
+	$(document).on(
+		"click",
+		'.gm-ui-hover-effect[aria-label="Close"]',
+		function () {
+			infoWindowActive = false;
+		}
+	);
+
+	// When the user has completed the gravity form, close it and show their marker on the map
+	$(document).on("gform_confirmation_loaded", function (event, formId) {
+		// Get div with data-entryid property
+		let confirmation = $(".feedback-modal").find(".gform_confirmation_wrapper");
+		let entryId = confirmation.find("[data-entryid]").data("entryid");
+		let message = confirmation.find(".confirmation-message");
+
+		// Close the open modal
+		$(".feedback-modal").find(".modal-close").trigger("click");
+
+		// FIXME: Far better off to reload the page here.
+
+		// Reset the UI
+		userProvidingFeedback = false;
+
+		let $mapElement = $(globalMap.getDiv()),
+			feedbackButton = $mapElement
+				.closest(".feedback-map-wrapper")
+				.find(".share-feedback-button"),
+			addMarkerControls = $mapElement
+				.closest(".feedback-map-wrapper")
+				.find(".add-marker-controls");
+
+		addMarkerControls.fadeOut(150);
+		addMarkerControls.attr("aria-hidden", "true");
+		globalMap.hasActiveModal = false;
+
+		setTimeout(() => {
+			feedbackButton.fadeIn(150);
+			feedbackButton.attr("aria-expanded", "false");
+		}, 200);
+
+		// Send AJAX request to get the entry data
+		let ajaxData = {
+			action: "get_feedback_entry",
+			entryId: entryId,
+			nonce: feedbackMapsParams.nonce,
+		};
+
+		$.ajax({
+			type: "GET",
+			url: feedbackMapsParams.ajaxUrl,
+			data: ajaxData,
+			dataType: "json",
+			success: function (response, textStatus, xhr) {
+				let entry = response.data;
+
+				if (entry.length) {
+					entry = entry[0];
+					let marker = addMarker(globalMap, entry, true);
+				}
+			},
+			error: function (error) {
+				// NO ENTRIES FOUND
+				// console.error(error);
+			},
+		});
+	});
 	/********************************************
 	 * PLOT MARKERS
 	 ********************************************/
 
 	/**
 	 * Plots markers on the given map by sending an AJAX request to the server to get the form entries
-	 * @param {google.maps.Map} map - The map object
 	 */
-	function plotMarkers(map) {
+	function plotMarkers() {
 		// Get the jQuery element the map is attached to
-		let $mapElement = $(map.getDiv());
+		let $mapElement = $(globalMap.getDiv());
 
 		let formId = $mapElement.data("form-id");
 		if (!formId) {
@@ -71,6 +182,12 @@
 			nonce: feedbackMapsParams.nonce,
 		};
 
+		const urlParams = new URLSearchParams(window.location.search);
+		const entryID = urlParams.get("entryID");
+		if (entryID) {
+			ajaxData.clearTransient = true;
+		}
+
 		// Get form entries using AJAX
 		$.ajax({
 			type: "GET",
@@ -81,15 +198,23 @@
 				let formEntries = response.data;
 				if (formEntries.length) {
 					formEntries.forEach(function (entry) {
-						let marker = addMarker(map, entry);
+						let marker = addMarker(globalMap, entry);
 
 						// Add the marker to the map object
-						if (!map.markers) {
-							map.markers = [];
+						if (!globalMap.markers) {
+							globalMap.markers = [];
 						}
-						map.markers.push(marker);
+						globalMap.markers.push(marker);
 					});
 				}
+
+				// Dispatch markersPlotted event
+				let event = new CustomEvent("markersPlotted", {
+					detail: {
+						map: globalMap,
+					},
+				});
+				document.dispatchEvent(event);
 			},
 			error: function (error) {
 				// NO ENTRIES FOUND
@@ -106,8 +231,8 @@
 	 */
 
 	// TODO: Move to https://developers.google.com/maps/documentation/javascript/reference/advanced-markers#AdvancedMarkerElement before deprecated
-	function addMarker(map, markerData) {
-		let $mapElement = $(map.getDiv());
+	function addMarker(map, markerData, panToAndOpen = false) {
+		let $mapElement = $(globalMap.getDiv());
 		let hasFilter = $mapElement.data("filterby");
 
 		var latLng = {
@@ -152,6 +277,7 @@
 					}
 				}
 
+				markerProps.entryID = markerData.entry_id;
 				markerProps.filter = value;
 			}
 			$mapElement.removeAttr("data-filterby");
@@ -190,15 +316,25 @@
 
 		// Show the marker content when clicked
 		google.maps.event.addListener(marker, "click", function () {
-			if (!map.hasActiveModal) {
-				map.infowindow.setOptions({
+			if (!globalMap.hasActiveModal) {
+				globalMap.infowindow.setOptions({
 					content: generateMarkerContent(markerData),
 				});
-				map.infowindow.open(map, marker);
-
-				map.panTo(marker.getPosition());
+				globalMap.infowindow.open(map, marker);
+				globalMap.panTo(marker.getPosition());
+				infoWindowActive = true;
 			}
 		});
+
+		if (panToAndOpen) {
+			// google.maps.event.trigger(globalMap, "resize");
+			globalMap.panTo(latLng);
+			globalMap.infowindow.setOptions({
+				content: generateMarkerContent(markerData),
+			});
+			globalMap.infowindow.open(map, marker);
+			infoWindowActive = true;
+		}
 
 		return marker;
 	}
@@ -277,10 +413,9 @@
 
 	/**
 	 * Shows the UI elements on a map
-	 * @param {google.maps.Map} map - The map object
 	 */
-	function showMapInterface(map) {
-		map.setOptions({
+	function showMapInterface() {
+		globalMap.setOptions({
 			mapTypeControl: true,
 			mapTypeControlOptions: {
 				mapTypeIds: ["roadmap", "satellite"],
@@ -292,17 +427,13 @@
 				position: google.maps.ControlPosition.RIGHT_BOTTOM,
 			},
 		});
-
-		return map;
 	}
 
 	/**
 	 * If the map has an intro screen, add event listener to the button to start the map and remove the intro screen
-	 *
-	 * @param {*} map  - The map object
 	 */
-	function addIntroScreen(map) {
-		let $mapElement = $(map.getDiv());
+	function addIntroScreen() {
+		let $mapElement = $(globalMap.getDiv());
 		let hasIntro = $mapElement.data("has-intro");
 
 		if (!hasIntro) return;
@@ -328,11 +459,10 @@
 
 	/**
 	 * Adds filtering to the map based on the data-filterby attribute
-	 * @param {google.maps.Map} map - The map object
 	 * @returns {void}
 	 */
-	function addFiltering(map) {
-		let $mapElement = $(map.getDiv());
+	function addFiltering() {
+		let $mapElement = $(globalMap.getDiv());
 		let allowsFiltering = $mapElement.data("filterby");
 
 		if (!allowsFiltering) {
@@ -347,8 +477,8 @@
 		// Add event listener to filter inputs to show/hide markers when checked
 		filterInputs.on("change", function () {
 			// hide any open infowindows
-			if (map.infowindow) {
-				map.infowindow.close();
+			if (globalMap.infowindow) {
+				globalMap.infowindow.close();
 			}
 
 			// Update active Map Filters to match the checked inputs
@@ -358,16 +488,16 @@
 					return $(this).val();
 				})
 				.toArray();
-			map.activeFilters = checkedFilters;
+			globalMap.activeFilters = checkedFilters;
 
 			// Determine whether or not to show each marker based on the active filters
-			if (map.activeFilters.length > 0) {
-				map.markers.forEach(function (marker) {
+			if (globalMap.activeFilters.length > 0) {
+				globalMap.markers.forEach(function (marker) {
 					if (marker.filter) {
 						if (marker.filter) {
 							marker.setVisible(
 								marker.filter.some((filter) =>
-									map.activeFilters.includes(filter)
+									globalMap.activeFilters.includes(filter)
 								)
 							);
 						} else {
@@ -377,7 +507,7 @@
 				});
 			} else {
 				// No filters => show all markers
-				map.markers.forEach(function (marker) {
+				globalMap.markers.forEach(function (marker) {
 					marker.setVisible(true);
 				});
 			}
@@ -390,11 +520,10 @@
 
 	/**
 	 * Adds user feedback functionality to the map
-	 * @param {google.maps.Map} map - The map object
 	 * @returns {void}
 	 */
-	function addUserFeedback(map) {
-		let $mapElement = $(map.getDiv());
+	function addUserFeedback() {
+		let $mapElement = $(globalMap.getDiv());
 
 		let allowsFeedback = $mapElement.data("feedback-active");
 
@@ -417,16 +546,19 @@
 		}
 
 		feedbackButton.on("click", function () {
-			if (map.infowindow) {
-				map.infowindow.close();
+			if (globalMap.infowindow) {
+				globalMap.infowindow.close();
 			}
+
+			userProvidingFeedback = true;
+
 			feedbackButton.fadeOut(150);
 			feedbackButton.attr("aria-expanded", "true");
 
 			setTimeout(() => {
 				addMarkerControls.fadeIn(150);
 				addMarkerControls.attr("aria-hidden", "false");
-				map.hasActiveModal = true;
+				globalMap.hasActiveModal = true;
 			}, 200);
 		});
 
@@ -435,7 +567,7 @@
 			.find(".open-feedback-modal");
 
 		feedbackButtonOpener.on("click", function () {
-			let latLng = map.getCenter();
+			let latLng = globalMap.getCenter();
 			let $form = $mapElement.closest(".feedback-map-wrapper").find("form");
 			let $latInput = $form.find(".gfield.latitude input");
 			let $lngInput = $form.find(".gfield.longitude input");
@@ -455,7 +587,7 @@
 			setTimeout(() => {
 				feedbackButton.fadeIn(50);
 				feedbackButton.attr("aria-expanded", "false");
-				map.hasActiveModal = false;
+				globalMap.hasActiveModal = false;
 			}, 350);
 		});
 	}
@@ -472,7 +604,6 @@
 	 * @returns {google.maps.Map} - The map object
 	 */
 	async function initialiseSingleMap($mapElement) {
-		let map;
 		let mapZoom = $mapElement.data("zoom") ? $mapElement.data("zoom") : 15;
 		let minMapZoom = mapZoom - 3 < 12 ? 12 : mapZoom - 3; // Dont let min Zoom go below 12
 
@@ -528,7 +659,7 @@
 			const { Map, KmlLayer } = await google.maps.importLibrary("maps");
 
 			// Create a new map
-			map = new Map($mapElement[0], mapProps);
+			globalMap = new Map($mapElement[0], mapProps);
 
 			// If there is KML data load it in
 			// @link https://developers.google.com/maps/documentation/javascript/kml
@@ -542,7 +673,7 @@
 				var kmlLayer = new KmlLayer(overlaySource, {
 					suppressInfoWindows: true,
 					preserveViewport: true,
-					map: map,
+					map: globalMap,
 				});
 
 				kmlLayer.addListener("status_changed", function () {
@@ -558,17 +689,17 @@
 		await initMap();
 
 		// Populate the map with markers and add UI elements
-		showMapInterface(map);
-		plotMarkers(map);
-		addUserFeedback(map);
-		addFiltering(map);
-		addIntroScreen(map);
+		showMapInterface();
+		await plotMarkers();
+		addUserFeedback();
+		addFiltering();
+		addIntroScreen();
 
 		// Set up an infoWindow and activeFilters property on the map object
-		map.infowindow = new google.maps.InfoWindow();
-		map.activeFilters = {};
+		globalMap.infowindow = new google.maps.InfoWindow();
+		globalMap.activeFilters = {};
 
-		return map;
+		return globalMap;
 	}
 
 	/**
@@ -590,7 +721,7 @@
 				function (entries, observer) {
 					entries.forEach(function (entry) {
 						if (entry.isIntersecting) {
-							var map = initialiseSingleMap($(entry.target));
+							initialiseSingleMap($(entry.target));
 							observeFeedbackMaps.unobserve(entry.target);
 						}
 					});
@@ -605,7 +736,7 @@
 		} else {
 			// For browsers that don't support intersection observer, load all images straight away
 			feedbackMaps.forEach(function (element) {
-				var map = initialiseSingleMap($(element));
+				initialiseSingleMap($(element));
 			});
 		}
 	}

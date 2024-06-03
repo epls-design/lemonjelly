@@ -52,15 +52,15 @@ class ezpzFeedbackMap {
     return $mimes;
   }
 
-  function process_entries($form_id) {
+  function process_entries($form_id, $clear_transient = false) {
+
     $form = GFAPI::get_form($form_id);
+    $entry_transient_name = 'feedback_map_entries_' . $form_id;
 
-    // $entry_transient_name = 'feedback_map_entries_' . $form_id;
-    // $entry_transient = get_transient($entry_transient_name);
 
-    // if ($entry_transient) {
-    //   return $entry_transient;
-    // }
+    if ($clear_transient && $clear_transient == 'true') {
+      delete_transient($entry_transient_name);
+    }
 
     $user_feedback_all = [];
     $field_mapping = [];
@@ -78,35 +78,40 @@ class ezpzFeedbackMap {
       ];
     }
 
-    $all_entries = [];
-    $search_criteria = [];
-    $page_size = 100;
-    $offset = 0;
+    if ($entry_id) {
+      $all_entries = [GFAPI::get_entry($entry_id)];
+    } else {
+      $all_entries = [];
+      $search_criteria = [];
+      $page_size = 100;
+      $offset = 0;
 
-    // Keep looping until we have all entries
-    do {
-      $paging = array(
-        'offset' => $offset,
-        'page_size' => $page_size
-      );
+      // Keep looping until we have all entries
+      do {
+        $paging = array(
+          'offset' => $offset,
+          'page_size' => $page_size
+        );
 
-      // Get the entries
-      $entries = GFAPI::get_entries($form_id, $search_criteria, null, $paging);
+        // Get the entries
+        $entries = GFAPI::get_entries($form_id, $search_criteria, null, $paging);
 
-      if (!$entries) {
-        break; // No more entries, exit loop
-      }
+        if (!$entries) {
+          break; // No more entries, exit loop
+        }
 
-      // Process entries here
-      foreach ($entries as $entry) {
-        // Process each entry as needed
-        // For example, you can store data in the $feedback array
-        $all_entries[] = $entry;
-      }
+        // Process entries here
+        foreach ($entries as $entry) {
+          // Process each entry as needed
+          // For example, you can store data in the $feedback array
+          $all_entries[] = $entry;
+        }
 
-      // Increment offset for next iteration
-      $offset += $page_size;
-    } while (count($entries) == $page_size); // Continue loop if entries fetched equals page size
+        // Increment offset for next iteration
+        $offset += $page_size;
+      } while (count($entries) == $page_size); // Continue loop if entries fetched equals page size
+
+    }
 
     if (empty($all_entries)) {
       return [];
@@ -171,7 +176,9 @@ class ezpzFeedbackMap {
       $user_feedback_all[] = $user_feedback;
     }
 
-    set_transient($entry_transient_name, $user_feedback_all, 5 * MINUTE_IN_SECONDS);
+    if (!$entry_id) {
+      set_transient($entry_transient_name, $user_feedback_all, 5 * MINUTE_IN_SECONDS);
+    }
 
     return $user_feedback_all;
   }
@@ -226,9 +233,11 @@ class ezpzFeedbackMap {
 
     $form_id = $_GET['formId'];
 
+    $clear_transient = isset($_GET['clearTransient']) ? $_GET['clearTransient'] : false;
+
     $form = GFAPI::get_form($form_id);
     if ($form) {
-      $processed_entries = $this->process_entries($form_id);
+      $processed_entries = $this->process_entries($form_id, $clear_transient);
       wp_send_json_success($processed_entries, 200);
     } else {
       wp_send_json_error('Form not found', 404);
