@@ -46,6 +46,11 @@ $block_classlist = implode(' ', $block_classlist);
       . '</div></div>';
   } elseif ($api_key) {
 
+
+    if (isset($_GET['entryID'])) {
+      $fields['feedback_active'] = false;
+    }
+
     /**
      * Build up attributes
      */

@@ -103,6 +103,7 @@
 	);
 
 	// When the user has completed the gravity form, close it and show their marker on the map
+	// TODO: I think this has been replaxced by just reloading the page
 	$(document).on("gform_confirmation_loaded", function (event, formId) {
 		// Get div with data-entryid property
 		let confirmation = $(".feedback-modal").find(".gform_confirmation_wrapper");
@@ -196,6 +197,7 @@
 			dataType: "json",
 			success: function (response, textStatus, xhr) {
 				let formEntries = response.data;
+
 				if (formEntries.length) {
 					formEntries.forEach(function (entry) {
 						let marker = addMarker(globalMap, entry);
@@ -204,6 +206,7 @@
 						if (!globalMap.markers) {
 							globalMap.markers = [];
 						}
+
 						globalMap.markers.push(marker);
 					});
 				}
@@ -339,6 +342,72 @@
 		return marker;
 	}
 
+	function buildReactionButton(markerData, type = "like") {
+		// Append Like button if likes are enabled
+		if (markerData.likes !== undefined) {
+			let likeButton = document.createElement("button");
+			let currentLikes, currentDislikes;
+			if (type == "like") {
+				currentLikes = markerData.likes ? markerData.likes : 0;
+				likeButton.innerHTML = currentLikes + " likes";
+				likeButton.classList.add("success");
+			} else {
+				currentDislikes = markerData.dislikes ? markerData.dislikes : 0;
+				likeButton.innerHTML = currentDislikes + " dislikes";
+				likeButton.classList.add("error");
+			}
+
+			likeButton.classList.add(type + "-button", "button", "xsmall");
+
+			if (type === "like" && markerData.userHasLiked) {
+				likeButton.disabled = true;
+				likeButton.title = "You have already liked this";
+			} else if (type === "dislike" && markerData.userHasDisliked) {
+				likeButton.disabled = true;
+				likeButton.title = "You have already disliked this";
+			}
+
+			likeButton.addEventListener("click", function () {
+				console.log("clicked");
+				if (
+					(type === "like" && markerData.userHasLiked) ||
+					(type === "dislike" && markerData.userHasDisliked)
+				) {
+					console.log("already reacted");
+					return;
+				}
+				$.ajax({
+					type: "POST",
+					url: feedbackMapsParams.ajaxUrl,
+					data: {
+						action: "user_feedback_interaction",
+						entryId: markerData["entry_id"],
+						nonce: feedbackMapsParams.nonce,
+						action_type: type,
+					},
+					dataType: "json",
+					success: function (response, textStatus, xhr) {
+						let respData = response.data;
+						likeButton.innerHTML = respData + " " + type + "s";
+						likeButton.disabled = true;
+						if (type === "like") {
+							markerData.userHasLiked = true;
+							markerData.likes = respData;
+						} else {
+							markerData.userHasDisliked = true;
+							markerData.dislikes = respData;
+						}
+					},
+					error: function (error) {},
+				});
+			});
+
+			return likeButton;
+		}
+
+		return null;
+	}
+
 	/**
 	 * Generates the markup for a given marker
 	 * @param {Object} markerData - The data for the marker
@@ -363,46 +432,12 @@
 			}
 		}
 
-		// Append Like button if likes are enabled
-		if (markerData.likes !== undefined) {
-			let currentLikes = markerData.likes ? markerData.likes : 0;
-
-			var likeButton = document.createElement("button");
-			likeButton.classList.add("like-button", "button", "success", "xsmall");
-
-			likeButton.innerHTML = currentLikes + " likes";
-
-			if (markerData.userHasLiked) {
-				likeButton.disabled = true;
-				likeButton.title = "You have already liked this";
-			}
-
-			likeButton.addEventListener("click", function () {
-				if (markerData.userHasLiked) {
-					return;
-				}
-				$.ajax({
-					type: "POST",
-					url: feedbackMapsParams.ajaxUrl,
-					data: {
-						action: "like_feedback_entry",
-						entryId: markerData["entry_id"],
-						nonce: feedbackMapsParams.nonce,
-					},
-					dataType: "json",
-					success: function (response, textStatus, xhr) {
-						let respData = response.data;
-						likeButton.innerHTML = respData + " likes";
-						likeButton.disabled = true;
-						markerData.userHasLiked = true;
-						markerData.likes = respData;
-					},
-					error: function (error) {},
-				});
-			});
-
+		// Add Like + Dislike buttons
+		if ((likeButton = buildReactionButton(markerData)))
 			content.appendChild(likeButton);
-		}
+
+		if ((dislikeButton = buildReactionButton(markerData, "dislike")))
+			content.appendChild(dislikeButton);
 
 		return content;
 	}
@@ -433,6 +468,12 @@
 	 * If the map has an intro screen, add event listener to the button to start the map and remove the intro screen
 	 */
 	function addIntroScreen() {
+		// Return if the user has just submitted a form
+		const urlParams = new URLSearchParams(window.location.search);
+		const entryID = urlParams.get("entryID");
+
+		if (entryID) return;
+
 		let $mapElement = $(globalMap.getDiv());
 		let hasIntro = $mapElement.data("has-intro");
 

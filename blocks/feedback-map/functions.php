@@ -15,8 +15,8 @@ class ezpzFeedbackMap {
     add_filter('upload_mimes', [$this, 'allow_kml_upload']);
     add_action('wp_ajax_feedback_map_entries', [$this, 'get_markers']);
     add_action('wp_ajax_nopriv_feedback_map_entries', [$this, 'get_markers']);
-    add_action('wp_ajax_like_feedback_entry', [$this, 'like_entry']);
-    add_action('wp_ajax_nopriv_like_feedback_entry', [$this, 'like_entry']);
+    add_action('wp_ajax_user_feedback_interaction', [$this, 'user_interact']);
+    add_action('wp_ajax_nopriv_user_feedback_interaction', [$this, 'user_interact']);
   }
 
   function enqueue_scripts() {
@@ -56,6 +56,7 @@ class ezpzFeedbackMap {
 
     $form = GFAPI::get_form($form_id);
     $entry_transient_name = 'feedback_map_entries_' . $form_id;
+    delete_transient($entry_transient_name);
 
 
     if ($clear_transient && $clear_transient == 'true') {
@@ -78,11 +79,22 @@ class ezpzFeedbackMap {
       ];
     }
 
+
     if ($entry_id) {
       $all_entries = [GFAPI::get_entry($entry_id)];
     } else {
       $all_entries = [];
-      $search_criteria = [];
+
+      // Search - not in Trash
+      $search_criteria = [
+        'status' => 'active',
+        'field_filters' => [
+          [
+            'key' => 'is_starred',
+            'value' => '1'
+          ]
+        ]
+      ];
       $page_size = 100;
       $offset = 0;
 
@@ -123,23 +135,29 @@ class ezpzFeedbackMap {
         'date_created' => $entry['date_created'],
       ];
 
+
       foreach ($entry as $key => $value) {
 
         $user_feedback['entry_id'] = $entry['id'];
 
-        // If the field label is 'Lat' or 'Latitude' or 'Lng' or 'Longitude' then push  it to the top level of the array
-        if (preg_match('/lat(itude)?|lng(itude)?/i', $field_mapping[$key]['label'])) {
-          if (preg_match('/lat(itude)?/i', $field_mapping[$key]['label'])) {
+        // If the field label == 'Longitude' or 'Latitude' then set the lat/lng
+        if ($field_mapping[$key]['label'] == 'Longitude' || $field_mapping[$key]['label'] == 'Latitude') {
+          if ($field_mapping[$key]['label'] == 'Latitude') {
             $user_feedback['lat'] = $value;
           } else {
             $user_feedback['lng'] = $value;
           }
-
           continue;
         }
 
         if ($field_mapping[$key]['label'] == 'Likes') {
           $user_feedback['likes'] = $value;
+          continue;
+        }
+
+
+        if ($field_mapping[$key]['label'] == 'Dislikes') {
+          $user_feedback['dislikes'] = $value;
           continue;
         }
 
@@ -183,7 +201,7 @@ class ezpzFeedbackMap {
     return $user_feedback_all;
   }
 
-  function like_entry() {
+  function user_interact() {
     // Check nonce
     if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'feedback-map-nonce')) {
       wp_send_json_error('Invalid nonce');
@@ -191,6 +209,7 @@ class ezpzFeedbackMap {
     }
 
     $entry_id = $_POST['entryId'];
+    $action_type = $_POST['action_type'];
 
     $entry_exists = GFAPI::entry_exists($entry_id);
 
@@ -202,9 +221,15 @@ class ezpzFeedbackMap {
     $entry = GFAPI::get_entry($entry_id);
     if ($entry) {
 
-      // Get the field id for the 'Likes' field
+      if ($action_type == 'like') {
+        $field_label = 'Likes';
+      } else {
+        $field_label = 'Dislikes';
+      }
+
+      // Get the field id for the $field_label field
       $form = GFAPI::get_form($entry['form_id']);
-      $likes_field = array_search('Likes', array_column($form['fields'], 'label'));
+      $likes_field = array_search($field_label, array_column($form['fields'], 'label'));
       $likes_field_id = $form['fields'][$likes_field]['id'];
 
       $likes = $entry[$likes_field_id] ?? 0;

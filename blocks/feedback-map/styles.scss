@@ -67,7 +67,8 @@
 		background: white !important;
 	}
 
-	button.like-button {
+	button.like-button,
+	button.dislike-button {
 		&::before {
 			content: "";
 			background-color: currentColor;
@@ -79,7 +80,10 @@
 				center / contain no-repeat;
 		}
 
+		// TODO: FLIP THE DISLIKE BUTOTN
+
 		margin-bottom: 0;
+		margin-right: 0.25rem;
 		&[disabled] {
 			opacity: 1;
 			--button-color-theme: var(--color-success-50);
@@ -92,6 +96,13 @@
 	}
 }
 
+button.dislike-button::before {
+	mask-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI3LjguMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAxMDAgMTAwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPHBhdGggZD0iTTIyLjcsNTUuNmwwLTQzLjdjMC0xLjUtMS4yLTIuNy0yLjctMi43bC0xNi41LDBjLTEuNSwwLTIuNywxLjItMi43LDIuN2wwLDQzLjhjMCwxLjUsMS4yLDIuNywyLjcsMi43bDE2LjUsMAoJCUMyMS41LDU4LjQsMjIuNyw1Ny4yLDIyLjcsNTUuNnoiLz4KCTxwYXRoIGQ9Ik05OS4yLDM5LjZjMC00LTIuNC04LTcuMS04LjhjMC41LTEuMywwLjgtMi42LDAuOC0zLjljMC0yLjMtMC44LTQuNS0yLjItNi4xYy0xLjItMS40LTMtMi4zLTQuOS0yLjcKCQljMC41LTAuMywwLjgtMS43LDAuOC0zYzAtNC41LTMtOS04LjktOWwtMjEuNSwwYy0xMS4zLDAtMTguNywyLjUtMjcuMyw1LjVjLTAuNywwLjItMS4zLDAuNC0xLjksMC42bDAsNDMuNGMwLDAuMiwwLDAuNCwwLDAuNgoJCWMwLjgsMCwxLjYsMC44LDIuNCwxLjJjNS4yLDIuNSw4LjMsNCwxMiw3LjdjNC40LDQuMyw3LjQsMTYuNiw4LjEsMjMuNWMwLjMsMy4yLDMsNS41LDYuMSw1LjNoMC4xYzQuOC0wLjMsOC41LTMuMywxMC40LTguNAoJCWMyLjYtNywxLjUtMTYuNS0yLjMtMjMuM2wyNi41LDBjNS44LDAsOC45LTQuNSw4LjktOUM5OC40LDQ4LjUsMTAyLjIsNDcuMiw5OS4yLDM5LjZ6Ii8+CjwvZz4KPC9zdmc+Cg==") !important;
+}
+button.dislike-button[disabled] {
+	--button-color-theme: var(--color-error-50) !important;
+	--button-color-text: var(--color-black);
+}
 .feedback-map-intro {
 	background-color: var(--color-white);
 	padding: 1.5rem;
