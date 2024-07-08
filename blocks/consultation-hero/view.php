@@ -34,7 +34,7 @@ $block_template = array(
   array(
     'core/paragraph', array('fontSize' => 'medium', 'placeholder' => 'Write Something here...'), array()
   ),
-  array('ezpz/buttons', array())
+  // array('ezpz/buttons', array())
 );
 
 $block_template = jellypress_get_block_template($block_template);
