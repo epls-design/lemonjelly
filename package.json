@@ -2,7 +2,7 @@
 	"name": "ezpz-consultation-child-theme",
 	"friendly_name": "EZPZ Consultations",
 	"text_domain": "ezpzconsultations",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"author": {
 		"name": "EPLS Design",
 		"email": "theteam@epls.design",
@@ -47,6 +47,7 @@
 		"sass": "^1.57.1"
 	},
 	"dependencies": {
+		"postcss": "^8.4.39",
 		"zurb-twentytwenty": "^0.1.1"
 	}
 }

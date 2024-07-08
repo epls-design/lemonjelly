@@ -1,0 +1,405 @@
+/* Add your styles here, and they will be compiled down into the styles.css file. */
+// Define the breakpoints map
+$breakpoints: (
+	sm: (
+		breakpoint: 600px,
+		container-width: 100%,
+		container-gutter: 4rem,
+		col-gutter: 1.5rem,
+	),
+	md: (
+		breakpoint: 900px,
+		container-width: 90%,
+		container-max-width: 1140px,
+		container-gutter: 0px,
+		root-font-size: 18px,
+		root-line-height: 1.6,
+		col-gutter: 2rem,
+	),
+	lg: (
+		breakpoint: 1200px,
+		container-width: 1140px,
+		container-max-width: none,
+	),
+	xl: (
+		breakpoint: 1800px,
+		container-width: 1280px,
+	),
+);
+
+@function map-deep-get($map, $keys...) {
+	$value: $map;
+
+	@each $key in $keys {
+		$value: map-get($value, $key);
+	}
+
+	@return $value;
+}
+
+@mixin above($breakpoint) {
+	$breakpoint-values: map-get($breakpoints, $breakpoint);
+	@media (min-width: map-get($breakpoint-values, breakpoint)) {
+		@content;
+	}
+}
+
+@mixin below($breakpoint) {
+	$breakpoint-values: map-get($breakpoints, $breakpoint);
+	@media (max-width: map-get($breakpoint-values, breakpoint)) {
+		@content;
+	}
+}
+
+$base-container-gutter: get-size(1.5rem);
+
+:root {
+	@each $point, $i in $breakpoints {
+		// for each breakpoint defined...
+		--container-width: #{calc(100% - (#{$base-container-gutter} * 2))};
+		--container-max-width: none;
+		@include above($point) {
+			--container-width: #{map-deep-get($breakpoints, $point, "container-width")};
+			@if map-has-key($breakpoints, $point, "container-max-width") {
+				--container-max-width: #{map-deep-get(
+						$breakpoints,
+						$point,
+						"container-max-width"
+					)};
+			}
+		}
+	}
+}
+
+// Define the base container width and largest item multiplier
+$largest-item-multiplier: 1.25;
+
+// Calculate the largest item width based on the breakpoint width
+@function largest-item-width($breakpoint-width) {
+	@return calc(#{$breakpoint-width} / 3 * #{$largest-item-multiplier});
+}
+
+// Styling for the timeline block
+.block-vertical-timeline {
+	// Wrapper for the timeline, enabling horizontal scrolling
+	.timeline-wrapper {
+		overflow-x: auto; // Allow horizontal scrolling
+		scrollbar-width: none; // Hide scrollbar for Firefox
+
+		// Style for single timeline
+		&.single-timeline {
+			& .timeline-item {
+				margin-right: 0px; // Remove margin for single timeline items
+			}
+		}
+	}
+
+	// Container for the timeline items
+	.timeline-container {
+		padding-left: 1.5rem;
+		padding-right: 1.5rem;
+		width: calc(
+			200% - #{largest-item-width(var(--container-width))}
+		); // Calculate width
+
+		@include above(md) {
+			padding-left: calc(
+				(100vw - var(--container-width)) / 2
+			); // Adjust left padding for medium screens
+			padding-right: calc(
+				(100vw - var(--container-width)) / 2 + 50vw
+			); // Adjust right padding for scrolling
+			width: calc(
+				200% - #{largest-item-width(var(--container-width))}
+			); // Calculate width for medium screens
+		}
+
+		@include above(lg) {
+			padding-left: calc(
+				(100vw - var(--container-width)) / 2
+			); // Adjust left padding for large screens
+			padding-right: calc(
+				(100vw - var(--container-width)) / 2 + 50vw
+			); // Adjust right padding for scrolling
+			width: calc(
+				200% - #{largest-item-width(var(--container-width))}
+			); // Calculate width for large screens
+		}
+
+		@include above(xl) {
+			padding-left: calc(
+				(100vw - var(--container-width)) / 2
+			); // Adjust left padding for extra large screens
+			padding-right: calc(
+				(100vw - var(--container-width)) / 2 + 50vw
+			); // Adjust right padding for scrolling
+			width: calc(
+				200% - #{largest-item-width(var(--container-width))}
+			); // Calculate width for extra large screens
+		}
+	}
+
+	// Styles for top and bottom timeline containers
+	.top-timeline-container,
+	.bottom-timeline-container {
+		display: inline-flex;
+		flex-direction: row;
+		flex-wrap: nowrap; // Prevent wrapping of items
+	}
+
+	.top-timeline-container {
+		border-bottom: 4px solid var(--color-secondary-500); // Add bottom border
+		align-items: end; // Align items to the end
+		position: relative;
+
+		&::before,
+		&::after {
+			content: "";
+			position: absolute;
+			bottom: -0.5rem;
+			height: 1rem;
+			width: 1rem;
+			border-radius: 100%; // Make circular
+			background-color: var(--color-secondary-500);
+		}
+
+		&::before {
+			left: -0.5rem; // Position on the left
+		}
+
+		&::after {
+			right: -0.5rem; // Position on the right
+		}
+	}
+
+	// Styles for individual timeline items
+	.timeline-item {
+		height: fit-content; // Adjust height to fit content
+
+		& img {
+			max-height: 200px; // Set max height for images
+			width: auto;
+		}
+
+		&.bottom {
+			margin-left: 4vw; // Margin for bottom items
+
+			& p {
+				margin-bottom: 0px;
+			}
+
+			& img {
+				margin-bottom: 0px;
+				margin-top: 1rem;
+			}
+		}
+
+		&.top {
+			margin-right: 4vw; // Margin for top items
+
+			& p {
+				margin-bottom: 0px;
+			}
+
+			&:last-of-type {
+				margin-right: 0; // Remove margin for the last item
+			}
+		}
+
+		// Define width for different sizes of timeline items
+		&.size-1 {
+			width: calc(var(--container-width) / 2 * 0.75);
+
+			@include above(md) {
+				width: calc(
+					var(--container-width) / 3 * 0.75
+				); // Adjust width for medium screens
+			}
+		}
+
+		&.size-2 {
+			width: calc(var(--container-width) / 2);
+
+			@include above(md) {
+				width: calc(
+					var(--container-width) / 3
+				); // Adjust width for medium screens
+			}
+		}
+
+		&.size-3 {
+			width: calc(var(--container-width) / 2 * 1.25);
+
+			@include above(md) {
+				width: calc(
+					var(--container-width) / 3 * 1.25
+				); // Adjust width for medium screens
+			}
+		}
+
+		&.size-4 {
+			width: calc(var(--container-width) / 2 * 1.35); // Width for size 4
+
+			& .timeline-content {
+				display: flex;
+
+				& img {
+					margin-right: 1rem; // Margin for images
+					max-width: 45%; // Max width for images
+					height: auto;
+				}
+			}
+
+			@include above(md) {
+				width: calc(
+					var(--container-width) / 3 * 1.35
+				); // Adjust width for medium screens
+			}
+		}
+	}
+
+	// Adjust width for smaller screens
+	@include below(md) {
+		.timeline-item {
+			&.size-1,
+			&.size-2,
+			&.size-3 {
+				width: calc((100vw - 48px) * 0.6); // Width for small screens
+			}
+
+			&.size-4 {
+				width: calc((100vw - 48px)); // Full width for size 4 on small screens
+			}
+		}
+	}
+
+	@include below(sm) {
+		.timeline-item {
+			&.size-1,
+			&.size-2,
+			&.size-3 {
+				width: calc((100vw - 48px) * 0.9); // Width for extra small screens
+			}
+		}
+	}
+
+	// Style for the timeline date
+	.timeline-date {
+		width: fit-content;
+		background: var(--color-secondary-500);
+		color: white;
+		padding: 0.25rem 0.5rem;
+		font-size: 1.35em;
+		font-weight: 500;
+		position: relative;
+
+		&::after {
+			content: "";
+			position: absolute;
+			left: calc(100% - 0.1px);
+			top: 0;
+			height: 100%;
+			background-color: var(--color-secondary-500);
+			clip-path: polygon(51% 0, 0 0, 0 100%);
+			width: 1.5rem;
+		}
+	}
+
+	// Style for the timeline content
+	.timeline-content {
+		padding: 1.5rem;
+		border-left: 2px solid var(--color-secondary-500);
+	}
+
+	// Style for the scroll bar container
+	.timeline-scroll {
+		width: 100%;
+		position: relative;
+		margin-left: 0.5rem;
+		margin-right: 0.5rem;
+
+		&::before {
+			content: "";
+			position: absolute;
+			top: 50%;
+			width: 100%;
+			left: 0;
+			height: 2px;
+			background-color: var(--color-secondary-500);
+		}
+	}
+
+	// Style for the scroll years container
+	.scroll-years {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+		max-width: 100%;
+		overflow-x: auto;
+		position: relative;
+		height: 40px;
+
+		&::before,
+		&::after {
+			content: "";
+			position: absolute;
+			height: 1rem;
+			width: 1rem;
+			background-color: var(--color-secondary-500);
+			border-radius: 50%;
+			top: 12px;
+		}
+
+		&::before {
+			left: 0; // Position on the left
+		}
+
+		&::after {
+			right: 0; // Position on the right
+		}
+	}
+
+	// Style for the scroll year indicator
+	.scroll-year {
+		position: absolute;
+		border-radius: 3rem;
+		color: #fff;
+		font-size: 1.125em;
+		font-weight: 700;
+		padding: 0.5rem;
+		width: auto;
+		min-width: 100px;
+		text-align: center;
+		background-color: var(--color-primary-500);
+		z-index: 2;
+		height: 40px;
+		cursor: grab; // Indicate draggable element
+		display: flex;
+		align-items: center;
+
+		& .icon {
+			top: 0;
+		}
+
+		& .scroll-year-text {
+			margin-right: 0.5rem;
+			margin-left: 0.5rem;
+		}
+	}
+
+	// Style for the timeline scroll container
+	.timeline-scroll-container {
+		display: inline-flex;
+		margin-top: 2rem;
+		width: 100%;
+		align-items: center;
+		justify-content: center;
+	}
+
+	// Style for the timeline year text
+	.timeline-year-text {
+		color: var(--color-secondary-500);
+		font-weight: 700;
+		margin-bottom: 0px;
+	}
+}

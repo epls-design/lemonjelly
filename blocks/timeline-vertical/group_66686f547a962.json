@@ -1,0 +1,137 @@
+{
+	"key": "group_66686f547a962",
+	"title": "Block > Vertical Timeline",
+	"fields": [
+		{
+			"key": "field_666871fb5f08e",
+			"label": "Single or Doubled",
+			"name": "single_or_double",
+			"aria-label": "",
+			"type": "true_false",
+			"instructions": "Please select if you would like to have the dates show above and below the line",
+			"required": 0,
+			"conditional_logic": 0,
+			"wrapper": {
+				"width": "40",
+				"class": "",
+				"id": ""
+			},
+			"message": "",
+			"default_value": 0,
+			"ui_on_text": "Double",
+			"ui_off_text": "Single",
+			"ui": 1
+		},
+		{
+			"key": "field_666872405f08f",
+			"label": "Timeline",
+			"name": "timeline",
+			"aria-label": "",
+			"type": "repeater",
+			"instructions": "Please add dates and description for the timeline",
+			"required": 1,
+			"conditional_logic": 0,
+			"wrapper": {
+				"width": "100",
+				"class": "",
+				"id": ""
+			},
+			"layout": "block",
+			"pagination": 0,
+			"min": 1,
+			"max": 0,
+			"collapsed": "",
+			"button_label": "Add Year",
+			"rows_per_page": 20,
+			"sub_fields": [
+				{
+					"key": "field_666872835f090",
+					"label": "Year",
+					"name": "year",
+					"aria-label": "",
+					"type": "text",
+					"instructions": "Please add the year",
+					"required": 1,
+					"conditional_logic": 0,
+					"wrapper": {
+						"width": "33",
+						"class": "",
+						"id": ""
+					},
+					"default_value": "",
+					"maxlength": "",
+					"placeholder": "",
+					"prepend": "",
+					"append": "",
+					"parent_repeater": "field_666872405f08f"
+				},
+				{
+					"key": "field_666872bc5f091",
+					"label": "Description",
+					"name": "description",
+					"aria-label": "",
+					"type": "textarea",
+					"instructions": "Please add a Description of the year",
+					"required": 1,
+					"conditional_logic": 0,
+					"wrapper": {
+						"width": "66",
+						"class": "",
+						"id": ""
+					},
+					"default_value": "",
+					"maxlength": 500,
+					"rows": 5,
+					"placeholder": "",
+					"new_lines": "",
+					"parent_repeater": "field_666872405f08f"
+				},
+				{
+					"key": "field_666873675f092",
+					"label": "Image",
+					"name": "image",
+					"aria-label": "",
+					"type": "image",
+					"instructions": "",
+					"required": 0,
+					"conditional_logic": 0,
+					"wrapper": {
+						"width": "66",
+						"class": "",
+						"id": ""
+					},
+					"return_format": "array",
+					"library": "all",
+					"min_width": "",
+					"min_height": "",
+					"min_size": "",
+					"max_width": "",
+					"max_height": "",
+					"max_size": "",
+					"mime_types": "",
+					"preview_size": "medium",
+					"parent_repeater": "field_666872405f08f"
+				}
+			]
+		}
+	],
+	"location": [
+		[
+			{
+				"param": "block",
+				"operator": "==",
+				"value": "ezpz/timeline-vertical"
+			}
+		]
+	],
+	"menu_order": 0,
+	"position": "normal",
+	"style": "default",
+	"label_placement": "top",
+	"instruction_placement": "label",
+	"hide_on_screen": "",
+	"active": true,
+	"description": "",
+	"show_in_rest": 0,
+	"modified": 1720446779
+}

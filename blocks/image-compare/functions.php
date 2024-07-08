@@ -17,6 +17,7 @@ function ezpzconsultations_enqueue_scripts() {
     filemtime(get_stylesheet_directory() . '/blocks/image-compare/scripts.js'),
     true
   );
+
   wp_register_script(
     'twentytwenty',
     get_stylesheet_directory_uri() . '/blocks/image-compare/lib/jquery.twentytwenty.js',
@@ -29,6 +30,14 @@ function ezpzconsultations_enqueue_scripts() {
     get_stylesheet_directory_uri() . '/blocks/image-compare/lib/jquery.event.move.js',
     array('jquery'),
     filemtime(get_stylesheet_directory() . '/blocks/image-compare/lib/jquery.event.move.js'),
+    true
+  );
+
+  wp_register_script(
+    'jquery-timeline-vertical',
+    get_stylesheet_directory_uri() . '/blocks/timeline-vertical/scripts.js',
+    array('jquery'),
+    filemtime(get_stylesheet_directory() . '/blocks/timeline-vertical/scripts.js'),
     true
   );
 }

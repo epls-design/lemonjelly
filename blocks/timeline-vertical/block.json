@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "ezpz/timeline-vertical",
+	"title": "Vertical Timeline",
+	"category": "media",
+	"icon": "image-flip-horizontal",
+	"description": "Displays two images in a before/after component allowing the user to compare differences.",
+	"keywords": ["timeline", "after", "twentytwenty", "compare", "comparison"],
+	"version": "1.0.0",
+	"textdomain": "ezpz-blocks-consultations",
+	"supports": {
+		"align": false,
+		"alignText": false,
+		"anchor": true,
+		"color": {
+			"background": false,
+			"gradients": false,
+			"link": false,
+			"text": false
+		},
+		"customClassName": true,
+		"html": false
+	},
+	"styles": [],
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "view.php",
+		"postTypes": ["post", "page"]
+	},
+	"style": "block-vertical-timeline",
+	"script": "block-vertical-timeline"
+}
