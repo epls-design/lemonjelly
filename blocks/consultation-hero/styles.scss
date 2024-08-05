@@ -4,6 +4,12 @@
 	padding-top: 148.922px !important;
 	//Default Overlay
 
+	&.hero-filter-zero {
+		& .hero-image img {
+			filter: grayscale(0%);
+		}
+	}
+
 	.hero-image {
 		&:before {
 			background: -webkit-gradient(

@@ -25,6 +25,8 @@ $fields = get_fields();
 
 $block_attributes = jellypress_get_block_attributes($block, $context);
 
+$theme_opts = ezpzconsultations_get_theme_opts();
+
 $allowed_blocks = jellypress_get_allowed_blocks();
 
 $block_template = array(
@@ -44,6 +46,9 @@ $block_attributes['class']  .= ' page-header hero ';
 
 $background_type = isset($fields['background_type']) ? $fields['background_type'] : '';
 
+$theme_overwrites = $theme_opts['themeoverwrites'];
+
+$hero_overlay = $theme_overwrites['hero_overlay'];
 
 $hero_class = '';
 
@@ -66,6 +71,10 @@ if (is_array($fields) && isset($fields['background_overlay_opacity'])) {
 } else {
   // Default value
   $background_overlay_opacity = 0.10;
+}
+
+if ($hero_overlay) {
+  $hero_class .= ' hero-filter-zero';
 }
 
 ?>

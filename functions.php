@@ -137,6 +137,13 @@ add_action('init', function () {
       'description' => '<style>#sub-accordion-panel-themedesigner .description.customize-panel-description{display:block !important;}</style> To update the favicon and logo, visit the <a href="/wp-admin/admin.php?page=theme-options">options page</a>.',
     ));
 
+
+    acf_add_customizer_section(array(
+      'title'        => 'Theme Overwrites',
+      'storage_type' => 'option',
+      'panel'        => $panel_id,
+
+    ));
     acf_add_customizer_section(array(
       'title'        => 'Global Colors',
       'storage_type' => 'option',
@@ -229,7 +236,8 @@ function ezpzconsultations_save_acf_local_json($group) {
     'group_65e6eb7aed060',
     'group_65e9b645cb80d',
     'group_64c2957a5ef4e',
-    'group_6650768a4a243'
+    'group_6650768a4a243',
+    'group_66b0a8b2d2529'
   );
   if (in_array($group['key'], $groups)) {
     add_filter('acf/settings/save_json', function () {
@@ -253,7 +261,8 @@ function ezpzconsultations_get_theme_opts() {
     'globaltypography',
     'buttons',
     'customcss',
-    'globalpadding'
+    'globalpadding',
+    'themeoverwrites'
   ];
 
   foreach ($prefixes as $prefix) {

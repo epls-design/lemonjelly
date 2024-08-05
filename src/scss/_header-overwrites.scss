@@ -1,0 +1,8 @@
+.alternate-header {
+	& .main-navigation {
+		background-color: white;
+		background: white;
+		position: fixed;
+		z-index: 99;
+	}
+}

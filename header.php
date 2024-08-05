@@ -18,6 +18,24 @@ $is_menu_off_canvas = true; // change this to determine the menu type
 $fields = get_fields('options');
 $main_logo = $fields['main_logo'];
 
+$theme_opts = ezpzconsultations_get_theme_opts();
+
+//This is the code for the theme overwrite options that are in the customizer
+$theme_overwrites = $theme_opts['themeoverwrites'];
+
+//Theme overwrite options
+$navbar_swap = $theme_overwrites['navbar_swap'];
+
+
+
+$header_class = 'site-header';
+//var_dump($theme_overwrites);
+
+if ($navbar_swap) {
+
+  $header_class .= ' alternate-header';
+}
+
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
@@ -31,7 +49,6 @@ $main_logo = $fields['main_logo'];
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <?php
-  $theme_opts = ezpzconsultations_get_theme_opts();
   $font_family = htmlspecialchars_decode($theme_opts['globaltypography']['primary_import_font_family']);
 
   if (!empty($font_family)) {
@@ -48,7 +65,7 @@ $main_logo = $fields['main_logo'];
 
     <a class="skip-link screen-reader-text" href="#content"><?php esc_html_e('Skip to content', 'jellypress'); ?></a>
 
-    <div id="masthead" class="site-header">
+    <div id="masthead" class="<?= $header_class ?>">
       <nav id="site-navigation" class="navbar main-navigation">
         <div class="container">
           <div class="navbar-brand site-branding">
@@ -100,4 +117,5 @@ $main_logo = $fields['main_logo'];
         </div>
       </nav>
     </div>
-    <div id="content" class="site-content">
+    <div id="content" class="site-content
+">
