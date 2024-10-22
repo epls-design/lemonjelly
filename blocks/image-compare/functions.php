@@ -7,9 +7,9 @@
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
-add_action('wp_enqueue_scripts', 'ezpzconsultations_enqueue_scripts');
+add_action('wp_enqueue_scripts', 'lemonjelly_enqueue_scripts');
 
-function ezpzconsultations_enqueue_scripts() {
+function lemonjelly_enqueue_scripts() {
   wp_register_script(
     'twentytwenty-init',
     get_stylesheet_directory_uri() . '/blocks/image-compare/scripts.js',

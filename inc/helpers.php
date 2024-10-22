@@ -1,5 +1,36 @@
 <?php
-function darken($color, $percent) {
+
+/**
+ * Child Theme Helpers
+ *
+ * @package lemonjelly
+ */
+
+// Exit if accessed directly.
+defined('ABSPATH') || exit;
+
+/**
+ * Calculate the contrast ratio between two colors using the WCAG 2.0 formula.
+ */
+function lemonjelly_calculate_contrast($color, $neutral_colour_900) {
+  // Convert hex color to RGB
+  $hex = str_replace('#', '', $color);
+  $r = hexdec(substr($hex, 0, 2));
+  $g = hexdec(substr($hex, 2, 2));
+  $b = hexdec(substr($hex, 4, 2));
+
+  // Calculate luminance
+  $luminance = (0.299 * $r + 0.587 * $g + 0.114 * $b) / 255;
+
+  // Choose text color based on luminance
+  return $luminance > 0.5 ? $neutral_colour_900 : '#ffffff'; // --color-neutral-900 = 2c333d for light backgrounds, White for dark backgrounds
+  //var_dump($neutral_colour_900);
+}
+
+/**
+ * Darken a color by a percentage.
+ */
+function lemonjelly_darken($color, $percent) {
   // Convert hexadecimal color string to RGB array
   $rgb = sscanf($color, "#%02x%02x%02x");
 
@@ -19,7 +50,7 @@ function darken($color, $percent) {
   return $dark_color;
 }
 
-function multiply_colors($color1, $color2) {
+function lemonjelly_multiply_colors($color1, $color2) {
   // Convert HEX to RGB
   $r1 = hexdec(substr($color1, 1, 2));
   $g1 = hexdec(substr($color1, 3, 2));
@@ -39,7 +70,7 @@ function multiply_colors($color1, $color2) {
   return $hex;
 }
 
-function mix_colors($color1, $color2, $weight) {
+function lemonjelly_mix_colors($color1, $color2, $weight) {
   // Convert HEX to RGB
   $r1 = hexdec(substr($color1, 1, 2));
   $g1 = hexdec(substr($color1, 3, 2));
@@ -64,24 +95,24 @@ function mix_colors($color1, $color2, $weight) {
   return $hex;
 }
 
-function ezpzconsultations_make_color_palette($color) {
+function lemonjelly_make_color_palette($color) {
   // Calculate dark color by multiplying color with itself
-  $dark = multiply_colors($color, $color);
-  $dark = darken($dark, 0.5);
+  $dark = lemonjelly_multiply_colors($color, $color);
+  $dark = lemonjelly_darken($dark, 0.5);
   // Generate the palette
   $palette = array(
-    '25' => mix_colors('#ffffff', $color, 0.1),
-    '50' => mix_colors('#ffffff', $color, 0.2),
-    '100' => mix_colors('#ffffff', $color, 0.30),
-    '200' => mix_colors('#ffffff', $color, 0.50),
-    '300' => mix_colors('#ffffff', $color, 0.70),
-    '400' => mix_colors('#ffffff', $color, 0.85),
+    '25' => lemonjelly_mix_colors('#ffffff', $color, 0.1),
+    '50' => lemonjelly_mix_colors('#ffffff', $color, 0.2),
+    '100' => lemonjelly_mix_colors('#ffffff', $color, 0.30),
+    '200' => lemonjelly_mix_colors('#ffffff', $color, 0.50),
+    '300' => lemonjelly_mix_colors('#ffffff', $color, 0.70),
+    '400' => lemonjelly_mix_colors('#ffffff', $color, 0.85),
     '500' => $color,
-    '600' => mix_colors($dark, $color, 0.86),
-    '700' => mix_colors($dark, $color, 0.72),
-    '800' => mix_colors($dark, $color, 0.58),
-    '900' => mix_colors($dark, $color, 0.44),
-    '1000' => mix_colors($dark, $color, 0.35),
+    '600' => lemonjelly_mix_colors($dark, $color, 0.86),
+    '700' => lemonjelly_mix_colors($dark, $color, 0.72),
+    '800' => lemonjelly_mix_colors($dark, $color, 0.58),
+    '900' => lemonjelly_mix_colors($dark, $color, 0.44),
+    '1000' => lemonjelly_mix_colors($dark, $color, 0.35),
   );
 
   return $palette;

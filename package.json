@@ -1,33 +1,25 @@
 {
 	"name": "ezpz-consultation-child-theme",
-	"friendly_name": "EZPZ Consultations",
-	"text_domain": "ezpzconsultations",
-	"version": "1.0.1",
+	"friendly_name": "Lemon Jelly",
+	"text_domain": "lemonjelly",
+	"version": "1.2.0",
 	"author": {
 		"name": "EPLS Design",
 		"email": "theteam@epls.design",
 		"url": "https://epls.design"
 	},
 	"description": "Child theme designed to work with the Jellypress boilerplate, to add more front end UI design tools",
-	"homepage": "https://github.com/epls-design/ezpz-consultations",
+	"homepage": "https://github.com/epls-design/lemonjelly",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/epls-design/ezpz-consultations.git"
+		"url": "https://github.com/epls-design/lemonjelly.git"
 	},
 	"license": "UNLICENSED",
 	"bugs": {
-		"url": "https://github.com/epls-design/ezpz-consultations/issues"
+		"url": "https://github.com/epls-design/lemonjelly/issues"
 	},
 	"private": true,
-	"keywords": [
-		"jellypress",
-		"child-theme",
-		"wordpress",
-		"theme",
-		"ezpz-consultations",
-		"epls-design",
-		"epls"
-	],
+	"keywords": [],
 	"browserslist": "last 5 versions",
 	"devDependencies": {
 		"autoprefixer": "^10.4.13",

@@ -18,10 +18,8 @@
 	});
 
 	// Reinitialize on resize
-	if (typeof ezpzconsultationsDebounce !== "undefined") {
-		const reinitVideoHero = ezpzconsultationsDebounce(() =>
-			minHeightVideoHero()
-		);
+	if (typeof lemonjellyDebounce !== "undefined") {
+		const reinitVideoHero = lemonjellyDebounce(() => minHeightVideoHero());
 		window.addEventListener("resize", reinitVideoHero);
 	}
 

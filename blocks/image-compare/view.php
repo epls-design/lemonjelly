@@ -20,7 +20,7 @@
  * Block registered with ACF using block.json
  * @link https://www.advancedcustomfields.com/resources/blocks/
  *
- * @package jellypress
+ * @package lemonjelly
  */
 
 // Exit if accessed directly.

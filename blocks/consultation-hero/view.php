@@ -16,7 +16,7 @@
  * Block registered with ACF using block.json
  * @link https://www.advancedcustomfields.com/resources/blocks/
  *
- * @package jellypress
+ * @package lemonjelly
  */
 
 // Exit if accessed directly.
@@ -25,16 +25,20 @@ $fields = get_fields();
 
 $block_attributes = jellypress_get_block_attributes($block, $context);
 
-$theme_opts = ezpzconsultations_get_theme_opts();
+$theme_opts = lemonjelly_get_theme_opts();
 
 $allowed_blocks = jellypress_get_allowed_blocks();
 
 $block_template = array(
   array(
-    'ezpz/post-title', array(), array()
+    'ezpz/post-title',
+    array(),
+    array()
   ),
   array(
-    'core/paragraph', array('fontSize' => 'medium', 'placeholder' => 'Write Something here...'), array()
+    'core/paragraph',
+    array('fontSize' => 'medium', 'placeholder' => 'Write Something here...'),
+    array()
   ),
   // array('ezpz/buttons', array())
 );

@@ -12,7 +12,7 @@
  * @param int $post_id The post ID the block is rendering content against.
  * @param array $context The context provided to the block by the post or its parent block.
  *
- * @package jellypress
+ * @package lemonjelly
  */
 
 // Exit if accessed directly.

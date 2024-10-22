@@ -7,7 +7,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
- * @package jellypress
+ * @package lemonjelly
  */
 
 // Exit if accessed directly.
@@ -18,7 +18,7 @@ $is_menu_off_canvas = true; // change this to determine the menu type
 $fields = get_fields('options');
 $main_logo = $fields['main_logo'];
 
-$theme_opts = ezpzconsultations_get_theme_opts();
+$theme_opts = lemonjelly_get_theme_opts();
 
 //This is the code for the theme overwrite options that are in the customizer
 $theme_overwrites = $theme_opts['themeoverwrites'];
