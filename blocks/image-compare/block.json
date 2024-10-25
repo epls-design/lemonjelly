@@ -8,13 +8,13 @@
 	"description": "Displays two images in a before/after component allowing the user to compare differences.",
 	"keywords": ["before", "after", "twentytwenty", "compare", "comparison"],
 	"version": "1.0.0",
-	"textdomain": "ezpz-blocks-consultations",
+	"textdomain": "lemonjelly",
 	"supports": {
 		"align": false,
-		"alignText": false,
+		"alignText": true,
 		"anchor": true,
 		"color": {
-			"background": false,
+			"background": true,
 			"gradients": false,
 			"link": false,
 			"text": false
@@ -22,10 +22,26 @@
 		"customClassName": true,
 		"html": false
 	},
+	"attributes": {
+		"outerContainer": {
+			"type": "string",
+			"default": "image-compare"
+		},
+		"backgroundColor": {
+			"type": "string",
+			"default": "white"
+		}
+	},
+	"providesContext": {
+		"ezpz/outerContainer": "outerContainer",
+		"ezpz/backgroundColor": "backgroundColor"
+	},
 	"styles": [],
+	"viewScript": ["twentytwenty-init"],
+	"editorScript": ["twentytwenty-init"],
 	"acf": {
 		"mode": "preview",
 		"renderTemplate": "view.php",
-		"postTypes": ["post", "page"]
+		"postTypes": []
 	}
 }

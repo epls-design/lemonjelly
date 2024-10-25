@@ -8,19 +8,20 @@
 	"description": "Renders a timeline of events.",
 	"keywords": ["timeline", "history", "project", "milestone"],
 	"version": "1.0.0",
-	"textdomain": "ezpz-blocks-consultations",
+	"textdomain": "lemonjelly",
 	"supports": {
 		"align": false,
 		"alignText": false,
 		"anchor": true,
 		"color": {
-			"background": false,
+			"background": true,
 			"gradients": false,
 			"link": false,
 			"text": false
 		},
 		"customClassName": true,
-		"html": false
+		"html": false,
+		"multiple": false
 	},
 	"styles": [],
 	"acf": {
@@ -28,6 +29,20 @@
 		"renderTemplate": "view.php",
 		"postTypes": ["post", "page"]
 	},
-	"style": "block-timeline",
-	"script": "block-timeline"
+	"attributes": {
+		"outerContainer": {
+			"type": "string",
+			"default": "timeline"
+		},
+		"backgroundColor": {
+			"type": "string",
+			"default": "white"
+		}
+	},
+	"providesContext": {
+		"ezpz/outerContainer": "outerContainer",
+		"ezpz/backgroundColor": "backgroundColor"
+	},
+	"viewScript": ["timeline-init"],
+	"editorScript": ["timeline-init"]
 }

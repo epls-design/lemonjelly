@@ -30,23 +30,28 @@ if (function_exists('acf_add_options_page')) {
 /**
  * Save and load ACF local JSON
  */
-add_action('acf/update_field_group', 'lemonjelly_save_acf_local_json', 50, 1);
+add_action('acf/update_field_group', 'lemonjelly_save_acf_local_json', 1, 1);
 function lemonjelly_save_acf_local_json($group) {
   $groups = array(
-    'group_65d61eb9da7c1',
+    'group_65d61eb9da7c1', // THEME DESIGNER
+    'group_65e9b645cb80d', // BLOCK: HERO
+    'group_64c2957a5ef4e', // BLOCK: TIMELINE
+    'group_65e6eb7aed060', // BLOCK: COMPARE
+    'group_6650768a4a243', // BLOCK: MAP
   );
 
   if (in_array($group['key'], $groups)) {
     add_filter('acf/settings/save_json', function () {
-      return get_stylesheet_directory() . '/acf';
+      return get_stylesheet_directory() . '/acf-json';
     });
   }
 }
-add_action('acf/settings/load_json', 'lemonjelly_load_acf_local_json', 50, 1);
+add_action('acf/settings/load_json', 'lemonjelly_load_acf_local_json', 1, 1);
 
 // TODO: THIS DOESNT SEEM TO BE WORKING
 function lemonjelly_load_acf_local_json($paths) {
-  $paths[] = get_stylesheet_directory() . '/acf';
+  $paths[] = get_stylesheet_directory() . '/acf-json';
+
 
   // Check if there are any in the /blocks directory
   $blocks = get_stylesheet_directory() . '/blocks';
@@ -62,6 +67,5 @@ function lemonjelly_load_acf_local_json($paths) {
       }
     }
   }
-
   return $paths;
 }

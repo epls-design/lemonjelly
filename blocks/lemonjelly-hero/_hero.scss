@@ -1,0 +1,63 @@
+/* Add your styles here, and they will be compiled down into the styles.css file. */
+
+.hero-figure {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	img,
+	video {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		object-fit: cover;
+		object-position: center;
+		height: 100%;
+		width: 100%;
+	}
+	&.is-desaturated {
+		img,
+		video {
+			filter: grayscale(100%);
+		}
+	}
+}
+
+img.is-parallax {
+	@media (min-width: 48em) {
+		position: fixed;
+	}
+}
+
+.overlay-secondary-100 {
+	--overlay-color: var(--color-secondary-100);
+}
+.overlay-secondary-500 {
+	--overlay-color: var(--color-secondary-500);
+}
+.overlay-primary-500 {
+	--overlay-color: var(--color-primary-500);
+}
+.overlay-primary-100 {
+	--overlay-color: var(--color-primary-100);
+}
+
+// TODO: SET CONTRAST COLOR!
+
+.hero {
+	> .container {
+		position: relative;
+		z-index: 2;
+	}
+}
+
+// TODO: REMOVE!
+#masthead {
+	display: none !important;
+}

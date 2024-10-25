@@ -1,5 +1,3 @@
 node_modules
 package-lock.json
- # Ignore because this gets dynamically updated by the theme editor and we dont want commits to overwrite it
 theme.json
-consultation.css

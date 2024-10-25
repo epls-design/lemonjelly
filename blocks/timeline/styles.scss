@@ -1,44 +1,9 @@
-/* Add your styles here, and they will be compiled down into the styles.css file. */
-// Define the breakpoints map
-$breakpoints: (
-	sm: (
-		breakpoint: 600px,
-		container-width: 100%,
-		container-gutter: 4rem,
-		col-gutter: 1.5rem,
-	),
-	md: (
-		breakpoint: 900px,
-		container-width: 90%,
-		container-max-width: 1140px,
-		container-gutter: 0px,
-		root-font-size: 18px,
-		root-line-height: 1.6,
-		col-gutter: 2rem,
-	),
-	lg: (
-		breakpoint: 1200px,
-		container-width: 1140px,
-		container-max-width: none,
-	),
-	xl: (
-		breakpoint: 1800px,
-		container-width: 1280px,
-	),
-);
-
-// Define the above mixin
-@mixin above($breakpoint) {
-	$breakpoint-values: map-get($breakpoints, $breakpoint);
-	@media (min-width: map-get($breakpoint-values, breakpoint)) {
-		@content;
-	}
+.time-image {
+	width: 160px;
 }
 
-// Define the pseudo mixin
-@mixin pseudo() {
-	content: "";
-	position: absolute;
+.mb-sm {
+	margin-bottom: 0.75rem !important;
 }
 
 $element-padding: 1.5rem;
@@ -50,7 +15,7 @@ $timeline-line-width: 6px;
 	--marker-offset: 2rem;
 	position: relative;
 	margin-bottom: $element-margin;
-	@include above(md) {
+	@media (min-width: 56.25em) {
 		margin-top: $element-margin;
 	}
 	&::after {
@@ -74,7 +39,9 @@ $timeline-line-width: 6px;
 .time-container h3 {
 	position: relative;
 	&::before {
-		@include pseudo();
+		content: "";
+		position: absolute;
+		display: block;
 		top: 0.2em;
 		background-color: var(--color-primary-500);
 		width: var(--marker-size);
@@ -82,7 +49,9 @@ $timeline-line-width: 6px;
 		left: calc((var(--marker-size) * -1) - var(--marker-offset));
 	}
 	&::after {
-		@include pseudo();
+		content: "";
+		position: absolute;
+		display: block;
 		top: calc(var(--marker-size) * 0.5 - ($timeline-line-width / 2) + 0.2em);
 		background-color: var(--color-primary-500);
 		width: calc(var(--marker-offset) * 0.75);
@@ -91,7 +60,7 @@ $timeline-line-width: 6px;
 	}
 }
 
-@include above(md) {
+@media (min-width: 56.25em) {
 	.timeline {
 		--marker-offset: 3rem;
 		&::after {
@@ -120,7 +89,7 @@ $timeline-line-width: 6px;
 		}
 	}
 }
-@include above(lg) {
+@media (min-width: 75em) {
 	.timeline {
 		--marker-offset: 4rem;
 	}

@@ -7,9 +7,10 @@
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
-add_action('wp_enqueue_scripts', 'lemonjelly_enqueue_scripts');
+add_action('wp_enqueue_scripts', 'lemonjelly_register_twentytwenty');
+add_action('admin_enqueue_scripts', 'lemonjelly_register_twentytwenty');
 
-function lemonjelly_enqueue_scripts() {
+function lemonjelly_register_twentytwenty() {
   wp_register_script(
     'twentytwenty-init',
     get_stylesheet_directory_uri() . '/blocks/image-compare/scripts.js',
@@ -32,12 +33,11 @@ function lemonjelly_enqueue_scripts() {
     filemtime(get_stylesheet_directory() . '/blocks/image-compare/lib/jquery.event.move.js'),
     true
   );
-
-  wp_register_script(
-    'jquery-timeline-vertical',
-    get_stylesheet_directory_uri() . '/blocks/timeline-vertical/scripts.js',
-    array('jquery'),
-    filemtime(get_stylesheet_directory() . '/blocks/timeline-vertical/scripts.js'),
-    true
-  );
 }
+
+/**
+ * Image Size for the Image Compare block
+ */
+add_action('after_setup_theme', function () {
+  add_image_size('large_landscape', 1920, 1080, true);
+});

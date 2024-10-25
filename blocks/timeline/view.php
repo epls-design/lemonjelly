@@ -22,6 +22,8 @@
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
+// TODO: PREVENT BACKGROUNDS OTHER THAN WHITE, LIGHT, ETC - DONT ALLOW THIS OIN A DARK BG
+
 $block_attributes = jellypress_get_block_attributes($block, $context);
 
 $allowed_blocks = jellypress_get_allowed_blocks();
@@ -33,14 +35,14 @@ $text_align = $block_attributes['text_align'];
 ?>
 
 <section class="<?php echo $block_attributes['class']; ?>" <?php echo $block_attributes['anchor']; ?>>
-  <div class="container">
+  <figure class="container">
 
     <?php if ($content || $is_preview) : ?>
-      <header class="row justify-center">
-        <div class="col md-10 lg-8">
-          <InnerBlocks className="<?php echo $text_align; ?>" allowedBlocks=" <?php echo $allowed_blocks; ?>" template="<?php echo $block_template; ?>" />
-        </div>
-      </header>
+    <header class="row justify-center">
+      <div class="col md-10 lg-8">
+        <InnerBlocks className="<?php echo $text_align; ?>" allowedBlocks=" <?php echo $allowed_blocks; ?>" template="<?php echo $block_template; ?>" />
+      </div>
+    </header>
     <?php endif; ?>
 
     <?php
@@ -48,38 +50,36 @@ $text_align = $block_attributes['text_align'];
 
     if ($timelines) {
     ?>
-      <div class="row justify-center">
-        <div class="sm-12 lg-10">
-          <div class="timeline">
-            <?php
-            $count = 0;
-            foreach ($timelines as $timeline) {
-              $title =  $timeline['title'];
-              $information =  $timeline['information'];
-              $date =  $timeline['date'];
 
-              $class = 'time-container ';
-              if ($count % 2 == 0) {
-                $class .= 'left';
-              } else {
-                $class .= 'right';
-              }
-              echo '<div class="' . $class . '">';
-            ?>
-              <?php if ($title) echo '<h3 class="h4 mb-sm">' . $title . '</h3>'; ?>
-              <?php if ($date) echo '<p class="bold mb-sm">' . $date . '</p>'; ?>
-              <p>
-                <?php if ($information) echo $information; ?>
-              </p>
-          </div>
+    <figure class="timeline">
+      <?php
+        $count = 0;
+        foreach ($timelines as $timeline) {
+          $title =  $timeline['title'];
+          $information =  $timeline['information'];
+          $date =  $timeline['date'];
+          $img =  $timeline['image'];
 
-        <?php
-              $count++;
-            }
+          $class = 'time-container ';
+          if ($count % 2 == 0) {
+            $class .= 'left';
+          } else {
+            $class .= 'right';
+          }
+          echo '<div class="' . $class . '">';
         ?>
-        </div>
+      <?php if ($title) echo '<h3 class="h4 mb-sm timeline-title">' . $title . '</h3>'; ?>
+      <?php if ($date) echo '<p class="bold mb-sm timeline-date">' . $date . '</p>'; ?>
+      <?php if ($information) echo '<div class="small">' . $information . '</div>'; ?>
+      <?php if ($img) echo wp_get_attachment_image($img, 'medium', false, array('class' => 'time-image')); ?>
       </div>
-  </div>
-<?php } ?>
-</div>
+
+      <?php
+          $count++;
+        }
+        ?>
+    </figure>
+
+    <?php } ?>
+    </div>
 </section>

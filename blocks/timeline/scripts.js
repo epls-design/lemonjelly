@@ -1,11 +1,9 @@
-// Note: These should match the values set in scss. Currently it is a manual process to keep them in sync
-
-// Simple JS Debounce function  https://www.freecodecamp.org/news/javascript-debounce-example/
 let lastTimeLineHeight = "";
+let lastLeftHeight = "";
+let lastRightHeight = "";
 (function ($) {
 	function repositionTimeLineElements() {
-		console.log("working");
-		if ($(window).width() >= breakPoints.md) {
+		if ($(window).width() >= 900) {
 			lastTimeLineHeight = "";
 			let timelines = $(".timeline");
 			if (timelines.length > 0) {
@@ -14,10 +12,44 @@ let lastTimeLineHeight = "";
 					let timeContainers = $(this).find(".time-container");
 					if (timeContainers.length > 0) {
 						timeContainers.each(function () {
+							let timelineSide = $(this).hasClass("left") ? "left" : "right";
+
 							if (lastTimeLineHeight !== "") {
-								$(this).css("margin-top", -lastTimeLineHeight / 2 + "px");
+								let offSetBy = 0;
+
+								if (timelineSide == "left") {
+									let diff = lastLeftHeight - lastRightHeight;
+									let rightSideOffset = lastLeftHeight / 2;
+
+									if (diff - rightSideOffset > 0) {
+										// The difference is greater than the right side offset - we need to add
+										offSetBy = diff - rightSideOffset;
+									} else {
+										//The difference is less than the right side offset - we need to subtract
+										offSetBy = ((rightSideOffset - diff) * -1) / 2;
+									}
+								} else {
+									let diff = lastRightHeight - lastLeftHeight;
+									let leftSideOffset = lastRightHeight / 2;
+
+									if (diff - leftSideOffset > 0) {
+										// The difference is greater than the right side offset - we need to add
+										offSetBy = diff - leftSideOffset;
+									} else {
+										//The difference is less than the right side offset - we need to subtract
+										offSetBy = ((leftSideOffset - diff) * -1) / 2;
+									}
+								}
+
+								$(this).css("margin-top", offSetBy + "px");
 							}
-							lastTimeLineHeight = $(this).height();
+							lastTimeLineHeight = $(this).outerHeight();
+
+							if ($(this).hasClass("left")) {
+								lastLeftHeight = $(this).outerHeight();
+							} else {
+								lastRightHeight = $(this).outerHeight();
+							}
 						});
 					}
 				});
@@ -27,9 +59,21 @@ let lastTimeLineHeight = "";
 		}
 	}
 
-	$(document).on("ready", function () {
-		repositionTimeLineElements();
-	});
+	// Check if jfDebounce is available
+	if (typeof jfDebounce === "function") {
+		jfDebounce("resize", repositionTimeLineElements, 20);
+	}
 
-	jfDebounce("resize", repositionTimeLineElements);
+	if (window.acf) {
+		window.acf.addAction(
+			"render_block_preview/type=ezpz/timeline",
+			function () {
+				repositionTimeLineElements();
+			}
+		);
+	} else {
+		document.addEventListener("DOMContentLoaded", function () {
+			repositionTimeLineElements();
+		});
+	}
 })(jQuery);

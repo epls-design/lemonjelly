@@ -26,8 +26,6 @@
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
-wp_enqueue_script('twentytwenty-init');
-
 $block_attributes = jellypress_get_block_attributes($block, $context);
 
 $allowed_blocks = jellypress_get_allowed_blocks();
@@ -44,21 +42,17 @@ $second_image = $fields['second_image'];
 <section class="<?php echo $block_attributes['class']; ?>" <?php echo $block_attributes['anchor']; ?>>
   <div class="container">
     <?php if ($content || $is_preview) : ?>
-      <header class="row justify-center">
-        <div class="col md-10 lg-8">
-          <InnerBlocks className="<?php echo $text_align; ?>" allowedBlocks=" <?php echo $allowed_blocks; ?>" template="<?php echo $block_template; ?>" />
-        </div>
-      </header>
+    <header class="row justify-center <?php echo $text_align; ?>">
+      <div class="col md-10 lg-8">
+        <InnerBlocks allowedBlocks=" <?php echo $allowed_blocks; ?>" template="<?php echo $block_template; ?>" />
+      </div>
+    </header>
     <?php endif; ?>
-    <div class="twentytwenty-container">
-      <!-- The before image is first -->
-      <?php if ($first_image) {  ?>
-        <img src="<?php echo $first_image; ?>" />
-      <?php } ?>
-      <!-- The after image is last -->
-      <?php if ($second_image) {  ?>
-        <img src="<?php echo $second_image; ?>" />
-      <?php } ?>
+    <div class="twentytwenty-container" data-before-label="<?php echo $fields['before_label']; ?>" data-after-label="<?php echo $fields['after_label']; ?>">
+      <?php
+      echo wp_get_attachment_image($first_image, 'large_landscape', false, array('class' => 'twentytwenty-before'));
+      echo wp_get_attachment_image($second_image, 'large_landscape', false, array('class' => 'twentytwenty-after'));
+      ?>
     </div>
   </div>
 </section>

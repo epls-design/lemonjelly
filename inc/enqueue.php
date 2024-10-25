@@ -60,3 +60,10 @@ function lemonjelly_scripts() {
  */
 function lemonjelly_block_scripts() {
 }
+
+
+add_action('admin_init', 'lemonjelly_editor_styles', 500);
+function lemonjelly_editor_styles() {
+  add_editor_style('style.css');
+  add_editor_style('lemonjelly.css');
+}

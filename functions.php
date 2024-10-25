@@ -9,6 +9,9 @@
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
+// Global array of blocks to register for this child theme
+$lemonjelly_blocks  = array('lemonjelly-hero', 'feedback-map', 'image-compare', 'timeline', 'timeline-vertical');
+
 $lemonjelly_includes = array(
   'helpers',
   'acf',
@@ -21,138 +24,22 @@ foreach ($lemonjelly_includes as $file) {
   if (file_exists($filepath)) require_once $filepath;
 }
 
-$block_functions_to_include = array('image-compare', 'timeline', 'consultation-hero', 'feedback-map', 'timeline-vertical');
-
-foreach ($block_functions_to_include as $block) {
+foreach ($lemonjelly_blocks as $block) {
   $directory = get_stylesheet_directory() . '/blocks/' . $block . '/functions.php';
 
   if (file_exists($directory))
     include_once $directory;
 }
 
+/**
+ *
+ */
+
 return;
 
 // TIDY UP BELOW....
 
 
-function lemonjelly_block_templates() {
-  $post_type_object = get_post_type_object('page');
-
-  $post_type_object->template = array(
-    array('ezpz/consultation-hero', array(
-      'lock' => array(
-        'move'   => true,
-        'remove' => true,
-      ),
-    )),
-    array('ezpz/section', array()),
-  );
-}
-add_action('init', 'lemonjelly_block_templates', 30);
-
-
-function wpdocs_theme_add_editor_styles() {
-  add_editor_style('style.css');
-  add_editor_style('consultation.css');
-}
-add_action('admin_init', 'wpdocs_theme_add_editor_styles', 500);
-
-
-add_action('acf/init', 'lemonjelly_register_blocks', 20);
-add_filter('allowed_block_types_all', 'lemonjelly_add_to_allowed_blocks', 100, 1);
-
-$blocks = array('timeline', 'image-compare', 'consultation-hero', 'feedback-map', 'timeline-vertical');
-
-function lemonjelly_register_blocks() {
-  global $blocks;
-  foreach ($blocks as $slug) {
-    if (file_exists(get_stylesheet_directory(__FILE__) . '/blocks/' . $slug . '/block.json')) {
-      // Register ACF block
-      register_block_type(get_stylesheet_directory(__FILE__) . '/blocks/' . $slug);
-    }
-  }
-}
-
-function lemonjelly_add_to_allowed_blocks($allowed_blocks) {
-  global $blocks;
-
-  // Ensure $allowed_blocks is initialized as an array
-  if (!is_array($allowed_blocks)) {
-    $allowed_blocks = array();
-  }
-
-  foreach ($blocks as $slug) {
-    $allowed_blocks[] = 'ezpz/' . $slug;
-  }
-
-  // Remove 'ezpz/hero-page' and 'ezpz/hero-post' if they exist
-  $hero_page_index = array_search('ezpz/hero-page', $allowed_blocks);
-  if ($hero_page_index !== false) {
-    unset($allowed_blocks[$hero_page_index]);
-  }
-
-  $hero_post_index = array_search('ezpz/hero-post', $allowed_blocks);
-  if ($hero_post_index !== false) {
-    unset($allowed_blocks[$hero_post_index]);
-  }
-
-  // Re-index the array keys
-  $allowed_blocks = array_values($allowed_blocks);
-
-  //var_dump($allowed_blocks);
-
-  return $allowed_blocks;
-}
-//Remove page-hero block from pages
-function remove_page_hero_block() {
-  remove_action('init', 'jellypress_block_templates', 20);
-}
-add_action('after_setup_theme', 'remove_page_hero_block');
-
-//I am using the https://github.com/mcguffin/acf-customizer
-//TODO : setup dependencies with tgmpluginactivation
-add_action('init', function () {
-  if (function_exists('acf_add_customizer_section')) {
-    $panel_id = acf_add_customizer_panel(array(
-      'title'        => 'Theme Designer',
-      'description' => '<style>#sub-accordion-panel-themedesigner .description.customize-panel-description{display:block !important;}</style> To update the favicon and logo, visit the <a href="/wp-admin/admin.php?page=theme-options">options page</a>.',
-    ));
-
-
-    acf_add_customizer_section(array(
-      'title'        => 'Theme Overwrites',
-      'storage_type' => 'option',
-      'panel'        => $panel_id,
-
-    ));
-    acf_add_customizer_section(array(
-      'title'        => 'Global Colors',
-      'storage_type' => 'option',
-      'panel'        => $panel_id,
-
-    ));
-    acf_add_customizer_section(array(
-      'title'        => 'Global Typography',
-      'storage_type' => 'option',
-      'panel'        => $panel_id,
-    ));
-    acf_add_customizer_section(array(
-      'title'        => 'Buttons',
-      'storage_type' => 'option',
-      'panel'        => $panel_id,
-    ));
-    acf_add_customizer_section(array(
-      'title'        => 'Custom CSS',
-      'storage_type' => 'option',
-      'panel'        => $panel_id,
-    ));
-    acf_add_customizer_section(array(
-      'title'        => 'Global Padding',
-      'storage_type' => 'option',
-      'panel'        => $panel_id,
-    ));
-  }
-});
 
 function lemonjelly_get_options_by_prefix($prefix) {
   global $wpdb;

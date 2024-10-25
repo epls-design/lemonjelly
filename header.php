@@ -13,6 +13,21 @@
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 $is_menu_off_canvas = true; // change this to determine the menu type
 
 $fields = get_fields('options');
@@ -40,15 +55,15 @@ if ($navbar_swap) {
 <!doctype html>
 <html <?php language_attributes(); ?>>
 
-<head>
-  <meta charset="<?php bloginfo('charset'); ?>">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <link rel="profile" href="https://gmpg.org/xfn/11">
+  <head>
+    <meta charset="<?php bloginfo('charset'); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="profile" href="https://gmpg.org/xfn/11">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <?php
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <?php
   $font_family = htmlspecialchars_decode($theme_opts['globaltypography']['primary_import_font_family']);
 
   if (!empty($font_family)) {
@@ -56,39 +71,39 @@ if ($navbar_swap) {
   }
   ?>
 
-  <?php wp_head(); ?>
-</head>
+    <?php wp_head(); ?>
+  </head>
 
-<body <?php body_class(); ?>>
-  <?php wp_body_open(); ?>
-  <div id="page" class="site">
+  <body <?php body_class(); ?>>
+    <?php wp_body_open(); ?>
+    <div id="page" class="site">
 
-    <a class="skip-link screen-reader-text" href="#content"><?php esc_html_e('Skip to content', 'jellypress'); ?></a>
+      <a class="skip-link screen-reader-text" href="#content"><?php esc_html_e('Skip to content', 'jellypress'); ?></a>
 
-    <div id="masthead" class="<?= $header_class ?>">
-      <nav id="site-navigation" class="navbar main-navigation">
-        <div class="container">
-          <div class="navbar-brand site-branding">
-            <?php if ($main_logo) : ?>
+      <div id="masthead" class="<?= $header_class ?>">
+        <nav id="site-navigation" class="navbar main-navigation">
+          <div class="container">
+            <div class="navbar-brand site-branding">
+              <?php if ($main_logo) : ?>
               <span class="site-title navbar-item" style="display:block">
                 <a class="site-logo navbar-item" href="<?php echo esc_url(home_url('/')); ?>" rel="home">
                   <?php echo wp_get_attachment_image($main_logo, 'full'); ?>
                 </a>
               </span>
-            <?php endif; ?>
+              <?php endif; ?>
 
 
 
 
-            <button class="hamburger" type="button" aria-label="<?php _e('Toggles the website navigation', 'jellypress'); ?>" aria-controls="navbar-menu" aria-expanded="false">
-              <span class="hamburger-label">Menu</span>
-              <span class="hamburger-box">
-                <span class="hamburger-inner"></span>
-              </span>
-            </button>
-          </div>
+              <button class="hamburger" type="button" aria-label="<?php _e('Toggles the website navigation', 'jellypress'); ?>" aria-controls="navbar-menu" aria-expanded="false">
+                <span class="hamburger-label">Menu</span>
+                <span class="hamburger-box">
+                  <span class="hamburger-inner"></span>
+                </span>
+              </button>
+            </div>
 
-          <?php if ($is_menu_off_canvas) : ?>
+            <?php if ($is_menu_off_canvas) : ?>
             <div id="navbar-menu" class="navbar-menu is-off-canvas">
               <div class="navbar-top">
                 <button class="hamburger" type="button" aria-label="<?php _e('Toggles the website navigation', 'jellypress'); ?>" aria-controls="navbar-menu" aria-expanded="false">
@@ -98,24 +113,24 @@ if ($navbar_swap) {
                   </span>
                 </button>
               </div>
-            <?php else : ?>
+              <?php else : ?>
               <div id="navbar-menu" class="navbar-menu">
-              <?php endif; ?>
+                <?php endif; ?>
 
-              <div class="navbar-end">
-                <?php
+                <div class="navbar-end">
+                  <?php
                 wp_nav_menu(array(
                   'theme_location' => 'menu-primary',
                   'menu_id'        => 'primary-menu',
                   'container'      => false,
                 ));
                 ?>
-              </div>
+                </div>
 
               </div>
             </div>
-        </div>
-      </nav>
-    </div>
-    <div id="content" class="site-content
+          </div>
+        </nav>
+      </div>
+      <div id="content" class="site-content
 ">

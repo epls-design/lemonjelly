@@ -1,6 +1,6 @@
 {
     "key": "group_65e9b645cb80d",
-    "title": "Block > Consultation Hero",
+    "title": "Block &gt; LemonJelly Hero",
     "fields": [
         {
             "key": "field_6602b6d07bbe7",
@@ -153,7 +153,7 @@
             "name": "background_overlay_opacity",
             "aria-label": "",
             "type": "range",
-            "instructions": "",
+            "instructions": "Set the background overlay colour in the 'styles' tab",
             "required": 1,
             "conditional_logic": [
                 [
@@ -175,6 +175,83 @@
             "step": 10,
             "prepend": "",
             "append": "%"
+        },
+        {
+            "key": "field_671ba1193185d",
+            "label": "Min-Height",
+            "name": "min_height",
+            "aria-label": "",
+            "type": "range",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 20,
+            "max": 100,
+            "step": 5,
+            "prepend": "",
+            "append": "dvh"
+        },
+        {
+            "key": "field_671b8517bd5a1",
+            "label": "Desaturate?",
+            "name": "desaturate",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6602b6d07bbe7",
+                        "operator": "!=",
+                        "value": "color"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
+        },
+        {
+            "key": "field_671ba2c0dd7d8",
+            "label": "Parallax?",
+            "name": "parallax",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6602b6d07bbe7",
+                        "operator": "==",
+                        "value": "image"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
         }
     ],
     "location": [
@@ -182,7 +259,7 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "ezpz\/consultation-hero"
+                "value": "ezpz\/lemonjelly-hero"
             }
         ]
     ],
@@ -195,5 +272,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1713266775
+    "modified": 1729864402
 }
