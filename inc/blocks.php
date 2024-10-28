@@ -74,3 +74,30 @@ add_action('init', function () {
 add_action('after_setup_theme', function () {
   remove_action('init', 'jellypress_block_templates', 20);
 });
+
+
+/**
+ * Filters out put of core/list-item so that if an image is provided it sets the image to the
+ * marker-image CSS variable
+ * @param string $block_content HTML output of the block
+ * @param array $block The block data
+ * @return string Updated HTML output
+ *
+ */
+add_filter('render_block_core/list-item', function ($block_content, $block) {
+  if (isset($block['attrs']['imageId']) && !empty($block['attrs']['imageId'])) {
+    // Initialize the WP_HTML_Tag_Processor with the block content
+    $markup = new WP_HTML_Tag_Processor($block_content);
+
+    // Add class and set style attribute
+    if ($markup->next_tag()) {
+      $image_url = wp_get_attachment_image_url($block['attrs']['imageId'], 'icon');
+      $markup->add_class('has-image-marker');
+      $markup->set_attribute('style', '--marker-image: url(' . $image_url . ');');
+    }
+
+    // Get the updated HTML
+    $block_content = $markup->get_updated_html();
+  }
+  return $block_content;
+}, 20, 2);

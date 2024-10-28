@@ -9,6 +9,7 @@ const fs = require("fs");
 const path = require("path");
 const glob = require("glob");
 var merge = require("merge-stream");
+const babel = require("gulp-babel");
 
 var eslint = require("gulp-eslint");
 var uglify = require("gulp-uglify");
@@ -69,15 +70,33 @@ function copyLibs() {
 // Tasks which watch for changes in specified files/dirs and run tasks based on filetypes edited
 function watchTask(done) {
 	watch(["./src/scss/*.scss", "blocks/**/*.scss"], sassProcessSite);
-	watch(["./src/js/*.js"], series(javascriptLint, javascriptProcess));
+	watch(
+		["./src/js/*.js", "!./src/js/editor-filters.js"],
+		series(javascriptLint, javascriptProcess)
+	);
 	// Watch for changes to acf
-	watch("acf/*.json", moveBlockJson);
+	watch("acf-json/*.json", moveBlockJson);
+
+	watch("./src/js/editor-filters.js", compileGutenberg);
 	done();
 }
 
 // eslint all first party JS
 function javascriptLint(done) {
 	return src(["./src/js/*.js"]).pipe(eslint()).pipe(eslint.format());
+	done();
+}
+
+function compileGutenberg(done) {
+	return src("./src/js/editor-filters.js")
+		.pipe(
+			babel({
+				presets: ["@babel/env", "@babel/preset-react"],
+			})
+		)
+		.pipe(uglify({ mangle: true }))
+		.pipe(dest("./js/"));
+
 	done();
 }
 
@@ -112,13 +131,13 @@ function moveBlockJson(done) {
 	 * with the same name. If it does, move the file to that folder.
 	 */
 	// Get all files in acf-json
-	files = fs.readdirSync("acf");
+	files = fs.readdirSync("acf-json");
 	let blocksFolder = "blocks";
 
 	files.forEach(function (stream, file) {
 		// Get the absolute path to the acf json file
 		// Get relative path to the acf json file
-		file = "acf/" + stream;
+		file = "acf-json/" + stream;
 		if (stream != ".DS_Store") {
 			// Convert the file into a json object
 			var jsonContent = JSON.parse(fs.readFileSync(file));

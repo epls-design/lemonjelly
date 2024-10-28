@@ -66,4 +66,14 @@ add_action('admin_init', 'lemonjelly_editor_styles', 500);
 function lemonjelly_editor_styles() {
   add_editor_style('style.css');
   add_editor_style('lemonjelly.css');
+
+
+add_action('enqueue_block_editor_assets', 'lemonjelly_block_filters');
+function lemonjelly_block_filters() {
+  wp_enqueue_script(
+    'lemonjelly-block-filters',
+    get_stylesheet_directory_uri() . '/js/editor-filters.js',
+    array('react', 'react-dom', 'wp-data', 'wp-blocks', 'wp-dom-ready', 'wp-edit-post', 'wp-hooks', 'wp-element', 'wp-editor', 'wp-components', 'wp-i18n', 'lodash'),
+    filemtime(get_template_directory() . '/js/editor-filters.js'),
+  );
 }
