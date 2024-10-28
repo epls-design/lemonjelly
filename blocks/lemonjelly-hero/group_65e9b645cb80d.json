@@ -1,276 +1,276 @@
 {
-    "key": "group_65e9b645cb80d",
-    "title": "Block &gt; LemonJelly Hero",
-    "fields": [
-        {
-            "key": "field_6602b6d07bbe7",
-            "label": "Background Type",
-            "name": "background_type",
-            "aria-label": "",
-            "type": "button_group",
-            "instructions": "Please select the type of content you want to use for the hero background.",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "image": "<i class=\"dashicons dashicons-format-image\"><\/i> Image",
-                "color": "<i class=\"dashicons dashicons-color-picker\"><\/i> Color",
-                "video": "<i class=\"dashicons dashicons-format-video\"><\/i> Video"
-            },
-            "default_value": "color",
-            "return_format": "value",
-            "allow_null": 0,
-            "layout": "horizontal"
-        },
-        {
-            "key": "field_65e9b64500523",
-            "label": "Background Image",
-            "name": "background_image",
-            "aria-label": "",
-            "type": "image",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_6602b6d07bbe7",
-                        "operator": "==",
-                        "value": "image"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "id",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "",
-            "preview_size": "medium"
-        },
-        {
-            "key": "field_6602b7fbd0300",
-            "label": "Background Video",
-            "name": "background_video",
-            "aria-label": "",
-            "type": "group",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_6602b6d07bbe7",
-                        "operator": "==",
-                        "value": "video"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "layout": "block",
-            "sub_fields": [
-                {
-                    "key": "field_6602b876d0301",
-                    "label": "Video Poster",
-                    "name": "video_poster",
-                    "aria-label": "",
-                    "type": "image",
-                    "instructions": "Please upload poster artwork for the video. This is displayed before the video is loaded, and in place of the video on some mobile devices. <strong>Min 600px x 400px<\/strong>",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "id",
-                    "library": "all",
-                    "min_width": "",
-                    "min_height": "",
-                    "min_size": "",
-                    "max_width": "",
-                    "max_height": "",
-                    "max_size": "",
-                    "mime_types": "",
-                    "preview_size": "medium"
-                },
-                {
-                    "key": "field_6602b8bfd0302",
-                    "label": "Video Source",
-                    "name": "video_source",
-                    "aria-label": "",
-                    "type": "file",
-                    "instructions": "Add up to three video sources (usually an .mp4 is sufficient, however you can also add webm and ogg files to support older browsers). <strong>Max video size 15MB.<\/strong>",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "url",
-                    "library": "all",
-                    "min_size": "",
-                    "max_size": 15,
-                    "mime_types": "webm, ogg, mp4"
-                },
-                {
-                    "key": "field_6602b94ff0ae5",
-                    "label": "External Video Link",
-                    "name": "external_video_link",
-                    "aria-label": "",
-                    "type": "oembed",
-                    "instructions": "If you'd like the visitor to be able to play a full version of the background, you can add a YouTube \/ Vimeo link here, which will be shown when the play button is pressed.",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "width": "",
-                    "height": ""
-                }
-            ]
-        },
-        {
-            "key": "field_6602aff4fd791",
-            "label": "Background Overlay Opacity",
-            "name": "background_overlay_opacity",
-            "aria-label": "",
-            "type": "range",
-            "instructions": "Set the background overlay colour in the 'styles' tab",
-            "required": 1,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_6602b6d07bbe7",
-                        "operator": "!=",
-                        "value": "color"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "min": 10,
-            "max": 100,
-            "step": 10,
-            "prepend": "",
-            "append": "%"
-        },
-        {
-            "key": "field_671ba1193185d",
-            "label": "Min-Height",
-            "name": "min_height",
-            "aria-label": "",
-            "type": "range",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "min": 20,
-            "max": 100,
-            "step": 5,
-            "prepend": "",
-            "append": "dvh"
-        },
-        {
-            "key": "field_671b8517bd5a1",
-            "label": "Desaturate?",
-            "name": "desaturate",
-            "aria-label": "",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_6602b6d07bbe7",
-                        "operator": "!=",
-                        "value": "color"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 0,
-            "ui_on_text": "",
-            "ui_off_text": "",
-            "ui": 1
-        },
-        {
-            "key": "field_671ba2c0dd7d8",
-            "label": "Parallax?",
-            "name": "parallax",
-            "aria-label": "",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_6602b6d07bbe7",
-                        "operator": "==",
-                        "value": "image"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 0,
-            "ui_on_text": "",
-            "ui_off_text": "",
-            "ui": 1
-        }
-    ],
-    "location": [
-        [
-            {
-                "param": "block",
-                "operator": "==",
-                "value": "ezpz\/lemonjelly-hero"
-            }
-        ]
-    ],
-    "menu_order": 0,
-    "position": "normal",
-    "style": "default",
-    "label_placement": "top",
-    "instruction_placement": "label",
-    "hide_on_screen": "",
-    "active": true,
-    "description": "",
-    "show_in_rest": 0,
-    "modified": 1729864402
+	"key": "group_65e9b645cb80d",
+	"title": "Block &gt; LemonJelly Hero",
+	"fields": [
+		{
+			"key": "field_6602b6d07bbe7",
+			"label": "Background Type",
+			"name": "background_type",
+			"aria-label": "",
+			"type": "button_group",
+			"instructions": "Please select the type of content you want to use for the hero background.",
+			"required": 1,
+			"conditional_logic": 0,
+			"wrapper": {
+				"width": "",
+				"class": "",
+				"id": ""
+			},
+			"choices": {
+				"image": "<i class=\"dashicons dashicons-format-image\"></i> Image",
+				"color": "<i class=\"dashicons dashicons-color-picker\"></i> Color",
+				"video": "<i class=\"dashicons dashicons-format-video\"></i> Video"
+			},
+			"default_value": "color",
+			"return_format": "value",
+			"allow_null": 0,
+			"layout": "horizontal"
+		},
+		{
+			"key": "field_65e9b64500523",
+			"label": "Background Image",
+			"name": "background_image",
+			"aria-label": "",
+			"type": "image",
+			"instructions": "",
+			"required": 1,
+			"conditional_logic": [
+				[
+					{
+						"field": "field_6602b6d07bbe7",
+						"operator": "==",
+						"value": "image"
+					}
+				]
+			],
+			"wrapper": {
+				"width": "",
+				"class": "",
+				"id": ""
+			},
+			"return_format": "id",
+			"library": "all",
+			"min_width": "",
+			"min_height": "",
+			"min_size": "",
+			"max_width": "",
+			"max_height": "",
+			"max_size": "",
+			"mime_types": "",
+			"preview_size": "medium"
+		},
+		{
+			"key": "field_6602b7fbd0300",
+			"label": "Background Video",
+			"name": "background_video",
+			"aria-label": "",
+			"type": "group",
+			"instructions": "",
+			"required": 1,
+			"conditional_logic": [
+				[
+					{
+						"field": "field_6602b6d07bbe7",
+						"operator": "==",
+						"value": "video"
+					}
+				]
+			],
+			"wrapper": {
+				"width": "",
+				"class": "",
+				"id": ""
+			},
+			"layout": "block",
+			"sub_fields": [
+				{
+					"key": "field_6602b876d0301",
+					"label": "Video Poster",
+					"name": "video_poster",
+					"aria-label": "",
+					"type": "image",
+					"instructions": "Please upload poster artwork for the video. This is displayed before the video is loaded, and in place of the video on some mobile devices. <strong>Min 600px x 400px</strong>",
+					"required": 1,
+					"conditional_logic": 0,
+					"wrapper": {
+						"width": "",
+						"class": "",
+						"id": ""
+					},
+					"return_format": "id",
+					"library": "all",
+					"min_width": "",
+					"min_height": "",
+					"min_size": "",
+					"max_width": "",
+					"max_height": "",
+					"max_size": "",
+					"mime_types": "",
+					"preview_size": "medium"
+				},
+				{
+					"key": "field_6602b8bfd0302",
+					"label": "Video Source",
+					"name": "video_source",
+					"aria-label": "",
+					"type": "file",
+					"instructions": "Add up to three video sources (usually an .mp4 is sufficient, however you can also add webm and ogg files to support older browsers). <strong>Max video size 15MB.</strong>",
+					"required": 1,
+					"conditional_logic": 0,
+					"wrapper": {
+						"width": "",
+						"class": "",
+						"id": ""
+					},
+					"return_format": "url",
+					"library": "all",
+					"min_size": "",
+					"max_size": 15,
+					"mime_types": "webm, ogg, mp4"
+				},
+				{
+					"key": "field_6602b94ff0ae5",
+					"label": "External Video Link",
+					"name": "external_video_link",
+					"aria-label": "",
+					"type": "oembed",
+					"instructions": "If you'd like the visitor to be able to play a full version of the background, you can add a YouTube / Vimeo link here, which will be shown when the play button is pressed.",
+					"required": 0,
+					"conditional_logic": 0,
+					"wrapper": {
+						"width": "",
+						"class": "",
+						"id": ""
+					},
+					"width": "",
+					"height": ""
+				}
+			]
+		},
+		{
+			"key": "field_6602aff4fd791",
+			"label": "Background Overlay Opacity",
+			"name": "background_overlay_opacity",
+			"aria-label": "",
+			"type": "range",
+			"instructions": "Set the background overlay colour in the 'styles' tab",
+			"required": 1,
+			"conditional_logic": [
+				[
+					{
+						"field": "field_6602b6d07bbe7",
+						"operator": "!=",
+						"value": "color"
+					}
+				]
+			],
+			"wrapper": {
+				"width": "",
+				"class": "",
+				"id": ""
+			},
+			"default_value": "",
+			"min": 10,
+			"max": 100,
+			"step": 10,
+			"prepend": "",
+			"append": "%"
+		},
+		{
+			"key": "field_671ba1193185d",
+			"label": "Min-Height",
+			"name": "min_height",
+			"aria-label": "",
+			"type": "range",
+			"instructions": "",
+			"required": 1,
+			"conditional_logic": 0,
+			"wrapper": {
+				"width": "",
+				"class": "",
+				"id": ""
+			},
+			"default_value": "",
+			"min": 20,
+			"max": 100,
+			"step": 5,
+			"prepend": "",
+			"append": "dvh"
+		},
+		{
+			"key": "field_671b8517bd5a1",
+			"label": "Desaturate?",
+			"name": "desaturate",
+			"aria-label": "",
+			"type": "true_false",
+			"instructions": "",
+			"required": 0,
+			"conditional_logic": [
+				[
+					{
+						"field": "field_6602b6d07bbe7",
+						"operator": "!=",
+						"value": "color"
+					}
+				]
+			],
+			"wrapper": {
+				"width": "",
+				"class": "",
+				"id": ""
+			},
+			"message": "",
+			"default_value": 0,
+			"ui_on_text": "",
+			"ui_off_text": "",
+			"ui": 1
+		},
+		{
+			"key": "field_671ba2c0dd7d8",
+			"label": "Parallax?",
+			"name": "parallax",
+			"aria-label": "",
+			"type": "true_false",
+			"instructions": "",
+			"required": 0,
+			"conditional_logic": [
+				[
+					{
+						"field": "field_6602b6d07bbe7",
+						"operator": "==",
+						"value": "image"
+					}
+				]
+			],
+			"wrapper": {
+				"width": "",
+				"class": "",
+				"id": ""
+			},
+			"message": "",
+			"default_value": 0,
+			"ui_on_text": "",
+			"ui_off_text": "",
+			"ui": 1
+		}
+	],
+	"location": [
+		[
+			{
+				"param": "block",
+				"operator": "==",
+				"value": "ezpz/lemonjelly-hero"
+			}
+		]
+	],
+	"menu_order": 0,
+	"position": "normal",
+	"style": "default",
+	"label_placement": "top",
+	"instruction_placement": "label",
+	"hide_on_screen": "",
+	"active": true,
+	"description": "",
+	"show_in_rest": 0,
+	"modified": 1729864802
 }

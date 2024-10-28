@@ -1,5 +1,10 @@
 /* Add your styles here, and they will be compiled down into the styles.css file. */
-
+body {
+	--hero-padding: 0rem;
+}
+.hero {
+	padding-top: calc(var(--block-padding) + var(--hero-padding)) !important;
+}
 .hero-figure {
 	height: 100%;
 	width: 100%;
@@ -35,29 +40,17 @@ img.is-parallax {
 	}
 }
 
-.overlay-secondary-100 {
-	--overlay-color: var(--color-secondary-100);
+.has-overlay {
+	// TODO: SET CONTRAST COLOR FOR EACH VARIATION OF OVERLAY
+	color: var(--color-section-text);
+	& :is(h1, h2, h3, h4, h5, h6) {
+		color: var(--color-section-headings);
+	}
 }
-.overlay-secondary-500 {
-	--overlay-color: var(--color-secondary-500);
-}
-.overlay-primary-500 {
-	--overlay-color: var(--color-primary-500);
-}
-.overlay-primary-100 {
-	--overlay-color: var(--color-primary-100);
-}
-
-// TODO: SET CONTRAST COLOR!
 
 .hero {
 	> .container {
 		position: relative;
 		z-index: 2;
 	}
-}
-
-// TODO: REMOVE!
-#masthead {
-	display: none !important;
 }

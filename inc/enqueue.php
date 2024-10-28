@@ -37,7 +37,7 @@ function lemonjelly_scripts() {
   if (file_exists($override_css_path)) {
     wp_enqueue_style(
       'lemonjelly',
-      get_stylesheet_directory_uri() . '/lemonjelly.css', // TODO: NEED TO SAVE INTO HERE - used to be consultation.css
+      get_stylesheet_directory_uri() . '/lemonjelly.css',
       array('jellypress-child'),
       filemtime($override_css_path)
     );
@@ -66,6 +66,15 @@ add_action('admin_init', 'lemonjelly_editor_styles', 500);
 function lemonjelly_editor_styles() {
   add_editor_style('style.css');
   add_editor_style('lemonjelly.css');
+}
+
+
+add_action('wp_head', function () {
+  $acf_opts = get_fields('options');
+  if (isset($acf_opts['unfiltered_html'])) {
+    echo $acf_opts['unfiltered_html'];
+  }
+});
 
 
 add_action('enqueue_block_editor_assets', 'lemonjelly_block_filters');
@@ -76,4 +85,36 @@ function lemonjelly_block_filters() {
     array('react', 'react-dom', 'wp-data', 'wp-blocks', 'wp-dom-ready', 'wp-edit-post', 'wp-hooks', 'wp-element', 'wp-editor', 'wp-components', 'wp-i18n', 'lodash'),
     filemtime(get_template_directory() . '/js/editor-filters.js'),
   );
+}
+
+
+add_action('wp_head', 'lemonjelly_frontend_favicon');
+function lemonjelly_frontend_favicon() {
+  $favicon_url = get_field('favicon', 'option');
+  $favicon_url  = wp_get_attachment_image_url($favicon_url, 'icon');
+  // Check if favicon URL exists
+  if ($favicon_url) {
+    // Update favicon links with the ACF URL
+    echo '<link rel="shortcut icon" type="image/x-icon" href="' . esc_url($favicon_url) . '">';
+    echo '<link rel="icon" type="image/png" href="' . esc_url($favicon_url) . '" sizes="194x194">';
+    echo '<link rel="icon" type="image/png" href="' . esc_url($favicon_url) . '" sizes="96x96">';
+    echo '<link rel="icon" type="image/png" href="' . esc_url($favicon_url) . '" sizes="32x32">';
+    echo '<link rel="icon" type="image/png" href="' . esc_url($favicon_url) . '" sizes="16x16">';
+    echo '<link rel="apple-touch-icon" href="' . esc_url($favicon_url) . '">';
+    echo '<link rel="mask-icon" href="' . esc_url($favicon_url) . '" color="#5bbad5">';
+  }
+}
+
+// Add favicon to admin areas
+add_action('login_head', 'lemonjelly_backend_favicon');
+add_action('admin_head', 'lemonjelly_backend_favicon');
+function lemonjelly_backend_favicon() {
+  // Get the URL of the uploaded favicon image from ACF
+  $favicon_url = get_field('favicon', 'option');
+  $favicon_url  = wp_get_attachment_image_url($favicon_url, 'icon');
+  // Check if favicon URL exists
+  if ($favicon_url) {
+    // Update favicon link in admin areas with the ACF URL
+    echo '<link rel="shortcut icon" type="image/x-icon" href="' . esc_url($favicon_url) . '">';
+  }
 }

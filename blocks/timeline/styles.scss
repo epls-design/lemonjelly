@@ -13,6 +13,9 @@ $timeline-line-width: 6px;
 .timeline {
 	--marker-size: 1.2rem;
 	--marker-offset: 2rem;
+
+	--timeline-color-theme: var(--color-primary-500);
+
 	position: relative;
 	margin-bottom: $element-margin;
 	@media (min-width: 56.25em) {
@@ -22,7 +25,7 @@ $timeline-line-width: 6px;
 		content: "";
 		position: absolute;
 		width: $timeline-line-width;
-		background-color: var(--color-primary-500);
+		background-color: var(--timeline-color-theme);
 		top: 0;
 		bottom: 0;
 		left: calc((var(--marker-size) * 0.5) - ($timeline-line-width / 2));
@@ -43,7 +46,7 @@ $timeline-line-width: 6px;
 		position: absolute;
 		display: block;
 		top: 0.2em;
-		background-color: var(--color-primary-500);
+		background-color: var(--timeline-color-theme);
 		width: var(--marker-size);
 		height: var(--marker-size);
 		left: calc((var(--marker-size) * -1) - var(--marker-offset));
@@ -53,7 +56,7 @@ $timeline-line-width: 6px;
 		position: absolute;
 		display: block;
 		top: calc(var(--marker-size) * 0.5 - ($timeline-line-width / 2) + 0.2em);
-		background-color: var(--color-primary-500);
+		background-color: var(--timeline-color-theme);
 		width: calc(var(--marker-offset) * 0.75);
 		height: $timeline-line-width;
 		left: calc(var(--marker-offset) * -1);

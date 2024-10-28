@@ -48,7 +48,6 @@ function lemonjelly_save_acf_local_json($group) {
 }
 add_action('acf/settings/load_json', 'lemonjelly_load_acf_local_json', 1, 1);
 
-// TODO: THIS DOESNT SEEM TO BE WORKING
 function lemonjelly_load_acf_local_json($paths) {
   $paths[] = get_stylesheet_directory() . '/acf-json';
 

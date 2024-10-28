@@ -22,8 +22,6 @@
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
-// TODO: PREVENT BACKGROUNDS OTHER THAN WHITE, LIGHT, ETC - DONT ALLOW THIS OIN A DARK BG
-
 $block_attributes = jellypress_get_block_attributes($block, $context);
 
 $allowed_blocks = jellypress_get_allowed_blocks();

@@ -1,4 +1,5 @@
 "use strict";
+// TODO it would be nice if the editor showed the image and not just the front ned
 // Import dependencies
 const { addFilter } = wp.hooks;
 const { createHigherOrderComponent } = wp.compose;

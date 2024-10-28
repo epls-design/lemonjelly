@@ -3,11 +3,11 @@
     "title": "Theme Designer",
     "fields": [
         {
-            "key": "field_6717d032bb0cd",
-            "label": "Branding",
+            "key": "field_6717d06cbb0cf",
+            "label": "Colours",
             "name": "",
             "aria-label": "",
-            "type": "tab",
+            "type": "accordion",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -16,65 +16,124 @@
                 "class": "",
                 "id": ""
             },
-            "placement": "top",
+            "open": 1,
+            "multi_expand": 0,
             "endpoint": 0
         },
         {
-            "key": "field_65d61ee1ddf6e",
-            "label": "Main Logo",
-            "name": "main_logo",
+            "key": "field_65d6168f46389",
+            "label": "Primary Colour",
+            "name": "primary_colour",
             "aria-label": "",
-            "type": "image",
-            "instructions": "Used in the Navbar",
+            "type": "color_picker",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
-            "return_format": "id",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "",
-            "preview_size": "medium"
+            "default_value": "#ff3c74",
+            "enable_opacity": 0,
+            "return_format": "string"
         },
         {
-            "key": "field_65d61effddf6f",
-            "label": "Favicon",
-            "name": "favicon",
+            "key": "field_65d6168f46390",
+            "label": "Secondary Colour",
+            "name": "secondary_colour",
             "aria-label": "",
-            "type": "image",
-            "instructions": "A small 80x80 graphic shown in the browser tab",
+            "type": "color_picker",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
-            "return_format": "url",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "",
-            "preview_size": "thumbnail"
+            "default_value": "#ffa0cd",
+            "enable_opacity": 0,
+            "return_format": "string"
+        },
+        {
+            "key": "field_671bb0c4be6ca",
+            "label": "Tertiary Colour",
+            "name": "tertiary_colour",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "#ffa0cd",
+            "enable_opacity": 0,
+            "return_format": "string"
+        },
+        {
+            "key": "field_65e1b24732226",
+            "label": "Neutral Colour",
+            "name": "neutral_colour",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "This colour should be a mid-grey colour.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "#64748b",
+            "enable_opacity": 0,
+            "return_format": "string"
+        },
+        {
+            "key": "field_671bb672de149",
+            "label": "Text Colour",
+            "name": "text_color",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "This should be a darker colour, the fallback colour is white and if this colour is too light it can cause legibility issues.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "#131516",
+            "enable_opacity": 0,
+            "return_format": "string"
+        },
+        {
+            "key": "field_65ddb310b358a",
+            "label": "Headings Preferred Colour",
+            "name": "headings_preferred_colour",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "This should be a darker colour, the fallback colour is white and if this colour is too light it can cause legibility issues.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "enable_opacity": 0,
+            "return_format": "string"
         },
         {
             "key": "field_6717d04fbb0ce",
             "label": "Typography",
             "name": "",
             "aria-label": "",
-            "type": "tab",
+            "type": "accordion",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -83,16 +142,17 @@
                 "class": "",
                 "id": ""
             },
-            "placement": "top",
+            "open": 0,
+            "multi_expand": 0,
             "endpoint": 0
         },
         {
             "key": "field_65d616d0e7342",
-            "label": "Primary Import Font Family",
-            "name": "primary_import_font_family",
+            "label": "Font Import",
+            "name": "unfiltered_html",
             "aria-label": "",
             "type": "textarea",
-            "instructions": "Please add the @import url. For example: https:\/\/fonts.googleapis.com\/css2?family=Open+Sans&display=swap",
+            "instructions": "If you are importing fonts from Google or Adobe, paste the code here",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -102,8 +162,8 @@
             },
             "default_value": "",
             "maxlength": "",
-            "rows": "",
-            "placeholder": "",
+            "rows": 2,
+            "placeholder": "e.g. <link rel=\"stylesheet\" href=\"https:\/\/use.typekit.net\/mte1mpv.css\">",
             "new_lines": ""
         },
         {
@@ -112,17 +172,17 @@
             "name": "primary_font_family",
             "aria-label": "",
             "type": "text",
-            "instructions": "Please copy the font family name",
+            "instructions": "Please copy the font stack from Adobe \/ Google",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
             "default_value": "",
             "maxlength": "",
-            "placeholder": "",
+            "placeholder": "eg. myriad-pro, sans-serif;",
             "prepend": "",
             "append": ""
         },
@@ -132,19 +192,45 @@
             "name": "secondary_font_family",
             "aria-label": "",
             "type": "text",
-            "instructions": "Please copy the font family name",
+            "instructions": "Please copy the font stack from Adobe \/ Google",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
             "default_value": "",
             "maxlength": "",
-            "placeholder": "",
+            "placeholder": "eg. myriad-pro, sans-serif;",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_671bc60808e25",
+            "label": "Body Font Family",
+            "name": "body_font_family",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Please copy the font stack from Adobe \/ Google",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "--font-primary": "Primary",
+                "--font-secondary": "Secondary"
+            },
+            "default_value": "--font-primary",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
         },
         {
             "key": "field_65d616d0e6bef",
@@ -172,7 +258,7 @@
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "",
+                        "width": "50",
                         "class": "",
                         "id": ""
                     },
@@ -218,15 +304,15 @@
                         ]
                     ],
                     "wrapper": {
-                        "width": "",
+                        "width": "50",
                         "class": "",
                         "id": ""
                     },
                     "choices": {
-                        "primary_font": "Primary",
-                        "secondary_font": "Secondary"
+                        "--font-primary": "Primary",
+                        "--font-secondary": "Secondary"
                     },
-                    "default_value": false,
+                    "default_value": "--font-secondary",
                     "return_format": "value",
                     "multiple": 0,
                     "allow_null": 0,
@@ -262,7 +348,7 @@
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "",
+                        "width": "50",
                         "class": "",
                         "id": ""
                     },
@@ -295,15 +381,15 @@
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "",
+                        "width": "50",
                         "class": "",
                         "id": ""
                     },
                     "choices": {
-                        "primary_font": "Primary",
-                        "secondary_font": "Secondary"
+                        "--font-primary": "Primary",
+                        "--font-secondary": "Secondary"
                     },
-                    "default_value": false,
+                    "default_value": "--font-secondary",
                     "return_format": "value",
                     "multiple": 0,
                     "allow_null": 0,
@@ -339,7 +425,7 @@
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "",
+                        "width": "50",
                         "class": "",
                         "id": ""
                     },
@@ -372,15 +458,15 @@
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "",
+                        "width": "50",
                         "class": "",
                         "id": ""
                     },
                     "choices": {
-                        "primary_font": "Primary",
-                        "secondary_font": "Secondary"
+                        "--font-primary": "Primary",
+                        "--font-secondary": "Secondary"
                     },
-                    "default_value": false,
+                    "default_value": "--font-secondary",
                     "return_format": "value",
                     "multiple": 0,
                     "allow_null": 0,
@@ -416,7 +502,7 @@
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "",
+                        "width": "50",
                         "class": "",
                         "id": ""
                     },
@@ -449,15 +535,15 @@
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "",
+                        "width": "50",
                         "class": "",
                         "id": ""
                     },
                     "choices": {
-                        "primary_font": "Primary",
-                        "secondary_font": "Secondary"
+                        "--font-primary": "Primary",
+                        "--font-secondary": "Secondary"
                     },
-                    "default_value": false,
+                    "default_value": "--font-secondary",
                     "return_format": "value",
                     "multiple": 0,
                     "allow_null": 0,
@@ -468,11 +554,11 @@
             ]
         },
         {
-            "key": "field_6717d06cbb0cf",
-            "label": "Colours",
-            "name": "",
+            "key": "field_671bc4e3ce9e8",
+            "label": "H5",
+            "name": "font_h5",
             "aria-label": "",
-            "type": "tab",
+            "type": "group",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -481,154 +567,255 @@
                 "class": "",
                 "id": ""
             },
-            "placement": "top",
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_671bc4e3ce9e9",
+                    "label": "Font Weight",
+                    "name": "font_weight",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "100": "Thin (100)",
+                        "200": "Extra Light (200)",
+                        "300": "Light (300)",
+                        "400": "Regular (400)",
+                        "500": "Medium (500)",
+                        "600": "Semi-Bold (600)",
+                        "700": "Bold (700)",
+                        "800": "Extra Bold (800)",
+                        "900": "Black (900)"
+                    },
+                    "default_value": 500,
+                    "return_format": "",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_671bc4e3ce9ea",
+                    "label": "Family",
+                    "name": "font_family",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "--font-primary": "Primary",
+                        "--font-secondary": "Secondary"
+                    },
+                    "default_value": "--font-primary",
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
+                }
+            ]
+        },
+        {
+            "key": "field_671bc4e9ce9eb",
+            "label": "H6",
+            "name": "font_h6",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_671bc4e9ce9ec",
+                    "label": "Font Weight",
+                    "name": "font_weight",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "100": "Thin (100)",
+                        "200": "Extra Light (200)",
+                        "300": "Light (300)",
+                        "400": "Regular (400)",
+                        "500": "Medium (500)",
+                        "600": "Semi-Bold (600)",
+                        "700": "Bold (700)",
+                        "800": "Extra Bold (800)",
+                        "900": "Black (900)"
+                    },
+                    "default_value": 500,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_671bc4e9ce9ed",
+                    "label": "Family",
+                    "name": "font_family",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "--font-primary": "Primary",
+                        "--font-secondary": "Secondary"
+                    },
+                    "default_value": "--font-primary",
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": ""
+                }
+            ]
+        },
+        {
+            "key": "field_6717d032bb0cd",
+            "label": "Branding and Navigation",
+            "name": "",
+            "aria-label": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 0,
             "endpoint": 0
         },
         {
-            "key": "field_65d6168f46389",
-            "label": "Primary Colour",
-            "name": "primary_colour",
+            "key": "field_65d61ee1ddf6e",
+            "label": "Main Logo",
+            "name": "main_logo",
             "aria-label": "",
-            "type": "color_picker",
-            "instructions": "",
+            "type": "image",
+            "instructions": "Used in the Navbar",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
-            "default_value": "#ff3c74",
-            "enable_opacity": 0,
-            "return_format": "string"
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium_landscape"
         },
         {
-            "key": "field_65d6168f46390",
-            "label": "Secondary Colour",
-            "name": "secondary_colour",
+            "key": "field_65d61effddf6f",
+            "label": "Favicon",
+            "name": "favicon",
             "aria-label": "",
-            "type": "color_picker",
-            "instructions": "",
+            "type": "image",
+            "instructions": "A small 80x80 graphic shown in the browser tab",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
-            "default_value": "#ffa0cd",
-            "enable_opacity": 0,
-            "return_format": "string"
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "icon"
         },
         {
-            "key": "field_65e1b24732226",
-            "label": "Neutral Colour",
-            "name": "neutral_colour",
+            "key": "field_671fdfb722f1c",
+            "label": "Transparent Navbar?",
+            "name": "transparent_navbar",
             "aria-label": "",
-            "type": "color_picker",
-            "instructions": "",
+            "type": "true_false",
+            "instructions": "Would you like the navbar to be transparent on desktop (works well with image-focused heroes)",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
-            "default_value": "#64748b",
-            "enable_opacity": 0,
-            "return_format": "string"
+            "message": "",
+            "default_value": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
         },
         {
-            "key": "field_65e1b61232227",
-            "label": "Success Colour",
-            "name": "success_colour",
-            "aria-label": "",
-            "type": "color_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "#00c851",
-            "enable_opacity": 0,
-            "return_format": "string"
-        },
-        {
-            "key": "field_65e1b63532228",
-            "label": "Warning Colour",
-            "name": "warning_colour",
-            "aria-label": "",
-            "type": "color_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "#FFBB33",
-            "enable_opacity": 0,
-            "return_format": "string"
-        },
-        {
-            "key": "field_65e1b64e32229",
-            "label": "Error Colour",
-            "name": "error_colour",
-            "aria-label": "",
-            "type": "color_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "#FF4444",
-            "enable_opacity": 0,
-            "return_format": "string"
-        },
-        {
-            "key": "field_65ddb310b358a",
-            "label": "Headings Preferred Colour",
-            "name": "headings_preferred_colour",
-            "aria-label": "",
-            "type": "color_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "enable_opacity": 0,
-            "return_format": "string"
-        },
-        {
-            "key": "field_65e83c403627b",
-            "label": "Colour",
-            "name": "colour",
+            "key": "field_671fdeeb22f13",
+            "label": "Navbar Background Colour",
+            "name": "navbar_background",
             "aria-label": "",
             "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "25",
                 "class": "",
                 "id": ""
             },
             "choices": {
+                "white": "White",
                 "primary": "Primary",
-                "secondary": "Secondary"
+                "secondary": "Secondary",
+                "tertiary": "Tertiary"
             },
-            "default_value": false,
+            "default_value": "primary",
             "return_format": "value",
             "multiple": 0,
             "allow_null": 0,
@@ -637,16 +824,315 @@
             "placeholder": ""
         },
         {
-            "key": "field_65df24a361147",
-            "label": "Font Weight",
-            "name": "font_weight",
+            "key": "field_671bbefe230eb",
+            "label": "Navbar Background Variant",
+            "name": "navbar_background_color_variant",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Higher number = darker colour",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_671fdeeb22f13",
+                        "operator": "!=",
+                        "value": "white"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "25": "25",
+                "50": "50",
+                "100": "100",
+                "200": "200",
+                "300": "300",
+                "400": "400",
+                "500": "500",
+                "600": "600",
+                "700": "700",
+                "800": "800",
+                "900": "900",
+                "1000": "1000"
+            },
+            "default_value": 500,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_671fdf0b22f14",
+            "label": "Navbar Link Colour",
+            "name": "navbar_link_color",
             "aria-label": "",
             "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "white": "White",
+                "black": "Black",
+                "primary": "Primary",
+                "secondary": "Secondary",
+                "tertiary": "Tertiary"
+            },
+            "default_value": "white",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_671fdf1922f15",
+            "label": "Navbar Link Color Variant",
+            "name": "navbar_link_color_variant",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Higher number = darker colour",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_671fdf0b22f14",
+                        "operator": "!=",
+                        "value": "white"
+                    },
+                    {
+                        "field": "field_671fdf0b22f14",
+                        "operator": "!=",
+                        "value": "black"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "25": "25",
+                "50": "50",
+                "100": "100",
+                "200": "200",
+                "300": "300",
+                "400": "400",
+                "500": "500",
+                "600": "600",
+                "700": "700",
+                "800": "800",
+                "900": "900",
+                "1000": "1000"
+            },
+            "default_value": 500,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_671fdf4822f18",
+            "label": "Navbar Link Hover Colour",
+            "name": "navbar_link_hover_color",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "white": "White",
+                "black": "Black",
+                "primary": "Primary",
+                "secondary": "Secondary",
+                "tertiary": "Tertiary",
+                "neutral": "Neutral"
+            },
+            "default_value": "white",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_671fdf5022f19",
+            "label": "Navbar Link Hover Colour Variant",
+            "name": "navbar_link_hover_color_variant",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Higher number = darker colour",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_671fdf4822f18",
+                        "operator": "!=",
+                        "value": "white"
+                    },
+                    {
+                        "field": "field_671fdf4822f18",
+                        "operator": "!=",
+                        "value": "black"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "25": "25",
+                "50": "50",
+                "100": "100",
+                "200": "200",
+                "300": "300",
+                "400": "400",
+                "500": "500",
+                "600": "600",
+                "700": "700",
+                "800": "800",
+                "900": "900",
+                "1000": "1000"
+            },
+            "default_value": 500,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_671fdf8822f1b",
+            "label": "Navbar Link Hover Background Colour",
+            "name": "navbar_link_hover_background_color",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "white": "White",
+                "primary": "Primary",
+                "secondary": "Secondary",
+                "tertiary": "Tertiary"
+            },
+            "default_value": "primary",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_671fdf7e22f1a",
+            "label": "Navbar Link Hover Background Colour Variant",
+            "name": "navbar_link_hover_background_color_variant",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Higher number = darker colour",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_671fdf8822f1b",
+                        "operator": "!=",
+                        "value": "white"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "25": "25",
+                "50": "50",
+                "100": "100",
+                "200": "200",
+                "300": "300",
+                "400": "400",
+                "500": "500",
+                "600": "600",
+                "700": "700",
+                "800": "800",
+                "900": "900",
+                "1000": "1000"
+            },
+            "default_value": 700,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_671fe81c55c6f",
+            "label": "Navbar Link Font Family",
+            "name": "navbar_font_family",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "--font-primary": "Primary",
+                "--font-secondary": "Secondary"
+            },
+            "default_value": "--font-primary",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_671fe83b55c70",
+            "label": "Navbar Link Font Weight",
+            "name": "navbar_link_font_weight",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
                 "class": "",
                 "id": ""
             },
@@ -661,7 +1147,7 @@
                 "800": "Extra Bold (800)",
                 "900": "Black (900)"
             },
-            "default_value": 400,
+            "default_value": 700,
             "return_format": "value",
             "multiple": 0,
             "allow_null": 0,
@@ -670,116 +1156,11 @@
             "placeholder": ""
         },
         {
-            "key": "field_6717d089bb0d0",
-            "label": "Sizing and Spacing",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0
-        },
-        {
-            "key": "field_65eb2f8d429bd",
-            "label": "Unit",
-            "name": "border_radius_unit",
-            "aria-label": "",
-            "type": "button_group",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "px": "PX",
-                "rem": "REM",
-                "em": "EM"
-            },
-            "default_value": "px",
-            "return_format": "value",
-            "allow_null": 0,
-            "layout": "horizontal"
-        },
-        {
-            "key": "field_65d618c047488",
-            "label": "Border Radius Value",
-            "name": "border_radius_value",
-            "aria-label": "",
-            "type": "number",
-            "instructions": "Please enter the value in selected unit.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "min": "",
-            "max": "",
-            "placeholder": "",
-            "step": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_65e1fd5b7eda6",
-            "label": "Padding Desktop",
-            "name": "padding_decrease_desktop",
-            "aria-label": "",
-            "type": "range",
-            "instructions": "Enter the pixel value.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "min": 32,
-            "max": 100,
-            "step": "",
-            "prepend": "",
-            "append": "px"
-        },
-        {
-            "key": "field_65f081ce1565a",
-            "label": "Padding Tablet",
-            "name": "padding_decrease_tablet",
-            "aria-label": "",
-            "type": "range",
-            "instructions": "Enter the pixel value",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "min": 32,
-            "max": 75,
-            "step": "",
-            "prepend": "",
-            "append": "px"
-        },
-        {
             "key": "field_6717d09cbb0d1",
             "label": "Miscellaneous",
             "name": "",
             "aria-label": "",
-            "type": "tab",
+            "type": "accordion",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -788,7 +1169,8 @@
                 "class": "",
                 "id": ""
             },
-            "placement": "top",
+            "open": 0,
+            "multi_expand": 0,
             "endpoint": 0
         },
         {
@@ -810,6 +1192,218 @@
             "rows": "",
             "placeholder": "",
             "new_lines": ""
+        },
+        {
+            "key": "field_671bad74bf40c",
+            "label": "Components",
+            "name": "",
+            "aria-label": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 0,
+            "endpoint": 0
+        },
+        {
+            "key": "field_65e1fd5b7eda6",
+            "label": "Block Padding Desktop",
+            "name": "block_padding_desktop",
+            "aria-label": "",
+            "type": "range",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 48,
+            "max": 96,
+            "step": 8,
+            "prepend": "",
+            "append": "px"
+        },
+        {
+            "key": "field_671bcb40b31dd",
+            "label": "Block Padding Tablet",
+            "name": "block_padding_tablet",
+            "aria-label": "",
+            "type": "range",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 32,
+            "max": 80,
+            "step": 8,
+            "prepend": "",
+            "append": "px"
+        },
+        {
+            "key": "field_671bcb48b31de",
+            "label": "Block Padding Mobile",
+            "name": "block_padding_mobile",
+            "aria-label": "",
+            "type": "range",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 24,
+            "max": 64,
+            "step": 4,
+            "prepend": "",
+            "append": "px"
+        },
+        {
+            "key": "field_65d618c047488",
+            "label": "Button Border Radius",
+            "name": "button_border_radius",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": "",
+            "placeholder": "",
+            "step": "",
+            "prepend": "",
+            "append": "px"
+        },
+        {
+            "key": "field_671bc94bb2001",
+            "label": "Button Font Family",
+            "name": "button_font_family",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "--font-primary": "Primary",
+                "--font-secondary": "Secondary"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_671bc97db2002",
+            "label": "Button Font Weight",
+            "name": "button_font_weight",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "100": "Thin (100)",
+                "200": "Extra Light (200)",
+                "300": "Light (300)",
+                "400": "Regular (400)",
+                "500": "Medium (500)",
+                "600": "Semi-Bold (600)",
+                "700": "Bold (700)",
+                "800": "Extra Bold (800)",
+                "900": "Black (900)"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_671bc85bb0e0d",
+            "label": "Cards Border Radius",
+            "name": "cards_border_radius",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": 32,
+            "placeholder": "",
+            "step": "",
+            "prepend": "",
+            "append": "px"
+        },
+        {
+            "key": "field_671bad7bbf40d",
+            "label": "Timeline Colour",
+            "name": "timeline_color",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "primary": "Primary",
+                "secondary": "Secondary",
+                "tertiary": "Tertiary",
+                "neutral": "Neutral"
+            },
+            "default_value": "primary",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
         }
     ],
     "location": [
@@ -830,5 +1424,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1729614027
+    "modified": 1730148228
 }

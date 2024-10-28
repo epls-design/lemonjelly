@@ -83,7 +83,9 @@ function watchTask(done) {
 
 // eslint all first party JS
 function javascriptLint(done) {
-	return src(["./src/js/*.js"]).pipe(eslint()).pipe(eslint.format());
+	return src(["./src/js/*.js", "!./src/js/editor-filters.js"])
+		.pipe(eslint())
+		.pipe(eslint.format());
 	done();
 }
 
@@ -102,7 +104,7 @@ function compileGutenberg(done) {
 
 // Tasks which process the core javascript files
 function javascriptProcess() {
-	return src(["./src/js/*.js"])
+	return src(["./src/js/*.js", "!./src/js/editor-filters.js"])
 		.pipe(concat("theme.min.js"))
 		.pipe(uglify({ mangle: true }))
 		.pipe(dest("./js/"));
