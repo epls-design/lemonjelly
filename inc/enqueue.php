@@ -109,12 +109,15 @@ function lemonjelly_frontend_favicon() {
 add_action('login_head', 'lemonjelly_backend_favicon');
 add_action('admin_head', 'lemonjelly_backend_favicon');
 function lemonjelly_backend_favicon() {
-  // Get the URL of the uploaded favicon image from ACF
-  $favicon_url = get_field('favicon', 'option');
-  $favicon_url  = wp_get_attachment_image_url($favicon_url, 'icon');
-  // Check if favicon URL exists
-  if ($favicon_url) {
-    // Update favicon link in admin areas with the ACF URL
-    echo '<link rel="shortcut icon" type="image/x-icon" href="' . esc_url($favicon_url) . '">';
+  if (function_exists('get_field')) {
+
+    // Get the URL of the uploaded favicon image from ACF
+    $favicon_url = get_field('favicon', 'option');
+    $favicon_url  = wp_get_attachment_image_url($favicon_url, 'icon');
+    // Check if favicon URL exists
+    if ($favicon_url) {
+      // Update favicon link in admin areas with the ACF URL
+      echo '<link rel="shortcut icon" type="image/x-icon" href="' . esc_url($favicon_url) . '">';
+    }
   }
 }

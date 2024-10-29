@@ -22,14 +22,16 @@ class ezpzFeedbackMap {
   function enqueue_scripts() {
     // Register Google Maps if not already registered
     if (!wp_script_is('googlemaps', 'registered')) {
-      $get_gmaps_api = get_global_option('google_maps_api_key');
-      wp_register_script(
-        'googlemaps',
-        'https://maps.googleapis.com/maps/api/js?key=' . $get_gmaps_api,
-        array(),
-        null,
-        true
-      );
+      if (function_exists('get_field')) {
+        $get_gmaps_api = get_global_option('google_maps_api_key');
+        wp_register_script(
+          'googlemaps',
+          'https://maps.googleapis.com/maps/api/js?key=' . $get_gmaps_api,
+          array(),
+          null,
+          true
+        );
+      }
     }
 
     wp_register_script(

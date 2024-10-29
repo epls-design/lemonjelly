@@ -9,6 +9,11 @@
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
+if (!is_admin() && !function_exists('get_field')) {
+  echo 'Please install and activate Advanced Custom Fields Pro';
+  die();
+}
+
 // Global array of blocks to register for this child theme
 $lemonjelly_blocks  = array('lemonjelly-hero', 'feedback-map', 'image-compare', 'timeline', 'timeline-vertical');
 
