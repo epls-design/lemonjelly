@@ -195,7 +195,7 @@ function lemonjelly_save_theme_settings_to_json($post_id, $menu_slug) {
     $css_data .= '[type=button],[type=reset],[type=submit],a.button,.button {';
 
     if ($acf['button_border_radius'] != '') {
-      $rem = (int)$acf['button_border_radius'] / 16;
+      $rem = $acf['button_border_radius'] / 16;
       $css_data .= 'border-radius: ' . $rem . 'rem;';
     }
 
@@ -210,7 +210,7 @@ function lemonjelly_save_theme_settings_to_json($post_id, $menu_slug) {
     $css_data .= '}';
   }
 
-  if (isset($acf['cards_border_radius'])) {
+  if ($acf['cards_border_radius'] != '') {
     $css_data .= '.card {';
     $rem = $acf['cards_border_radius'] / 16;
     $css_data .= 'border-radius: ' . $rem . 'rem;';

@@ -122,6 +122,7 @@ function lemonjelly_make_color_palette($color) {
  * Returns CSS custom properties for a given color palette.
  */
 function lemonjelly_convert_colormap_to_css($array, $prefix = '') {
+  $css = '';
   foreach ($array as $key => $value) {
     $css .= "--color-$prefix-$key: $value;\n";
   }
