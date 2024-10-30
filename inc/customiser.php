@@ -194,8 +194,8 @@ function lemonjelly_save_theme_settings_to_json($post_id, $menu_slug) {
   ) {
     $css_data .= '[type=button],[type=reset],[type=submit],a.button,.button {';
 
-    if (isset($acf['button_border_radius'])) {
-      $rem = $acf['button_border_radius'] / 16;
+    if ($acf['button_border_radius'] != '') {
+      $rem = (int)$acf['button_border_radius'] / 16;
       $css_data .= 'border-radius: ' . $rem . 'rem;';
     }
 
