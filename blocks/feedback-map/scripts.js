@@ -186,7 +186,7 @@
 		const urlParams = new URLSearchParams(window.location.search);
 		const entryID = urlParams.get("entryID");
 		if (entryID) {
-			ajaxData.clearTransient = true;
+			ajaxData.appendEntry = entryID;
 		}
 
 		// Get form entries using AJAX
@@ -368,12 +368,10 @@
 			}
 
 			likeButton.addEventListener("click", function () {
-				console.log("clicked");
 				if (
 					(type === "like" && markerData.userHasLiked) ||
 					(type === "dislike" && markerData.userHasDisliked)
 				) {
-					console.log("already reacted");
 					return;
 				}
 				$.ajax({
@@ -422,6 +420,17 @@
 		var ul = document.createElement("ul");
 
 		content.classList.add("marker-content");
+
+		const urlParams = new URLSearchParams(window.location.search);
+		const getEntryID = urlParams.get("entryID");
+		if (getEntryID && getEntryID == markerData.entry_id) {
+			var intro = document.createElement("p");
+			intro.innerHTML =
+				"Your feedback will appear on the map once it has been moderated by our team.";
+			intro.classList.add("entry-intro", "small");
+			content.appendChild(intro);
+		}
+
 		content.appendChild(ul);
 
 		for (let key in markerData.fields) {
@@ -706,7 +715,6 @@
 			// @link https://developers.google.com/maps/documentation/javascript/kml
 			if ($mapElement.data("overlay-source")) {
 				let overlaySource = $mapElement.data("overlay-source");
-
 				// Remove the data attr from the map element
 				$mapElement.removeAttr("data-overlay-source");
 
@@ -718,6 +726,7 @@
 				});
 
 				kmlLayer.addListener("status_changed", function () {
+					console.log(kmlLayer.getStatus());
 					if (kmlLayer.getStatus() !== "OK") {
 						// Error handling for KML layer
 						console.error("KML Layer failed to load:", kmlLayer.getStatus());
