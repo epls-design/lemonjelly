@@ -138,3 +138,15 @@ button.hamburger {
 		background-color: var(--navbar-bg-color, var(--color-primary-500));
 	}
 }
+
+/***********
+ * ADDS SUPPORT FOR five col layout
+ ***********/
+@media (min-width: 56.25em) {
+	.col.md-fifth {
+		max-width: 20%;
+		-webkit-box-flex: 0;
+		-ms-flex: 0 0 20%;
+		flex: 0 0 20%;
+	}
+}

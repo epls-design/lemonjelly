@@ -3,12 +3,10 @@
 		let twentyTwenty = $(".twentytwenty-container");
 		if (twentyTwenty.length) {
 			twentyTwenty.each(function () {
-				console.log($(this).data("before-label"));
 				let beforeLabel = $(this).data("before-label")
 					? $(this).data("before-label")
 					: "Before";
 
-				alert(beforeLabel);
 				let afterLabel = $(this).data("after-label")
 					? $(this).data("after-label")
 					: "After";
