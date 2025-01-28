@@ -127,12 +127,23 @@ button.hamburger {
 	z-index: 100;
 }
 
+/* Standard Navbar */
 @media (min-width: 75em) {
-	body.has-transparent-navbar {
-		--navbar-bg-color: transparent;
-		--navbar-color: var(--color-white);
+	body.has-standard-navbar {
+		#masthead {
+			position: relative;
+		}
+		.hero {
+			padding-bottom: calc(
+				var(--block-padding) + var(--hero-padding) - 1.5rem
+			) !important;
+		}
+		.main-navigation {
+			position: relative;
+		}
 	}
 }
+
 @media (max-width: 74.9375em) {
 	.navbar-menu.is-off-canvas {
 		background-color: var(--navbar-bg-color, var(--color-primary-500));

@@ -796,6 +796,27 @@
             "ui": 1
         },
         {
+            "key": "field_67979ffd294b2",
+            "label": "Standard Navbar",
+            "name": "standard_navbar",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Would you like the navbar to stay fixed at the top and push the hero section down (prevents overlap)?",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 1,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
+        },
+        {
             "key": "field_671fdeeb22f13",
             "label": "Navbar Background Colour",
             "name": "navbar_background",
@@ -1424,5 +1445,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1730148228
+    "modified": 1738061898
 }
