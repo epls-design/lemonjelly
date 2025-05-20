@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded", function () { const title = document.querySelector("h1.page-title"); if (title) { title.textContent = "This title was changed by ACF JS!"; } }); 

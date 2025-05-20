@@ -133,3 +133,15 @@ function lemonjelly_backend_favicon() {
     }
   }
 }
+
+add_action('wp_footer', 'lemonjelly_output_custom_js', 1000);
+
+function lemonjelly_output_custom_js() {
+  $acf_opts = get_fields('options');
+
+  if (!empty($acf_opts['js'])) {
+    echo '<script id="custom-acf-js">';
+    echo $acf_opts['js'];
+    echo '</script>';
+  }
+}
