@@ -256,9 +256,41 @@ function lemonjelly_save_theme_settings_to_json($post_id, $menu_slug) {
     $css_data .= '.timeline { --timeline-color-theme: var(--color-' . $acf['timeline_color'] . '-' . $variant . '); }';
   }
 
-  if (isset($acf['custom_css']) && !empty($acf['custom_css'])) {
-    $css_data .= $acf['custom_css'];
+  $css = isset($acf['css']) ? $acf['css'] : [];
+
+  // if (isset($acf['global_css']) && !empty($acf['global_css'])) {
+  //   $css_data .= $acf['global_css'];
+  // }
+
+  //Add global CSS (not wrapped in a media query)
+  if (!empty($css['global_css'])) {
+    $css_data .= $css['global_css'];
   }
+
+
+  $breakpoints = [
+    'lg' => 1200,
+    'md' => 900,
+    'sm' => 600,
+  ];
+
+
+  foreach ($breakpoints as $label => $value) {
+
+    // Above breakpoint
+    $above_key = "css_above_{$label}";
+    if (!empty($css[$above_key])) {
+      $css_data .= "@media (min-width: {$value}px) { {$css[$above_key]} }";
+    }
+
+    //  Below breakpoint
+    $below_key = "css_below_{$label}";
+    if (!empty($css[$below_key])) {
+      $max = $value - 1;
+      $css_data .= "@media (max-width: {$max}px) { {$css[$below_key]} }";
+    }
+  }
+
 
   // Minify the CSS data
   $css_data = preg_replace('/\s+/', ' ', $css_data);
@@ -268,6 +300,27 @@ function lemonjelly_save_theme_settings_to_json($post_id, $menu_slug) {
   $css_file = fopen($css_file_path, "w");
   fwrite($css_file, $css_data);
   fclose($css_file);
+
+
+
+  /**
+   * Custom JS
+   */
+  $js_data = '';
+
+  if (!empty($acf['js'])) {
+    $js_data = $acf['js'];
+
+    // Minify the JS data
+    $js_data = preg_replace('/\s+/', ' ', $js_data);
+
+    // Write the JS data to the file
+    $js_file_path = get_stylesheet_directory() . '/lemonjelly.js';
+    $js_file = fopen($js_file_path, "w");
+    fwrite($js_file, $js_data);
+    fclose($js_file);
+  }
+
 
   return;
 }

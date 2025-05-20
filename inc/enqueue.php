@@ -53,6 +53,18 @@ function lemonjelly_scripts() {
       filemtime($theme_min_path)
     );
   }
+
+  // Enqueue lemonjelly.js
+  $custom_js_path = get_stylesheet_directory() . '/lemonjelly.js';
+  if (file_exists($custom_js_path)) {
+    wp_enqueue_script(
+      'lemonjelly-custom-js',
+      get_stylesheet_directory_uri() . '/lemonjelly.js',
+      array(),
+      filemtime($custom_js_path),
+      true
+    );
+  }
 }
 
 /**
